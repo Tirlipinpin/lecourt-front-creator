@@ -1,0 +1,25 @@
+.register-form {
+    width: 25%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+}
+
+@media screen and (max-width: 400px) {
+    .register-form {
+        width: 70%;
+    }
+}
+
+@media screen and (min-width: 400px) and (max-width: 640px) {
+    .register-form {
+        width: 60%;
+    }
+}
+
+.register-form .register-form-button {
+    width: 100%;
+}

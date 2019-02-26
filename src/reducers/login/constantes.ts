@@ -1,0 +1,4 @@
+export const FETCH_TOKEN = 'FETCH_TOKEN';
+export const FETCH_TOKEN_SUCCEEDED = 'FETCH_TOKEN_SUCCEEDED';
+export const FETCH_TOKEN_FAILED = 'FETCH_TOKEN_FAILED';
+export const LOGOUT = 'LOGOUT';
