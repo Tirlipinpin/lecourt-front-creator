@@ -50,7 +50,7 @@ export class Navbar extends Component<NavbarProps, {}> {
                     theme="light"
                     mode="inline"
                     style={{ lineHeight: '64px' }}
-                    className="menu-items-container navbar-menu"
+                    className={`menu-items-container navbar-menu ${!collapsed && 'not-collapsed'}`}
                     selectedKeys={this.isActive()}
                 >
                     <Menu.Item key="homepage"><Link to={url}>
