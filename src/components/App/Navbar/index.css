@@ -2,12 +2,19 @@
     margin: 1% 0;
     display: flex;
     justify-content: center;
+    align-items: center;
 }
 
 .logo > img {
     height: 48px;
     cursor: pointer;
     text-align: center;
+}
+
+.logo .lecourt-title {
+    margin-left: 2%;
+    font-size: 1em;
+    font-weight: 700;
 }
 
 .navbar-menu {

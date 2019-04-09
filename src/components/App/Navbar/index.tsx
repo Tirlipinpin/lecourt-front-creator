@@ -42,6 +42,9 @@ export class Navbar extends Component<NavbarProps, {}> {
             <>
                 <div className="logo">
                     <img src={logo} onClick={() => history.push(url)} />
+                    <span className="lecourt-title">
+                        { !collapsed && 'Lecourt' }
+                    </span>
                 </div>
                 <Menu
                     theme="light"

@@ -3,7 +3,6 @@ import Adapter from 'enzyme-adapter-react-16';
 import Enzyme, { shallow } from 'enzyme';
 
 import { Navbar } from '.';
-import { NavbarStore } from '../../reducers/navbar';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -15,17 +14,13 @@ describe('The Profile component', () => {
             url: 'poney',
         };
 
-        const navbar: NavbarStore = {
-            searchTerm: '',
-        }
-
         wrapper = shallow(
             <Navbar
                 location={{ pathname: '' }}
                 history={{ push: () => {} }}
                 match={match}
                 dispatch={() => {}}
-                navbar={navbar}
+                collapsed={false}
             />
         );
     });
