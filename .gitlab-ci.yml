@@ -1,0 +1,101 @@
+#-------------------------------------------------------------------------------
+# Gitlab-CI bliink.io
+#-------------------------------------------------------------------------------
+
+image: bsingr/docker-and-compose:17-1.12.0
+
+variables:
+  DOCKER_DRIVER: overlay
+  CONTAINER_STAGING_IMAGE: $CI_REGISTRY_IMAGE/staging:$CI_COMMIT_REF_SLUG
+
+before_script:
+  - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+
+stages:
+  - build
+  - test
+  - deploy
+
+#-------------------------------------------------------------------------------
+# Templates
+#-------------------------------------------------------------------------------
+
+# BRANCH
+.: &branch-production
+  only:
+    - /^\d+(\.\d+){2}$/
+  except:
+    - branches
+
+.: &branch-staging
+  only:
+    - master
+
+.: &branch-develop
+  only:
+    - /^(feature|fix)\/.*$/
+    - dev
+  except:
+    - master
+
+.: &branch-test
+  only:
+    - /^(feature|fix)\/.*$/
+    - dev
+    - master
+
+# TAGS
+.: &runner-docker
+  tags:
+    - docker
+
+.: &runner-staging
+  tags:
+    - staging
+
+#-------------------------------------------------------------------------------
+# Variables
+#-------------------------------------------------------------------------------
+.: &variables-compose-staging
+  COMPOSE_FILE: docker-compose.staging.yml
+  COMPOSE_PROJECT_NAME: lecourt-front-creator
+
+#-------------------------------------------------------------------------------
+# Jobs Staging
+#-------------------------------------------------------------------------------
+
+build_staging:
+  stage: build
+  <<: [ *branch-test, *runner-docker ]
+  services:
+    - docker:17-dind
+  script:
+    - docker build --pull -t $CONTAINER_STAGING_IMAGE -f development.Dockerfile .
+    - docker push $CONTAINER_STAGING_IMAGE
+
+deploy_staging:
+  stage: deploy
+  <<: [ *branch-staging, *runner-staging ]
+  environment:
+    name: staging
+  variables:
+    <<: *variables-compose-staging
+  script:
+    - docker-compose pull
+    - docker-compose up -d
+    - docker-compose ps
+
+#-------------------------------------------------------------------------------
+# Jobs Test
+#-------------------------------------------------------------------------------
+
+test_unit:
+  image:
+    name: $CONTAINER_STAGING_IMAGE
+    entrypoint: [""]
+  stage: test
+  <<: [ *branch-test, *runner-docker ]
+  before_script:
+    - npm i
+  script:
+    - npm run testci
