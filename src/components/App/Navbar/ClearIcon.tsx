@@ -4,8 +4,8 @@ import posed from 'react-pose';
 import { Icon } from 'antd';
 
 export interface ClearIconProps {
-    termLength: Number,
-    onChangeSearchTerm: (({}) => void),
+    termLength: Number
+    onChangeSearchTerm: (({}) => void)
 }
 
 const Box = posed.span({

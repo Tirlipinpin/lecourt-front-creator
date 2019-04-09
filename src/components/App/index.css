@@ -1,8 +1,15 @@
 .app-container {
-    min-height: calc(100vh - 64px);
-    margin-top: 64px;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
+}
+
+.navbar-container {
+    border-right: 1px solid #e8e8e8
+}
+
+.navbar-container .ant-layout-sider-trigger {
+    border-right: 1px solid #e8e8e8;
 }
 
 .content-container {

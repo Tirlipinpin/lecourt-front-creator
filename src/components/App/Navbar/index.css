@@ -1,24 +1,15 @@
-.navbar-container {
-    position: fixed;
-    z-index: 10;
-    width: 100%;
-    box-shadow: 0 8px 20px rgba(41, 45, 51, 0.35);
-    padding: 0 16px;
-}
-
 .logo {
+    margin: 1% 0;
+    display: flex;
+    justify-content: center;
+}
+
+.logo > img {
     height: 48px;
-    float: left;
-    margin: 8px 8px 8px 0;
     cursor: pointer;
+    text-align: center;
 }
 
-.menu-items-container {
-    margin-left: 5%;
-}
-
-@media screen and (min-width: 450px) {
-    .logout-button {
-        float: right;
-    }
+.navbar-menu {
+    border: none;
 }

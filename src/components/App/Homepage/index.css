@@ -1,7 +1,7 @@
 .homepage-page-container {
     margin: 32px 64px;
     padding-bottom: 32px;
-    box-shadow: 0 4px 20px 1px rgba(47, 51, 56, 0.35);
+    background-color: transparent;
 }
 
 .homepage-carousel {
@@ -12,7 +12,6 @@
 
 .homepage-page-content {
     min-height: 1500px;
-    background: pink;
 }
 
 .movies-carousel {

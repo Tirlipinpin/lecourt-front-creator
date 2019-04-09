@@ -1,11 +1,11 @@
 import { REGISTER_USER, REGISTER_USER_SUCCEEDED, REGISTER_USER_FAILED } from './constantes';
 
 export interface RegisterStore {
-    loading: boolean,
+    loading: boolean
 };
 
 export const defaultState: RegisterStore = {
-    loading: false,
+    loading: false
 };
 
 export default (state = defaultState, action: any) => {

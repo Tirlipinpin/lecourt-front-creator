@@ -8,23 +8,19 @@ import { LoginStore } from '../../reducers/login';
 import './index.css';
 
 interface LoginProps {
-    dispatch: Dispatch<any>,
-    login: LoginStore,
+    dispatch: Dispatch<any>
+    login: LoginStore
 };
 
 interface LoginState {
-    email: string,
-    password: string,
+    email: string
+    password: string
 }
 
 export class Login extends Component<LoginProps, LoginState> {
-    constructor(props: any) {
-        super(props);
-
-        this.state = {
-            email: '',
-            password: '',
-        };
+    state: Readonly<LoginState> = {
+        email: '',
+        password: '',
     }
 
     handleEmail = (e: any) => {
@@ -75,7 +71,7 @@ export class Login extends Component<LoginProps, LoginState> {
                     </Form.Item>
                     <Form.Item>
                         <Button
-                            disabled={login.loading}
+                            loading={login.loading}
                             htmlType="submit"
                             type="primary"
                             className="login-form-button"

@@ -7,15 +7,15 @@ import { RegisterStore } from '../../reducers/register';
 import './index.css';
 
 interface RegisterState {
-    displayName: string,
-    email: string,
-    password: string,
-    passwordConfirm: string,
+    displayName: string
+    email: string
+    password: string
+    passwordConfirm: string
 };
 
 interface RegisterProps {
-    dispatch: Dispatch<any>,
-    register: RegisterStore,
+    dispatch: Dispatch<any>
+    register: RegisterStore
 };
 
 export class Register extends Component<RegisterProps, RegisterState> {
