@@ -53,19 +53,19 @@ export class Navbar extends Component<NavbarProps, {}> {
                     <Menu.Item key="homepage"><Link to={url}>
                         { collapsed
                             ? <Icon type="home" />
-                            : [ <Icon type="home" />, 'Homepage' ]
+                            : <> <Icon type="home" /> Homepage </>
                         }
                     </Link></Menu.Item>
                     <Menu.Item key="profile"><Link to={`${url}/profile`}>
                         { collapsed
                             ? <Icon type="user" />
-                            : [ <Icon type="user" />, 'Profile' ]
+                            : <> <Icon type="user" /> Profile </>
                         }
                     </Link></Menu.Item>
                     <Menu.Item key="logout" className="logout-button" onClick={this.logout}>
                         { collapsed
                             ? <Icon type="logout" />
-                            : [ <Icon type="logout" />, 'Logout' ]
+                            : <> <Icon type="logout" /> Logout </>
                         }
                     </Menu.Item>
                 </Menu>
