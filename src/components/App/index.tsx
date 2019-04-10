@@ -88,9 +88,9 @@ export class App extends Component<AppProps, AppState> {
                         </Layout.Content>
                         <Layout.Footer style={{
                             textAlign: 'center',
-                            background: '#f0f2f5',
+                            background: 'white',
                         }}>
-                            Lecourt ©2019 Created with <Icon type="heart" /> by the best developpers ever
+                            Lecourt ©2019 Created with <Icon type="heart" /> by the best developers ever
                         </Layout.Footer>
                     </Layout>
                 </Layout>

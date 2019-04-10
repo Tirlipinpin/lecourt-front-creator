@@ -5,7 +5,9 @@
 }
 
 .navbar-container {
-    border-right: 1px solid #e8e8e8
+    border-right: 1px solid #e8e8e8;
+    height: 100vh;
+    position: fixed;
 }
 
 .navbar-container .ant-layout-sider-trigger {
@@ -13,7 +15,8 @@
 }
 
 .content-container {
-    background-color: white;
+    background-color: #f0f2f5;
+    margin-left: 200px;
 }
 
 @media screen and (max-width: 1256px) {

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Layout, Row, Col } from 'antd';
+import { Layout, Row, Col, PageHeader } from 'antd';
 import {
     ResponsiveContainer,
     PieChart,
@@ -128,6 +128,10 @@ export class Homepage extends Component<{}, {}> {
     render() {
         return (
             <Layout className="homepage-page-container">
+                <PageHeader
+                    title="Dashboard"
+                    subTitle="Voyez toutes vos statistiques du premier coup d'œil"
+                />
                 <Row>
                     <Col span={8}>
                         <ResponsiveContainer
@@ -166,10 +170,10 @@ export class Homepage extends Component<{}, {}> {
                     </Col>
                 </Row>
                 <Row>
-                    <Col span={14}>
+                    <Col span={16}>
                         <ResponsiveContainer
                             height={350}
-                            width="90%"
+                            width="95%"
                             className="chart-container"
                         >
                             <LineChart data={this.dataTest3}>
@@ -182,7 +186,7 @@ export class Homepage extends Component<{}, {}> {
                             </LineChart>
                         </ResponsiveContainer>
                     </Col>
-                    <Col span={10}>
+                    <Col span={8}>
                         <ResponsiveContainer
                             height={350}
                             width="90%"
@@ -210,23 +214,10 @@ export class Homepage extends Component<{}, {}> {
                             </PieChart>
                         </ResponsiveContainer>
                     </Col>
-                    <Col span={8}>
+                    <Col span={16}>
                         <ResponsiveContainer
                             height={350}
-                            width="90%"
-                            className="chart-container"
-                        >
-                            <PieChart>
-                                <Tooltip />
-                                <Pie data={this.dataTest1} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={50} fill={this.getRandomColor()} />
-                                <Pie data={this.dataTest2} dataKey="value" nameKey="name" cx="50%" cy="50%" innerRadius={60} outerRadius={80} fill={this.getRandomColor()} label />
-                            </PieChart>
-                        </ResponsiveContainer>
-                    </Col>
-                    <Col span={8}>
-                        <ResponsiveContainer
-                            height={350}
-                            width="90%"
+                            width="95%"
                             className="chart-container"
                         >
                             <PieChart>
