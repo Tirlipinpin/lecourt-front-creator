@@ -1,4 +1,4 @@
-import React, { Component, Dispatch } from 'react';
+import React, { Component, Dispatch, FormEvent, SyntheticEvent } from 'react';
 import { connect } from 'react-redux';
 import { Form, Icon, Input, Button } from 'antd';
 
@@ -6,31 +6,27 @@ import { RegisterStore } from '../../reducers/register';
 
 import './index.css';
 
-interface RegisterState {
+export interface RegisterState {
     displayName: string
     email: string
     password: string
     passwordConfirm: string
 };
 
-interface RegisterProps {
+export interface RegisterProps {
     dispatch: Dispatch<any>
     register: RegisterStore
 };
 
 export class Register extends Component<RegisterProps, RegisterState> {
-    constructor(props: any) {
-        super(props);
+    state = {
+        displayName: '',
+        email: '',
+        password: '',
+        passwordConfirm: '',
+    };
 
-        this.state = {
-            displayName: '',
-            email: '',
-            password: '',
-            passwordConfirm: '',
-        };
-    }
-
-    registerUser = (e: any) => {
+    registerUser = (e: FormEvent<any>): void => {
         const { displayName, email, password, passwordConfirm } = this.state;
         const { dispatch } = this.props;
 
@@ -47,27 +43,34 @@ export class Register extends Component<RegisterProps, RegisterState> {
         });
     }
 
-    handleDisplayName = (e: any) => {
+    handleDisplayName = (e: SyntheticEvent): void => {
+        const target = e.target as HTMLInputElement;
         this.setState({
-            displayName: e.target.value,
+            displayName: target.value,
         });
     }
 
-    handleEmail = (e: any) => {
+    handleEmail = (e: SyntheticEvent): void => {
+        const target = e.target as HTMLInputElement;
+
         this.setState({
-            email: e.target.value,
+            email: target.value,
         });
     }
 
-    handlePassword = (e: any) => {
+    handlePassword = (e: SyntheticEvent): void => {
+        const target = e.target as HTMLInputElement;
+
         this.setState({
-            password: e.target.value,
+            password: target.value,
         });
     }
 
-    handlePasswordConfirm = (e: any) => {
+    handlePasswordConfirm = (e: SyntheticEvent): void => {
+        const target = e.target as HTMLInputElement;
+
         this.setState({
-            passwordConfirm: e.target.value,
+            passwordConfirm: target.value,
         });
     }
 

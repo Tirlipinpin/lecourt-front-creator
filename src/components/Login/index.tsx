@@ -1,4 +1,4 @@
-import React, { Component, Dispatch } from 'react';
+import React, { Component, Dispatch, SyntheticEvent, FormEvent } from 'react';
 import { connect } from 'react-redux';
 import { Form, Icon, Input, Button } from 'antd';
 import { Redirect } from 'react-router';
@@ -7,35 +7,39 @@ import { LoginStore } from '../../reducers/login';
 
 import './index.css';
 
-interface LoginProps {
+export interface LoginProps {
     dispatch: Dispatch<any>
     login: LoginStore
 };
 
-interface LoginState {
+export interface LoginState {
     email: string
     password: string
-}
+};
 
 export class Login extends Component<LoginProps, LoginState> {
-    state: Readonly<LoginState> = {
+    state = {
         email: '',
         password: '',
-    }
+    };
 
-    handleEmail = (e: any) => {
+    handleEmail = (e: SyntheticEvent): void => {
+        const target = e.target as HTMLInputElement;
+
         this.setState({
-            email: e.target.value,
+            email: target.value,
         });
     }
 
-    handlePassword = (e: any) => {
+    handlePassword = (e: SyntheticEvent): void => {
+        const target = e.target as HTMLInputElement;
+
         this.setState({
-            password: e.target.value,
+            password: target.value,
         });
     }
 
-    fetchToken = (e: any) => {
+    fetchToken = (e: FormEvent<any>): void => {
         const { dispatch } = this.props;
         const { email, password } = this.state;
 
@@ -71,7 +75,7 @@ export class Login extends Component<LoginProps, LoginState> {
                     </Form.Item>
                     <Form.Item>
                         <Button
-                            loading={login.loading}
+                            disabled={login.loading}
                             htmlType="submit"
                             type="primary"
                             className="login-form-button"
