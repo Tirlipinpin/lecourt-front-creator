@@ -132,11 +132,11 @@ export class Homepage extends Component<{}, {}> {
                     title="Dashboard"
                     subTitle="Voyez toutes vos statistiques du premier coup d'œil"
                 />
-                <Row>
+                <Row gutter={32}>
                     <Col span={8}>
                         <ResponsiveContainer
                             height={350}
-                            width="90%"
+                            width="100%"
                             className="chart-container"
                         >
                             <PieChart>
@@ -149,7 +149,7 @@ export class Homepage extends Component<{}, {}> {
                     <Col span={8}>
                         <ResponsiveContainer
                             height={350}
-                            width="90%"
+                            width="100%"
                             className="chart-container"
                         >
                             <PieChart>
@@ -160,7 +160,11 @@ export class Homepage extends Component<{}, {}> {
                         </ResponsiveContainer>
                     </Col>
                     <Col span={8}>
-                        <ResponsiveContainer height={350} width="90%" className="chart-container">
+                        <ResponsiveContainer
+                            height={350}
+                            width="100%"
+                            className="chart-container"
+                        >
                             <PieChart>
                                 <Tooltip />
                                 <Pie data={this.dataTest1} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={50} fill={this.getRandomColor()} />
@@ -169,11 +173,11 @@ export class Homepage extends Component<{}, {}> {
                         </ResponsiveContainer>
                     </Col>
                 </Row>
-                <Row>
+                <Row gutter={32}>
                     <Col span={16}>
                         <ResponsiveContainer
                             height={350}
-                            width="95%"
+                            width="100%"
                             className="chart-container"
                         >
                             <LineChart data={this.dataTest3}>
@@ -189,7 +193,7 @@ export class Homepage extends Component<{}, {}> {
                     <Col span={8}>
                         <ResponsiveContainer
                             height={350}
-                            width="90%"
+                            width="100%"
                             className="chart-container"
                         >
                             <PieChart>
@@ -200,11 +204,11 @@ export class Homepage extends Component<{}, {}> {
                         </ResponsiveContainer>
                     </Col>
                 </Row>
-                <Row>
+                <Row gutter={32}>
                     <Col span={8}>
                         <ResponsiveContainer
                             height={350}
-                            width="90%"
+                            width="100%"
                             className="chart-container"
                         >
                             <PieChart>
@@ -217,7 +221,7 @@ export class Homepage extends Component<{}, {}> {
                     <Col span={16}>
                         <ResponsiveContainer
                             height={350}
-                            width="95%"
+                            width="100%"
                             className="chart-container"
                         >
                             <PieChart>
