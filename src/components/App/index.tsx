@@ -36,7 +36,7 @@ export class App extends Component<AppProps, AppState> {
 
         axiosInterceptor(() => {
             dispatch({ type: 'LOGOUT' });
-            history.push('/login');
+            history.push('/');
         });
 
         axios.defaults.baseURL = 'https://management.stg.lecourt.tv/';
@@ -64,7 +64,7 @@ export class App extends Component<AppProps, AppState> {
 
         if (!login.token)
             return (
-                <Redirect to="/login" />
+                <Redirect to="/authentication/login" />
             );
 
         return (

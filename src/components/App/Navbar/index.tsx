@@ -3,7 +3,7 @@ import { Menu, Icon } from 'antd';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import logo from './Logo.png';
+import logo from '../../../assets/Logo.png';
 import './index.css';
 import { LOGOUT } from '../../../reducers/login/constantes';
 
@@ -23,7 +23,7 @@ export class Navbar extends Component<NavbarProps, {}> {
             type: LOGOUT,
         });
 
-        history.push('/login');
+        history.push('/');
     }
 
     isActive = (): Array<string> => {

@@ -14,7 +14,7 @@ describe('the Login component', () => {
         wrapper = shallow(
             <Login
                 dispatch={dispatch}
-                login={{ loading: false }}
+                loading={false}
             />
         );
     });
