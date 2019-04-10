@@ -18,7 +18,7 @@ export class Profile extends Component<{}, {}> {
 
     render() {
         return (
-            <Layout className="profile-page-container">
+            <Layout className="page-container profile-page-container">
                 <Layout.Content className="profile-page-content">
                     <div className="profile-page-header">
                         <Avatar size={128} icon="user" className="user-profile-picture" />

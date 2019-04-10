@@ -1,32 +1,6 @@
 .profile-page-container {
     min-height: 100vh;
     overflow: hidden;
-    box-shadow: 0 1px 20px 1px rgba(47, 51, 56, 0.35);
-    padding: 0;
-}
-
-@media screen and (min-width: 900px) {
-    .profile-page-container {
-        margin: 32px 128px;
-    }
-}
-
-@media screen and (max-width: 720px) {
-    .profile-page-container {
-        margin: 32px 64px;
-    }
-}
-
-@media screen and (max-width: 480px) {
-    .profile-page-container {
-        margin: 32px 32px;
-    }
-}
-
-@media screen and (max-width: 320px) {
-    .profile-page-container {
-        margin: 32px 0;
-    }
 }
 
 .profile-page-header {
@@ -52,8 +26,16 @@
     box-shadow: 0 8px 20px rgba(47, 51, 56, 0.35);
 }
 
-.cards-parameters-container {
-    padding: 0 128px 32px 128px;
+@media screen and (max-width: 1256px) {
+    .cards-parameters-container {
+        padding: 0 0 32px 0;
+    }
+}
+
+@media screen and (min-width: 1256px) {
+    .cards-parameters-container {
+        padding: 0 128px 32px 128px;
+    }
 }
 
 .cards-parameters-container .card-parameters {
@@ -62,7 +44,7 @@
 
 .anchor-menu {
     padding-left: 8px;
-    box-shadow: -2px 0px 10px 0px rgba(47, 51, 56, 0.35);
+    border-left: 1px solid #e8e8e8;
 }
 
 .anchor {

@@ -1,38 +1,11 @@
 .homepage-page-container {
-    margin: 32px 64px;
+    margin: 32px 64px 0 64px;;
     padding-bottom: 32px;
     background-color: transparent;
 }
 
-.homepage-carousel {
-    text-align: center;
-    max-height: 640px;
-    overflow: hidden;
-}
-
-.homepage-page-content {
-    min-height: 1500px;
-}
-
-.movies-carousel {
-    overflow: hidden;
-    width: 90%;
-    margin: auto;
-}
-
-.movie-posters-carousel .movie-poster {
-    border-right: 5px solid white;
-}
-
-.movie-posters-carousel {
-    display: flex !important;
-    align-items: center;
-}
-
-.movie-poster.anticon-arrow-left {
-    margin-right: 10px;
-}
-
-.movie-poster.anticon-arrow-right {
-    margin-left: 10px;
+.chart-container {
+    background-color: #f0f2f5;
+    display: flex;
+    margin: 32px 0;
 }

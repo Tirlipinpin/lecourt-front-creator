@@ -1,8 +1,16 @@
-.logo {
-    margin: 1% 0;
+.collapsed-logo {
+    padding: 1% 0;
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+}
+
+.logo {
+    padding: 1% 0;
+    padding-left: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: left;
 }
 
 .logo > img {
@@ -12,6 +20,18 @@
 }
 
 .logo .lecourt-title {
+    margin-left: 2%;
+    font-size: 1em;
+    font-weight: 700;
+}
+
+.collapsed-logo > img {
+    height: 48px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.collapsed-logo .lecourt-title {
     margin-left: 2%;
     font-size: 1em;
     font-weight: 700;
