@@ -131,6 +131,7 @@ export class Homepage extends Component<{}, {}> {
                 <PageHeader
                     title="Dashboard"
                     subTitle="Voyez toutes vos statistiques du premier coup d'œil"
+                    className="dashboard-header"
                 />
                 <Row gutter={32}>
                     <Col span={8}>
