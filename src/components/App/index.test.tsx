@@ -1,69 +1,59 @@
 import React from 'react';
-import Enzyme, { shallow } from 'enzyme';
+import Enzyme, { shallow, ShallowWrapper } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 
-import { Redirect } from 'react-router';
-
 import { App } from '.';
+import { LoginStore } from '../../reducers/login';
 
 Enzyme.configure({ adapter: new Adapter() });
 
 describe('The App component', () => {
+    let wrapper: ShallowWrapper;
 
-    it('should render correctly', () => {
-        const store = {
+    beforeEach(() => {
+        const loginStore: LoginStore = {
             token: 'something',
             loading: false,
         };
 
-        const wrapper = shallow(
+        wrapper = shallow(
             <App
                 match={{}}
                 history={{}}
-                login={store}
+                login={loginStore}
                 dispatch={() => {}}
                 location={{}}
+                collapsed={false}
             />
         );
+    });
 
-        expect(wrapper.length).toBe(1);
+    it('should render correctly', () => {
+        expect(wrapper).toHaveLength(1);
     });
 
     it('should redirect when user is not logged', () => {
-        const store = {
-            token: null,
-            loading: false,
-        };
+        wrapper.setProps({
+            login: {
+                token: false,
+            },
+        });
 
-        const wrapper = shallow(
-            <App
-                match={{}}
-                history={{}}
-                login={store}
-                dispatch={() => {}}
-                location={{}}
-            />
-        );
-
-        expect(wrapper.find(Redirect)).toHaveLength(1);
+        expect(wrapper.find('Redirect')).toHaveLength(1);
     });
 
     it('should display app when user is logged', () => {
-        const store = {
-            token: 'something',
-            loading: false,
-        };
+        expect(wrapper.find('.app-container')).toHaveLength(1);
+    });
 
-        const wrapper = shallow(
-            <App
-                match={{}}
-                history={{}}
-                login={store}
-                dispatch={() => {}}
-                location={{}}
-            />
-        );
+    it('should collape navbar when collapsed is true', () => {
+        wrapper.setProps({
+            collapsed: true,
+        });
+        const Navbar = wrapper.find('Sider');
 
-        expect(wrapper.find('.app-wrapper')).toHaveLength(1);
+        expect(Navbar.props()).toMatchObject({
+            collapsed: true,
+        });
     });
 });

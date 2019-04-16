@@ -12,6 +12,7 @@ import axiosInterceptor from '../../services/axiosInterceptor';
 import { LoginStore } from '../../reducers/login';
 
 import './index.css';
+import { collapseNavbar } from './Navbar/actions';
 
 interface AppProps {
     match: any
@@ -19,17 +20,10 @@ interface AppProps {
     location: any
     login: LoginStore
     dispatch: Dispatch<any>
-}
-
-interface AppState {
     collapsed: boolean
 }
 
-export class App extends Component<AppProps, AppState> {
-    state: Readonly<AppState> = {
-        collapsed: false,
-    }
-
+export class App extends Component<AppProps, {}> {
     componentDidMount() {
         const { history, dispatch, login } = this.props;
         // const { token } = login;
@@ -45,7 +39,9 @@ export class App extends Component<AppProps, AppState> {
     }
 
     onCollapse = (collapsed: boolean) => {
-        this.setState({ collapsed });
+        const { dispatch } = this.props;
+
+        dispatch(collapseNavbar(collapsed));
     }
 
     lazyRender = (Child: React.ComponentType) => (
@@ -59,8 +55,7 @@ export class App extends Component<AppProps, AppState> {
     )
 
     render() {
-        const { match, login } = this.props;
-        const { collapsed } = this.state;
+        const { match, login, collapsed } = this.props;
 
         if (!login.token)
             return (
@@ -80,7 +75,7 @@ export class App extends Component<AppProps, AppState> {
                         <Navbar { ...this.props } collapsed={collapsed} />
                     </Layout.Sider>
                     <Layout className="app-container">
-                        <Layout.Content className="content-container">
+                        <Layout.Content className={`content-container ${collapsed && 'content-container-extended'}`}>
                             <Switch>
                                 <Route exact path={match.url} render={() => this.lazyRender(Homepage)} />
                                 <Route path={`${match.path}/profile`} render={() => this.lazyRender(Profile)}/>
@@ -99,6 +94,7 @@ export class App extends Component<AppProps, AppState> {
     }
 }
 
-export default connect(({ login }: any) => ({
+export default connect(({ login, navbar }: any) => ({
     login,
+    collapsed: navbar.collapsed,
 }))(App);

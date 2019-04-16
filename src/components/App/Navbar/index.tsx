@@ -40,7 +40,7 @@ export class Navbar extends Component<NavbarProps, {}> {
 
         return (
             <>
-                <div className={collapsed ? 'collapsed-logo' : 'logo'}>
+                <div className={collapsed ? 'collapsed-logo' : 'navbar-logo'}>
                     <img src={logo} onClick={() => history.push(url)} />
                     <span className="lecourt-title">
                         { !collapsed && 'Lecourt' }

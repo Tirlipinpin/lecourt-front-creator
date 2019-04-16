@@ -5,7 +5,7 @@
     justify-content: center;
 }
 
-.logo {
+.navbar-logo {
     padding: 1% 0;
     padding-left: 24px;
     display: flex;
@@ -13,13 +13,13 @@
     justify-content: left;
 }
 
-.logo > img {
+.navbar-logo > img {
     height: 48px;
     cursor: pointer;
     text-align: center;
 }
 
-.logo .lecourt-title {
+.navbar-logo .lecourt-title {
     margin-left: 2%;
     font-size: 1em;
     font-weight: 700;

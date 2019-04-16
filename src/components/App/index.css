@@ -19,6 +19,10 @@
     margin-left: 200px;
 }
 
+.content-container-extended {
+    margin-left: 80px;
+}
+
 @media screen and (max-width: 1256px) {
     .page-container {
         margin: 0 32px;
