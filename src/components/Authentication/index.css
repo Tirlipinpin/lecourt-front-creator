@@ -1,6 +1,6 @@
 .auth-background {
     background-color: #B5543D;
-    background-image: -webkit-linear-gradient(30deg, #2A2A2A 50%, #d7cab8 50%);
+    background-image: -webkit-linear-gradient(30deg, #263A54 50%, rgb(50, 83, 126) 50%);
     height: 100vh;
     width: 100vw;
 }
