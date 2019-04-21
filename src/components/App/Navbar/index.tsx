@@ -1,5 +1,5 @@
 import React, { Component, Dispatch } from 'react';
-import { Menu, Icon } from 'antd';
+import { Menu, Icon, Tooltip } from 'antd';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
@@ -53,12 +53,14 @@ export class Navbar extends Component<NavbarProps, {}> {
                     className={`menu-items-container navbar-menu ${!collapsed && 'not-collapsed'}`}
                     selectedKeys={this.isActive()}
                 >
-                    <Menu.Item key="homepage"><Link to={url}>
-                        { collapsed
-                            ? <Icon type="home" />
-                            : <> <Icon type="home" /> Homepage </>
-                        }
-                    </Link></Menu.Item>
+                    <Menu.Item key="dashboard">
+                        <Tooltip title="Dashboard" placement="right"><Link to={url}>
+                            { collapsed
+                                ? <Icon type="pie-chart" />
+                                : <> <Icon type="pie-chart" /> Dashboard </>
+                            }
+                        </Link></Tooltip>
+                    </Menu.Item>
                     <Menu.Item key="profile"><Link to={`${url}/profile`}>
                         { collapsed
                             ? <Icon type="user" />

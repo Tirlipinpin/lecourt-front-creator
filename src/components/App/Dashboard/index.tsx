@@ -16,7 +16,7 @@ import {
 import './index.css';
 
 
-export class Homepage extends Component<{}, {}> {
+export class Dashboard extends Component<{}, {}> {
     margin = {
         top: 20,
         right: 30,
@@ -127,7 +127,7 @@ export class Homepage extends Component<{}, {}> {
 
     render() {
         return (
-            <Layout className="homepage-page-container">
+            <Layout className="dashboard-page-container">
                 <PageHeader
                     title="Dashboard"
                     subTitle="Voyez toutes vos statistiques du premier coup d'œil"
@@ -238,4 +238,4 @@ export class Homepage extends Component<{}, {}> {
     }
 };
 
-export default connect()(Homepage);
+export default connect()(Dashboard);

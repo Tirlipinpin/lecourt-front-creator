@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@types/antd": "^1.0.0",
     "@types/history": "^4.7.2",
     "@types/jest": "24.0.11",
     "@types/node": "11.13.0",
@@ -15,7 +16,7 @@
     "@types/recharts": "^1.1.16",
     "@types/redux": "^3.6.0",
     "@types/redux-persist": "^4.3.1",
-    "antd": "^3.16.1",
+    "antd": "^3.16.3",
     "axios": "^0.18.0",
     "connected-react-router": "^6.3.2",
     "cross-env": "^5.2.0",
@@ -55,7 +56,7 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "@types/enzyme": "^3.9.0",
+    "@types/enzyme": "^3.9.1",
     "@types/enzyme-adapter-react-16": "^1.0.5",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.10.0",

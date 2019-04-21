@@ -1,13 +1,13 @@
-import React, { Component, Dispatch, Suspense, lazy, LazyExoticComponent } from 'react';
+import React, { Component, Dispatch, Suspense, lazy } from 'react';
 import { connect } from 'react-redux';
 import { Switch, Route, Redirect } from 'react-router';
 import { Icon, Layout } from 'antd';
 import axios from 'axios';
 
 import Navbar from './Navbar';
-const Homepage = lazy(() => import('./Homepage'));
+const Dashboard = lazy(() => import('./Dashboard'));
 const Profile = lazy(() => import('./Profile'));
-const Upload = lazy(() => import('./Upload'));
+const UploadMovie = lazy(() => import('./UploadMovie'));
 
 import axiosInterceptor from '../../services/axiosInterceptor';
 import { LoginStore } from '../../reducers/login';
@@ -45,7 +45,7 @@ export class App extends Component<AppProps, {}> {
         dispatch(collapseNavbar(collapsed));
     }
 
-    lazyRender = (Child: React.LazyExoticComponent<React.ComponentType>) => (
+    lazyRender = (Child: React.LazyExoticComponent<any>) => (
         <Suspense
             fallback={(
                 <Icon type="loading" />
@@ -78,9 +78,9 @@ export class App extends Component<AppProps, {}> {
                     <Layout className="app-container">
                         <Layout.Content className={`content-container ${collapsed && 'content-container-extended'}`}>
                             <Switch>
-                                <Route exact path={match.url} render={() => this.lazyRender(Homepage)} />
+                                <Route exact path={match.url} render={() => this.lazyRender(Dashboard)} />
                                 <Route path={`${match.path}/profile`} render={() => this.lazyRender(Profile)}/>
-                                <Route path={`${match.path}/upload`} render={() => this.lazyRender(Upload)}/>
+                                <Route path={`${match.path}/upload`} render={() => this.lazyRender(UploadMovie)}/>
                             </Switch>
                         </Layout.Content>
                         <Layout.Footer style={{
