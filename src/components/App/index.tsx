@@ -1,4 +1,4 @@
-import React, { Component, Dispatch, Suspense, lazy } from 'react';
+import React, { Component, Dispatch, Suspense, lazy, LazyExoticComponent } from 'react';
 import { connect } from 'react-redux';
 import { Switch, Route, Redirect } from 'react-router';
 import { Icon, Layout } from 'antd';
@@ -7,6 +7,7 @@ import axios from 'axios';
 import Navbar from './Navbar';
 const Homepage = lazy(() => import('./Homepage'));
 const Profile = lazy(() => import('./Profile'));
+const Upload = lazy(() => import('./Upload'));
 
 import axiosInterceptor from '../../services/axiosInterceptor';
 import { LoginStore } from '../../reducers/login';
@@ -44,7 +45,7 @@ export class App extends Component<AppProps, {}> {
         dispatch(collapseNavbar(collapsed));
     }
 
-    lazyRender = (Child: React.ComponentType) => (
+    lazyRender = (Child: React.LazyExoticComponent<React.ComponentType>) => (
         <Suspense
             fallback={(
                 <Icon type="loading" />
@@ -79,6 +80,7 @@ export class App extends Component<AppProps, {}> {
                             <Switch>
                                 <Route exact path={match.url} render={() => this.lazyRender(Homepage)} />
                                 <Route path={`${match.path}/profile`} render={() => this.lazyRender(Profile)}/>
+                                <Route path={`${match.path}/upload`} render={() => this.lazyRender(Upload)}/>
                             </Switch>
                         </Layout.Content>
                         <Layout.Footer style={{

@@ -65,6 +65,12 @@ export class Navbar extends Component<NavbarProps, {}> {
                             : <> <Icon type="user" /> Profile </>
                         }
                     </Link></Menu.Item>
+                    <Menu.Item key="upload"><Link to={`${url}/upload`}>
+                        { collapsed
+                            ? <Icon type="plus" />
+                            : <> <Icon type="plus" /> Upload </>
+                        }
+                    </Link></Menu.Item>
                     <Menu.Item key="logout" className="logout-button" onClick={this.logout}>
                         { collapsed
                             ? <Icon type="logout" />
