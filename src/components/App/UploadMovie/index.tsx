@@ -13,6 +13,7 @@ import {
 } from 'antd';
 import { RangePickerValue } from 'antd/lib/date-picker/interface';
 import { UploadChangeParam } from 'antd/lib/upload';
+import { UploadFile } from 'antd/lib/upload/interface';
 
 import './index.css';
 
@@ -20,11 +21,11 @@ export interface IUploadState {
     title: string
     startDate: string
     endDate: string
-    movie: File | null,
-    poster: File | null,
+    movie: UploadFile | null,
+    poster: UploadFile | null,
 }
 
-export default class UploadMovie extends Component<IUploadState, {}> {
+export default class UploadMovie extends Component<{}, IUploadState> {
     state: Readonly<IUploadState> = {
         title: '',
         startDate: '',
