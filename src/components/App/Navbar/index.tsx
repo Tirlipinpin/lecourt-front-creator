@@ -1,5 +1,5 @@
 import React, { Component, Dispatch } from 'react';
-import { Menu, Icon, Tooltip } from 'antd';
+import { Menu, Icon } from 'antd';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
@@ -53,27 +53,25 @@ export class Navbar extends Component<NavbarProps, {}> {
                     className={`menu-items-container navbar-menu ${!collapsed && 'not-collapsed'}`}
                     selectedKeys={this.isActive()}
                 >
-                    <Menu.Item key="dashboard">
-                        <Tooltip title="Dashboard" placement="right"><Link to={url}>
+                    <Menu.Item key="dashboard" title="Dashboard"><Link to={url}>
                             { collapsed
                                 ? <Icon type="pie-chart" />
                                 : <> <Icon type="pie-chart" /> Dashboard </>
                             }
-                        </Link></Tooltip>
-                    </Menu.Item>
-                    <Menu.Item key="profile"><Link to={`${url}/profile`}>
+                    </Link></Menu.Item>
+                    <Menu.Item key="profile" title="Profile"><Link to={`${url}/profile`}>
                         { collapsed
                             ? <Icon type="user" />
                             : <> <Icon type="user" /> Profile </>
                         }
                     </Link></Menu.Item>
-                    <Menu.Item key="upload"><Link to={`${url}/upload`}>
+                    <Menu.Item key="upload" title="Upload"><Link to={`${url}/upload`}>
                         { collapsed
                             ? <Icon type="plus" />
                             : <> <Icon type="plus" /> Upload </>
                         }
                     </Link></Menu.Item>
-                    <Menu.Item key="logout" className="logout-button" onClick={this.logout}>
+                    <Menu.Item key="logout" className="logout-button" onClick={this.logout} title="logout">
                         { collapsed
                             ? <Icon type="logout" />
                             : <> <Icon type="logout" /> Logout </>
