@@ -7,7 +7,7 @@ import UploadMovie from '.';
 import { UploadChangeParam } from 'antd/lib/upload';
 
 
-describe('The App component', () => {
+describe('The UploadMovie component', () => {
     let wrapper: ShallowWrapper<UploadMovie>;
 
     beforeEach(() => {

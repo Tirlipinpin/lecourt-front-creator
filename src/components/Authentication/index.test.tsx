@@ -10,7 +10,7 @@ import { LoginStore } from '../../reducers/login';
 
 Enzyme.configure({ adapter: new Adapter() });
 
-describe('The App component', () => {
+describe('The Authentication component', () => {
     let wrapper: ShallowWrapper;
 
     beforeEach(() => {

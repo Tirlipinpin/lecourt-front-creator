@@ -8,6 +8,7 @@ import Navbar from './Navbar';
 const Dashboard = lazy(() => import('./Dashboard'));
 const Profile = lazy(() => import('./Profile'));
 const UploadMovie = lazy(() => import('./UploadMovie'));
+const Campaign = lazy(() => import('./Campaign'));
 
 import axiosInterceptor from '../../services/axiosInterceptor';
 import { LoginStore } from '../../reducers/login';
@@ -81,6 +82,7 @@ export class App extends Component<AppProps, {}> {
                                 <Route exact path={match.url} render={() => this.lazyRender(Dashboard)} />
                                 <Route path={`${match.path}/profile`} render={() => this.lazyRender(Profile)}/>
                                 <Route path={`${match.path}/upload`} render={() => this.lazyRender(UploadMovie)}/>
+                                <Route path={`${match.path}/campaign`} render={() => this.lazyRender(Campaign)}/>
                             </Switch>
                         </Layout.Content>
                         <Layout.Footer style={{

@@ -19,8 +19,6 @@ import './index.css';
 
 export interface IUploadState {
     title: string
-    startDate: string
-    endDate: string
     movie: UploadFile | null,
     poster: UploadFile | null,
 }
@@ -28,8 +26,6 @@ export interface IUploadState {
 export default class UploadMovie extends Component<{}, IUploadState> {
     state: Readonly<IUploadState> = {
         title: '',
-        startDate: '',
-        endDate: '',
         movie: null,
         poster: null,
     }
@@ -42,13 +38,6 @@ export default class UploadMovie extends Component<{}, IUploadState> {
         const target = e.target as HTMLInputElement;
 
         this.setState({ title: target.value });
-    }
-
-    handleDateRange = (dates: RangePickerValue, dateStrings: [string, string]) => {
-        this.setState({
-            startDate: dateStrings[0],
-            endDate: dateStrings[1],
-        });
     }
 
     onUploadMovie = (info: UploadChangeParam) => {
@@ -97,11 +86,6 @@ export default class UploadMovie extends Component<{}, IUploadState> {
                             }
                             required
                         />
-                        <Form.Item label="Date de diffusion" required>
-                            <DatePicker.RangePicker
-                                onChange={this.handleDateRange}
-                            />
-                        </Form.Item>
                         <Form.Item required>
                             <Upload.Dragger
                                 name="file"
@@ -128,7 +112,12 @@ export default class UploadMovie extends Component<{}, IUploadState> {
                                 <p className="ant-upload-hint">Celui-ci doit-être au format mp4</p>
                             </Upload.Dragger>
                         </Form.Item>
-                        <Button icon="upload">Envoyer</Button>
+                        <Button
+                            icon="upload"
+                            htmlType="submit"
+                        >
+                            Envoyer
+                        </Button>
                     </Form>
                 </div>
             </Layout>
