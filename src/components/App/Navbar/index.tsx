@@ -53,25 +53,25 @@ export class Navbar extends Component<NavbarProps, {}> {
                     className={`menu-items-container navbar-menu ${!collapsed && 'not-collapsed'}`}
                     selectedKeys={this.isActive()}
                 >
-                    <Menu.Item key="dashboard" title="Dashboard"><Link to={url}>
+                    <Menu.Item key="dashboard" title="Dashboard"><Link to='/app'>
                             { collapsed
                                 ? <Icon type="pie-chart" />
                                 : <> <Icon type="pie-chart" /> Dashboard </>
                             }
                     </Link></Menu.Item>
-                    <Menu.Item key="profile" title="Profile"><Link to={`${url}/profile`}>
+                    <Menu.Item key="profile" title="Profile"><Link to='/app/profile'>
                         { collapsed
                             ? <Icon type="user" />
                             : <> <Icon type="user" /> Profile </>
                         }
                     </Link></Menu.Item>
-                    <Menu.Item key="upload" title="Upload"><Link to={`${url}/upload`}>
+                    <Menu.Item key="upload" title="Upload"><Link to='/app/upload'>
                         { collapsed
                             ? <Icon type="plus" />
                             : <> <Icon type="plus" /> Upload </>
                         }
                     </Link></Menu.Item>
-                    <Menu.Item key="campaign" title="Campagne de diffusion"><Link to={`${url}/campaign`}>
+                    <Menu.Item key="campaign" title="Campagne de diffusion"><Link to='/app/campaign'>
                         { collapsed
                             ? <Icon type="calendar" />
                             : <> <Icon type="calendar" /> Campagne de diffusion </>
