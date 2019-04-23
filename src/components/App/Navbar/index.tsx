@@ -26,11 +26,11 @@ export class Navbar extends Component<NavbarProps, {}> {
         history.push('/');
     }
 
-    isActive = (): Array<string> => {
+    isActive = (): string[] => {
         const { location } = this.props;
 
         return [
-            location.pathname.split('/')[2] || 'homepage',
+            location.pathname.split('/')[2] || 'dashboard',
         ];
     }
 
