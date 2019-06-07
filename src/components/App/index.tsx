@@ -8,7 +8,8 @@ import Navbar from './Navbar';
 const Dashboard = lazy(() => import('./Dashboard'));
 const Profile = lazy(() => import('./Profile'));
 const UploadMovie = lazy(() => import('./UploadMovie'));
-const Campaign = lazy(() => import('./Campaign'));
+const Movies = lazy(() => import('./Movies'));
+const MovieDetails = lazy(() => import('./Movies/MovieDetails'));
 
 import axiosInterceptor from '../../services/axiosInterceptor';
 import { LoginStore } from '../../reducers/login';
@@ -44,7 +45,7 @@ export class App extends Component<AppProps, {}> {
         const { dispatch } = this.props;
 
         dispatch(collapseNavbar(collapsed));
-    }
+    };
 
     lazyRender = (Child: React.LazyExoticComponent<any>) => (
         <Suspense
@@ -54,7 +55,7 @@ export class App extends Component<AppProps, {}> {
         >
             <Child { ...this.props } />
         </Suspense>
-    )
+    );
 
     render() {
         const { match, login, collapsed } = this.props;
@@ -82,7 +83,8 @@ export class App extends Component<AppProps, {}> {
                                 <Route exact path={match.url} render={() => this.lazyRender(Dashboard)} />
                                 <Route path={`${match.path}/profile`} render={() => this.lazyRender(Profile)}/>
                                 <Route path={`${match.path}/upload`} render={() => this.lazyRender(UploadMovie)}/>
-                                <Route path={`${match.path}/campaign`} render={() => this.lazyRender(Campaign)}/>
+                                <Route path={`${match.path}/movies`} exact render={() => this.lazyRender(Movies)}/>
+                                <Route path={`${match.path}/movies/:id`} render={() => this.lazyRender(MovieDetails)}/>
                             </Switch>
                         </Layout.Content>
                         <Layout.Footer style={{

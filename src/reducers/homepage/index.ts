@@ -1,4 +1,8 @@
-export const defaultState = {
+export interface IHomepageStore {
+    page: string,
+}
+
+export const defaultState: IHomepageStore = {
     page: 'Homepage',
 };
 

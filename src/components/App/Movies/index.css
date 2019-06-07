@@ -1,0 +1,18 @@
+.campaign-page-container .campaign-list {
+    margin: 64px 32px;
+    background-color: white;
+}
+
+.campaign-page-container .campaign-list .ant-pagination {
+    padding: 0 8px 8px 0;
+}
+
+.campaign-page-container .campaign-list .campaign-list-item {
+    transition: box-shadow linear 150ms;
+    padding: 16px;
+}
+
+.campaign-page-container .campaign-list .campaign-list-item:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.09);
+    cursor: pointer;
+}

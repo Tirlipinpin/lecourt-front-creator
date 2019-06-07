@@ -13,7 +13,7 @@ interface NavbarProps {
     dispatch: Dispatch<any>
     location: any
     collapsed: boolean
-};
+}
 
 export class Navbar extends Component<NavbarProps, {}> {
     logout = () => {
@@ -24,7 +24,7 @@ export class Navbar extends Component<NavbarProps, {}> {
         });
 
         history.push('/');
-    }
+    };
 
     isActive = (): string[] => {
         const { location } = this.props;
@@ -32,7 +32,7 @@ export class Navbar extends Component<NavbarProps, {}> {
         return [
             location.pathname.split('/')[2] || 'dashboard',
         ];
-    }
+    };
 
     render() {
         const { history, collapsed } = this.props;
@@ -41,7 +41,7 @@ export class Navbar extends Component<NavbarProps, {}> {
         return (
             <>
                 <div className={collapsed ? 'collapsed-logo' : 'navbar-logo'}>
-                    <img src={logo} onClick={() => history.push(url)} />
+                    <img src={logo} onClick={() => history.push(url)} alt="Lecourt" />
                     <span className="lecourt-title">
                         { !collapsed && 'Lecourt' }
                     </span>
@@ -71,10 +71,10 @@ export class Navbar extends Component<NavbarProps, {}> {
                             : <> <Icon type="plus" /> Upload </>
                         }
                     </Link></Menu.Item>
-                    <Menu.Item key="campaign" title="Campagne de diffusion"><Link to='/app/campaign'>
+                    <Menu.Item key="campaign" title="films"><Link to='/app/movies'>
                         { collapsed
-                            ? <Icon type="calendar" />
-                            : <> <Icon type="calendar" /> Campagne de diffusion </>
+                            ? <Icon type="unordered-list" />
+                            : <> <Icon type="unordered-list" /> Films </>
                         }
                     </Link></Menu.Item>
                     <Menu.Item key="logout" className="logout-button" onClick={this.logout} title="logout">
@@ -87,7 +87,7 @@ export class Navbar extends Component<NavbarProps, {}> {
             </>
         );
     }
-};
+}
 
 export default connect(({ navbar }: any) =>({
     navbar,

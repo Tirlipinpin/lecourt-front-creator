@@ -7,6 +7,7 @@ import homepage from './homepage';
 import login from './login';
 import register from './register';
 import navbar from './navbar';
+import movieDetails from './movieDetails';
 
 const persistConfig = {
     key: 'root',
@@ -15,7 +16,7 @@ const persistConfig = {
         'login',
         'navbar',
     ]
-}
+};
 
 export default (history: any) => persistReducer(persistConfig, combineReducers({
     router: connectRouter(history),
@@ -23,4 +24,5 @@ export default (history: any) => persistReducer(persistConfig, combineReducers({
     login,
     register,
     navbar,
+    movieDetails,
 }));

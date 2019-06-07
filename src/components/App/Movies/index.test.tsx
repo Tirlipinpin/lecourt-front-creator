@@ -1,17 +1,18 @@
-import React, { SyntheticEvent } from 'react';
+import React from 'react';
+import { History } from 'history';
 import Enzyme, { shallow, ShallowWrapper } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
+import MovieDetails from '.';
+
 Enzyme.configure({ adapter: new Adapter() });
 
-import Campaign from '.';
-
-
 describe('The Campaign component', () => {
-    let wrapper: ShallowWrapper<Campaign>;
+    let wrapper: ShallowWrapper<MovieDetails>;
+    const history = {} as unknown;
 
     beforeEach(() => {
         wrapper = shallow(
-            <Campaign />
+            <MovieDetails history={history as History} />
         );
     });
 

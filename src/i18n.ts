@@ -26,6 +26,7 @@ i18n
         }
       }
     },
+      lng: navigator.language,
     fallbackLng: "fr",
 
     ns: ["translations"],
