@@ -1,17 +1,14 @@
 import React, { Component, Dispatch } from 'react';
 import { Menu, Icon } from 'antd';
-import { Link } from 'react-router-dom';
+import {Link, RouteComponentProps} from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import logo from '../../../assets/Logo.png';
 import './index.css';
 import { LOGOUT } from '../../../reducers/login/constantes';
 
-interface NavbarProps {
-    match: any
-    history: any
+interface NavbarProps extends RouteComponentProps {
     dispatch: Dispatch<any>
-    location: any
     collapsed: boolean
 }
 

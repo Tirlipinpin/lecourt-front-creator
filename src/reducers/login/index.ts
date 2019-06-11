@@ -3,7 +3,7 @@ import { FETCH_TOKEN, FETCH_TOKEN_SUCCEEDED, FETCH_TOKEN_FAILED, LOGOUT } from '
 export interface LoginStore {
     loading: boolean
     token?: string | null
-};
+}
 
 export const defaultState: LoginStore = {
     loading: false,
@@ -21,18 +21,18 @@ export default (state = defaultState, action: any) => {
                 ...state,
                 loading: false,
                 token: action.payload.data,
-            }
+            };
         case FETCH_TOKEN_FAILED:
             return {
                 ...state,
                 loading: false,
-            }
+            };
         case LOGOUT:
             return {
                 ...state,
                 token: null,
-            }
+            };
         default:
             return state;
-    };
+    }
 }

@@ -1,6 +1,6 @@
 import React, { Component, Dispatch, Suspense, lazy } from 'react';
 import { connect } from 'react-redux';
-import { Switch, Route, Redirect } from 'react-router';
+import {Switch, Route, Redirect, Router, RouteComponentProps} from 'react-router';
 import { Icon, Layout } from 'antd';
 import axios from 'axios';
 
@@ -17,10 +17,7 @@ import { LoginStore } from '../../reducers/login';
 import './index.css';
 import { collapseNavbar } from './Navbar/actions';
 
-interface AppProps {
-    match: any
-    history: any
-    location: any
+interface AppProps extends RouteComponentProps {
     login: LoginStore
     dispatch: Dispatch<any>
     collapsed: boolean
@@ -47,13 +44,13 @@ export class App extends Component<AppProps, {}> {
         dispatch(collapseNavbar(collapsed));
     };
 
-    lazyRender = (Child: React.LazyExoticComponent<any>) => (
+    lazyRender = (Child: React.LazyExoticComponent<any>, props: RouteComponentProps) => (
         <Suspense
             fallback={(
                 <Icon type="loading" />
             )}
         >
-            <Child { ...this.props } />
+            <Child { ...props } />
         </Suspense>
     );
 
@@ -79,13 +76,15 @@ export class App extends Component<AppProps, {}> {
                     </Layout.Sider>
                     <Layout className="app-container">
                         <Layout.Content className={`content-container ${collapsed && 'content-container-extended'}`}>
-                            <Switch>
-                                <Route exact path={match.url} render={() => this.lazyRender(Dashboard)} />
-                                <Route path={`${match.path}/profile`} render={() => this.lazyRender(Profile)}/>
-                                <Route path={`${match.path}/upload`} render={() => this.lazyRender(UploadMovie)}/>
-                                <Route path={`${match.path}/movies`} exact render={() => this.lazyRender(Movies)}/>
-                                <Route path={`${match.path}/movies/:id`} render={() => this.lazyRender(MovieDetails)}/>
-                            </Switch>
+                            <Router history={this.props.history}>
+                                <Switch>
+                                    <Route exact path={match.url} render={(props) => this.lazyRender(Dashboard, props)} />
+                                    <Route path={`${match.path}/profile`} render={(props) => this.lazyRender(Profile, props)}/>
+                                    <Route path={`${match.path}/upload`} render={(props) => this.lazyRender(UploadMovie, props)}/>
+                                    <Route path={`${match.path}/movies`} exact render={(props) => this.lazyRender(Movies, props)}/>
+                                    <Route path={`${match.path}/movies/:id`} render={(props) => this.lazyRender(MovieDetails, props)}/>
+                                </Switch>
+                            </Router>
                         </Layout.Content>
                         <Layout.Footer style={{
                             textAlign: 'center',
