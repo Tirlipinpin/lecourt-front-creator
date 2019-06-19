@@ -92,7 +92,11 @@ export default class Movies extends PureComponent<IMovies, {}> {
     render() {
         return (
             <Layout className="campaign-page-container">
-            <PageHeader title="Films" subTitle="Explorez vos courts métrages postés sur la platforme et définissez leurs paramètres" />
+            <PageHeader
+              title="Films"
+              subTitle="Explorez vos courts métrages postés sur la platforme et définissez leurs paramètres"
+              className="campaign-page-header"
+            />
                 <List
                     className="campaign-list"
                     itemLayout="vertical"
