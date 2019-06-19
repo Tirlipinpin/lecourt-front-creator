@@ -1,4 +1,4 @@
-import React, { FormEvent, SyntheticEvent, useState } from 'react';
+import React, { FormEvent, SyntheticEvent, Component } from 'react';
 import {
     Layout,
     PageHeader,
@@ -12,136 +12,176 @@ import {
 } from 'antd';
 import { UploadChangeParam } from 'antd/lib/upload';
 import { UploadFile } from 'antd/lib/upload/interface';
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
 
 import './index.css';
+import { uploadMovie } from './actions';
 
-export interface IUploadState {
-    title: string
-    description: string
-    movieFile: UploadFile | null,
-    posterFile: UploadFile | null,
+export interface IUploadMovieProps {
+    dispatch: Dispatch
 }
 
-export default () => {
-    const [ state, updateState ] = useState({ title: '', description: '', movieFile: null, posterFile: null } as IUploadState);
+export interface IUploadMovieState {
+    title: string
+    description: string
+    shortDescription: string
+    posterFile: UploadFile | null,
+    movieFile: UploadFile | null,
+}
 
-    const handleSubmit = (e: FormEvent) => {
+export class UploadMovie extends Component<IUploadMovieProps, IUploadMovieState> {
+    state: Readonly<IUploadMovieState> = {
+        title: '',
+        description: '',
+        shortDescription: '',
+        posterFile: null,
+        movieFile: null,
+    };
+
+    handleSubmit = (e: FormEvent) => {
         e.preventDefault();
 
-        const { title, movieFile, posterFile } = state;
-        console.log(title, movieFile, posterFile);
+        const { title, description, shortDescription, posterFile, movieFile } = this.state;
+        if (!title || !description || !shortDescription || !posterFile || !movieFile) return;
 
-        if (!title || !movieFile || !posterFile) return;
-
+        const { dispatch } = this.props;
+        dispatch(uploadMovie(title, description, shortDescription, posterFile, movieFile));
     };
 
-    const handleTitle = (e: SyntheticEvent) => {
+    handleTitle = (e: SyntheticEvent) => {
         const target = e.target as HTMLInputElement;
 
-        updateState(prevState => ({ ...prevState, title: target.value }));
+        this.setState({ title: target.value });
     };
 
-    const handleDescription = (e: SyntheticEvent) => {
+    handleDescription = (e: SyntheticEvent) => {
         const target = e.target as HTMLInputElement;
 
-        updateState(prevState => ({ ...prevState, description: target.value }));
-    }
-
-    const onUploadMovie = (info: UploadChangeParam) => {
-        const { file } = info;
-
-        if (file.type === 'video/mp4') {
-            message.success(`${file.name} file uploaded successfully.`);
-            updateState(prevState => ({ ...prevState, movieFile: file }));
-        }
-        else {
-            message.error(`${file.name} file upload failed.`);
-        }
+        this.setState({ description: target.value });
     };
 
-    const onUploadPoster = (info: UploadChangeParam) => {
+    handleShortDescription = (e: SyntheticEvent) => {
+        const target = e.target as HTMLInputElement;
+
+        this.setState({ shortDescription: target.value });
+    };
+
+    onUploadPoster = (info: UploadChangeParam) => {
         const { file } = info;
 
         if (file && file['type'].split('/')[0] === 'image') {
             message.success(`${file.name} file uploaded successfully.`);
-            updateState(prevState => ({ ...prevState, posterFile: file }));
+            this.setState({ posterFile: file });
         }
         else {
             message.error(`${file.name} file upload failed.`);
         }
     };
 
-    const { title } = state;
-    return (
-        <Layout className="upload-page-container">
-            <PageHeader
+    onUploadMovie = (info: UploadChangeParam) => {
+        const { file } = info;
+
+        if (file.type === 'video/mp4') {
+            message.success(`${file.name} file uploaded successfully.`);
+            this.setState({ movieFile: file });
+        }
+        else {
+            message.error(`${file.name} file upload failed.`);
+        }
+    };
+
+    render() {
+        const { title, description, shortDescription } = this.state;
+
+        return (
+          <Layout className="upload-page-container">
+              <PageHeader
                 title="Upload"
                 subTitle="Postez vos courts métrages sur la plateforme !"
                 className="upload-page-header"
-            />
-            <div className="upload-form">
-                <Form onSubmit={handleSubmit}>
-                    <Form.Item>
-                        <Input
+              />
+              <div className="upload-form">
+                  <Form onSubmit={this.handleSubmit}>
+                      <Form.Item
+                        label="Titre du court métrage"
+                        required
+                      >
+                          <Input
                             value={title}
-                            onChange={handleTitle}
-                            placeholder="Titre du court métrage"
-                            suffix={
-                                <Tooltip title="Ex: Vive les mouettes">
-                                    <Icon type="info-circle" style={{ color: 'rgba(0,0,0,.45)' }} />
-                                </Tooltip>
-                            }
+                            onChange={this.handleTitle}
+                            placeholder="Ex: Vive les mouettes"
                             required
-                        />
-                    </Form.Item>
-                    <Form.Item>
-                        <Input
-                          value={title}
-                          onChange={handleDescription}
-                          placeholder="Description du court métrage"
-                          suffix={
-                              <Tooltip title="Ex: Un jeune homme courageux s'en va affronter le monde des mouettes">
-                                  <Icon type="info-circle" style={{ color: 'rgba(0,0,0,.45)' }} />
-                              </Tooltip>
-                          }
-                          required
-                        />
-                    </Form.Item>
-                    <Form.Item required>
-                        <Upload.Dragger
+                          />
+                      </Form.Item>
+                      <Form.Item
+                        label="Description du court métrage"
+                        required
+                      >
+                          <Input.TextArea
+                            value={description}
+                            onChange={this.handleDescription}
+                            placeholder="Ex: Un jeune homme cruel se lance dans une bataille contre les mouettes"
+                            required
+                            autosize
+                          />
+                      </Form.Item>
+                      <Form.Item
+                        label="Description rapide du court métrage"
+                        required
+                      >
+                          <Input.TextArea
+                            value={shortDescription}
+                            onChange={this.handleShortDescription}
+                            placeholder="Ex: Plein de mouettes !"
+                            required
+                            autosize
+                          />
+                      </Form.Item>
+                      <Form.Item
+                        required
+                        label="Affiche du court métrage"
+                      >
+                          <Upload.Dragger
                             name="file"
-                            onChange={onUploadPoster}
+                            onChange={this.onUploadPoster}
                             beforeUpload={() => false}
-                        >
-                            <p className="ant-upload-drag-icon">
-                            <Icon type="inbox" />
-                            </p>
-                            <p className="ant-upload-text">Ajoutez le poster du court métrage</p>
-                            <p className="ant-upload-hint">Celui-ci sera utilisé comme vignette représentative de votre film</p>
-                        </Upload.Dragger>
-                    </Form.Item>
-                    <Form.Item required>
-                        <Upload.Dragger
+                          >
+                              <p className="ant-upload-drag-icon">
+                                  <Icon type="inbox"/>
+                              </p>
+                              <p className="ant-upload-text">Ajoutez l'affiche du court métrage</p>
+                              <p className="ant-upload-hint">Celle-ci sera utilisée comme vignette représentative de votre film</p>
+                          </Upload.Dragger>
+                      </Form.Item>
+                      <Form.Item
+                        required
+                        label="Court métrage"
+                      >
+                          <Upload.Dragger
                             name="file"
-                            onChange={onUploadMovie}
+                            onChange={this.onUploadMovie}
                             beforeUpload={() => false}
-                        >
-                            <p className="ant-upload-drag-icon">
-                            <Icon type="inbox" />
-                            </p>
-                            <p className="ant-upload-text">Ajoutez votre court métrage</p>
-                            <p className="ant-upload-hint">Celui-ci doit-être au format mp4</p>
-                        </Upload.Dragger>
-                    </Form.Item>
-                    <Button
+                          >
+                              <p className="ant-upload-drag-icon">
+                                  <Icon type="inbox"/>
+                              </p>
+                              <p className="ant-upload-text">Ajoutez votre court métrage</p>
+                              <p className="ant-upload-hint">Celui-ci doit-être au format mp4</p>
+                          </Upload.Dragger>
+                      </Form.Item>
+                      <Button
                         icon="upload"
                         htmlType="submit"
                         className="upload-movie-button"
-                    >
-                        Envoyer
-                    </Button>
-                </Form>
-            </div>
-        </Layout>
-    );
+                      >
+                          Envoyer
+                      </Button>
+                  </Form>
+              </div>
+          </Layout>
+        );
+    }
 }
+
+export default connect()(UploadMovie);
