@@ -1,10 +1,13 @@
+import { fork, all } from 'redux-saga/effects';
+
 import login from './login';
 import register from './register';
-import { fork, all } from 'redux-saga/effects';
+import postMovie from './postMovie';
 
 export default function* sagas() {
     yield all([
         fork(login),
-        fork(register)
+        fork(register),
+        fork(postMovie),
     ]);
 };
