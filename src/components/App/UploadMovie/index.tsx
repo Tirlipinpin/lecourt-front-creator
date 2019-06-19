@@ -70,7 +70,7 @@ export class UploadMovie extends Component<IUploadMovieProps, IUploadMovieState>
     onUploadPoster = (info: UploadChangeParam) => {
         const { file } = info;
 
-        if (file && file['type'].split('/')[0] === 'image') {
+        if (file && file.type.split('/')[0] === 'image') {
             message.success(`${file.name} file uploaded successfully.`);
             this.setState({ posterFile: file });
         }

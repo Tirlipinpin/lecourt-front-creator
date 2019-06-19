@@ -28,28 +28,28 @@ describe('The UploadMovie component', () => {
         const instance = wrapper.instance() as UploadMovie;
         const info = {
             file: {
-                status: 'done',
                 name: 'poney',
+                type: 'video/mp4',
             },
         } as UploadChangeParam;
 
         instance.onUploadMovie(info);
 
-        expect(wrapper.state('movie')).toEqual(info.file);
+        expect(wrapper.state('movieFile')).toEqual(info.file);
     });
 
     it('should update poster state when uploading a poster', () => {
         const instance = wrapper.instance() as UploadMovie;
         const info = {
             file: {
-                status: 'done',
                 name: 'poney',
+                type: 'image',
             },
         } as UploadChangeParam;
 
         instance.onUploadPoster(info);
 
-        expect(wrapper.state('poster')).toEqual(info.file);
+        expect(wrapper.state('posterFile')).toEqual(info.file);
     });
 
     it('should update title state when changing title', () => {
