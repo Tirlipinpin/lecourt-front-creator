@@ -83,7 +83,6 @@ export default () => {
                 <Form onSubmit={handleSubmit}>
                     <Form.Item>
                         <Input
-                            prefix={<Icon type="info" />}
                             value={title}
                             onChange={handleTitle}
                             placeholder="Titre du court métrage"
@@ -97,7 +96,6 @@ export default () => {
                     </Form.Item>
                     <Form.Item>
                         <Input
-                          prefix={<Icon type="info" />}
                           value={title}
                           onChange={handleDescription}
                           placeholder="Description du court métrage"
