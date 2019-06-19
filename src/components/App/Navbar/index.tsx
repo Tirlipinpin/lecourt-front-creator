@@ -68,7 +68,7 @@ export class Navbar extends Component<NavbarProps, {}> {
                             : <> <Icon type="plus" /> Upload </>
                         }
                     </Link></Menu.Item>
-                    <Menu.Item key="campaign" title="films"><Link to='/app/movies'>
+                    <Menu.Item key="movies" title="films"><Link to='/app/movies'>
                         { collapsed
                             ? <Icon type="unordered-list" />
                             : <> <Icon type="unordered-list" /> Films </>
