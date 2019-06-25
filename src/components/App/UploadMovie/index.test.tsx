@@ -106,7 +106,7 @@ describe('The UploadMovie component', () => {
         instance.handleSubmit({ preventDefault(): void {} } as FormEvent);
 
         expect(dispatch).toHaveBeenCalledWith({
-            type: 'oui',
+            type: 'UPLOAD_MOVIE',
             payload: { ...state },
         });
     })
