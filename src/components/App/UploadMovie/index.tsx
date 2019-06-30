@@ -1,19 +1,20 @@
 import React, { FormEvent, SyntheticEvent, Component } from 'react';
 import {
-    Layout,
-    PageHeader,
-    Form,
-    Input,
-    Tooltip,
-    Icon,
-    Upload,
-    message,
     Button,
+    DatePicker,
+    Form,
+    Icon,
+    Input,
+    Layout,
+    message,
+    PageHeader,
+    Upload,
 } from 'antd';
 import { UploadChangeParam } from 'antd/lib/upload';
 import { UploadFile } from 'antd/lib/upload/interface';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
+import { Moment } from 'moment';
 
 import './index.css';
 import { uploadMovie } from './actions';
@@ -24,8 +25,9 @@ export interface IUploadMovieProps {
 
 export interface IUploadMovieState {
     title: string
-    description: string
-    shortDescription: string
+    summary: string
+    summarySmall: string
+    releaseDate: string
     posterFile: UploadFile | null,
     movieFile: UploadFile | null,
 }
@@ -33,8 +35,9 @@ export interface IUploadMovieState {
 export class UploadMovie extends Component<IUploadMovieProps, IUploadMovieState> {
     state: Readonly<IUploadMovieState> = {
         title: '',
-        description: '',
-        shortDescription: '',
+        summary: '',
+        summarySmall: '',
+        releaseDate: '',
         posterFile: null,
         movieFile: null,
     };
@@ -42,11 +45,11 @@ export class UploadMovie extends Component<IUploadMovieProps, IUploadMovieState>
     handleSubmit = (e: FormEvent) => {
         e.preventDefault();
 
-        const { title, description, shortDescription, posterFile, movieFile } = this.state;
-        if (!title || !description || !shortDescription || !posterFile || !movieFile) return;
+        const { title, summary, summarySmall, releaseDate, posterFile, movieFile } = this.state;
+        if (!title || !summary || !summarySmall || !releaseDate || !posterFile || !movieFile) return;
 
         const { dispatch } = this.props;
-        dispatch(uploadMovie(title, description, shortDescription, posterFile, movieFile));
+        dispatch(uploadMovie(title, summary, summarySmall, releaseDate, posterFile, movieFile));
     };
 
     handleTitle = (e: SyntheticEvent) => {
@@ -58,13 +61,17 @@ export class UploadMovie extends Component<IUploadMovieProps, IUploadMovieState>
     handleDescription = (e: SyntheticEvent) => {
         const target = e.target as HTMLInputElement;
 
-        this.setState({ description: target.value });
+        this.setState({ summary: target.value });
     };
 
     handleShortDescription = (e: SyntheticEvent) => {
         const target = e.target as HTMLInputElement;
 
-        this.setState({ shortDescription: target.value });
+        this.setState({ summarySmall: target.value });
+    };
+
+    handleReleaseDate = (date: Moment, dateString: string) => {
+        this.setState({ releaseDate: dateString });
     };
 
     onUploadPoster = (info: UploadChangeParam) => {
@@ -92,7 +99,7 @@ export class UploadMovie extends Component<IUploadMovieProps, IUploadMovieState>
     };
 
     render() {
-        const { title, description, shortDescription } = this.state;
+        const { title, summary, summarySmall } = this.state;
 
         return (
           <Layout className="upload-page-container">
@@ -119,7 +126,7 @@ export class UploadMovie extends Component<IUploadMovieProps, IUploadMovieState>
                         required
                       >
                           <Input.TextArea
-                            value={description}
+                            value={summary}
                             onChange={this.handleDescription}
                             placeholder="Ex: Un jeune homme cruel se lance dans une bataille contre les mouettes"
                             required
@@ -131,11 +138,20 @@ export class UploadMovie extends Component<IUploadMovieProps, IUploadMovieState>
                         required
                       >
                           <Input.TextArea
-                            value={shortDescription}
+                            value={summarySmall}
                             onChange={this.handleShortDescription}
                             placeholder="Ex: Plein de mouettes !"
                             required
                             autosize
+                          />
+                      </Form.Item>
+                      <Form.Item
+                        label="Date de sortie du court métrage"
+                        required
+                      >
+                          <DatePicker
+                            format="YYYY-MM-DD"
+                            onChange={this.handleReleaseDate}
                           />
                       </Form.Item>
                       <Form.Item
@@ -146,6 +162,7 @@ export class UploadMovie extends Component<IUploadMovieProps, IUploadMovieState>
                             name="file"
                             onChange={this.onUploadPoster}
                             beforeUpload={() => false}
+                            accept="image/*"
                           >
                               <p className="ant-upload-drag-icon">
                                   <Icon type="inbox"/>
@@ -162,12 +179,12 @@ export class UploadMovie extends Component<IUploadMovieProps, IUploadMovieState>
                             name="file"
                             onChange={this.onUploadMovie}
                             beforeUpload={() => false}
+                            accept="video/*"
                           >
                               <p className="ant-upload-drag-icon">
                                   <Icon type="inbox"/>
                               </p>
                               <p className="ant-upload-text">Ajoutez votre court métrage</p>
-                              <p className="ant-upload-hint">Celui-ci doit-être au format mp4</p>
                           </Upload.Dragger>
                       </Form.Item>
                       <Button

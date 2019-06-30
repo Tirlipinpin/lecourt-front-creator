@@ -4,6 +4,7 @@ import Adapter from 'enzyme-adapter-react-16';
 Enzyme.configure({ adapter: new Adapter() });
 import { UploadChangeParam } from 'antd/lib/upload';
 import { UploadFile } from 'antd/es/upload/interface';
+import { Moment } from 'moment';
 
 import { UploadMovie } from '.';
 
@@ -65,7 +66,7 @@ describe('The UploadMovie component', () => {
         expect(wrapper.state('title')).toEqual('poney');
     });
 
-    it('should update description state when changing description', () => {
+    it('should update summary state when changing summary', () => {
         const instance = wrapper.instance() as UploadMovie;
         const event = {
             target: {
@@ -75,10 +76,10 @@ describe('The UploadMovie component', () => {
 
         instance.handleDescription(event as SyntheticEvent);
 
-        expect(wrapper.state('description')).toEqual('poney');
+        expect(wrapper.state('summary')).toEqual('poney');
     });
 
-    it('should update short description state when changing short description', () => {
+    it('should update summary small state when changing summary small', () => {
         const instance = wrapper.instance() as UploadMovie;
         const event = {
             target: {
@@ -88,15 +89,24 @@ describe('The UploadMovie component', () => {
 
         instance.handleShortDescription(event as SyntheticEvent);
 
-        expect(wrapper.state('shortDescription')).toEqual('poney');
+        expect(wrapper.state('summarySmall')).toEqual('poney');
+    });
+
+    it('should update release date state when changing release date', () => {
+        const instance = wrapper.instance() as UploadMovie;
+
+        instance.handleReleaseDate({} as Moment, '1998-09-20');
+
+        expect(wrapper.state('releaseDate')).toEqual('1998-09-20');
     });
 
     it('should dispatch a uploadMovie action when submitting form', () => {
         const instance = wrapper.instance() as UploadMovie;
         const state = {
             title: 'poney',
-            description: 'poney magique',
-            shortDescription: 'my little poney',
+            summary: 'poney magique',
+            summarySmall: 'my little poney',
+            releaseDate: '1998-09-20',
             posterFile: { name: 'poster' } as UploadFile,
             movieFile: { name: 'video'} as UploadFile,
         };

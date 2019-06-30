@@ -15,8 +15,9 @@ function* postMovie(action: AnyAction): IterableIterator<Object | void> {
     try {
         const {
             title,
-            description,
-            shortDescription,
+            summary,
+            summarySmall,
+            releaseDate,
             posterFile,
             movieFile,
         } = action.payload;
@@ -27,8 +28,10 @@ function* postMovie(action: AnyAction): IterableIterator<Object | void> {
 
         const res = yield axios.post(`movies`, {
             title,
-            summary: description,
-            shortSummary: shortDescription,
+            summary,
+            summarySmall,
+            releaseDate,
+            duration: 0,
         });
 
         if (!res)
