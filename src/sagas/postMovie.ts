@@ -66,16 +66,15 @@ function* uploadMovieFile(action: AnyAction): IterableIterator<Object | void> {
             movieFile,
         } = action.payload;
 
+        const body = new FormData()
+        body.append('movie', movieFile)
+
         yield notification['info']({
             message: 'Movie successfully created in database',
             description: 'Uploading the video in database',
         });
 
-        const res = yield axios.post(`movies/video`, {
-            id: createMovieData.id,
-            movieFile,
-        });
-
+        const res = yield axios.post(`movies/${createMovieData.id}`, body);
         if (!res)
             throw new Error('Unable to upload the video');
 
