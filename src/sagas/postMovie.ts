@@ -74,7 +74,7 @@ function* uploadMovieFile(action: AnyAction): IterableIterator<Object | void> {
             description: 'Uploading the video in database',
         });
 
-        const res = yield axios.post(`movies/${createMovieData.id}`, body);
+        const res = yield axios.post(`https://upload.stg.lecourt.tv/movies/${createMovieData.id}`, body);
         if (!res)
             throw new Error('Unable to upload the video');
 
