@@ -18,8 +18,10 @@ import { Moment } from 'moment';
 
 import { uploadMovie } from './actions';
 import PersonsSelect from './components/PersonsSelect';
+import RoleSelect from './components/RoleSelect';
 import { FETCH_PERSONS } from '../../../reducers/uploadMovie/constantes';
 import { IUploadMovieStore } from '../../../reducers/uploadMovie';
+import { IActorForm, IDirectorForm, IStaffForm } from '../interfaces';
 import './index.css';
 
 export interface IUploadMovieProps {
@@ -32,11 +34,14 @@ export interface IUploadMovieState {
     summary: string
     summarySmall: string
     releaseDate: string
-    actors: string[]
-    directors: string[]
-    staff: string[]
-    posterFile: UploadFile | null,
-    movieFile: UploadFile | null,
+    actors: IActorForm[]
+    directors: IDirectorForm[]
+    staff: IStaffForm[]
+    posterFile: UploadFile | null
+    movieFile: UploadFile | null
+    modalVisible: boolean
+    addPerson?: (id: string, role: string) => void
+    actualPerson: string
 }
 
 export class UploadMovie extends Component<IUploadMovieProps, IUploadMovieState> {
@@ -50,6 +55,8 @@ export class UploadMovie extends Component<IUploadMovieProps, IUploadMovieState>
         staff: [],
         posterFile: null,
         movieFile: null,
+        modalVisible: false,
+        actualPerson: '',
     };
 
     componentDidMount(): void {
@@ -100,16 +107,65 @@ export class UploadMovie extends Component<IUploadMovieProps, IUploadMovieState>
         this.setState({ releaseDate: dateString });
     };
 
-    handleActors = (actors: string[]) => {
+    handleActor = (actorId: string, role: string) => {
+        const actors = [ ...this.state.actors ];
+
+        actors.push({ actorId, role });
         this.setState({ actors });
     };
 
-    handleDirectors = (directors: string[]) => {
+    handleActorSelect = (e: string) => {
+        this.setState({ addPerson: this.handleActor, actualPerson: e });
+        this.handleShowModal();
+    };
+
+    handleActorDeselect = (e: string) => {
+        const actors: IActorForm[] = [...this.state.actors];
+        const index = actors.findIndex((actor) => actor.actorId === e);
+
+        if (index !== -1) {
+            actors.splice(index, 1);
+            this.setState({ actors });
+        }
+    };
+
+    handleDirectorSelect = (personId: string) => {
+        const directors = [ ...this.state.directors ];
+
+        directors.push({ personId });
         this.setState({ directors });
     };
 
-    handleStaff = (staff: string[]) => {
+    handleDirectorDeselect = (e: string) => {
+        const directors: IDirectorForm[] = [...this.state.directors];
+        const index = directors.findIndex((director) => director.personId === e);
+
+        if (index !== -1) {
+            directors.splice(index, 1);
+            this.setState({ directors });
+        }
+    };
+
+    handleStaff= (personId: string, job: string) => {
+        const staff = [ ...this.state.staff ];
+
+        staff.push({ personId, job });
         this.setState({ staff });
+    };
+
+    handleStaffSelect = (e: string) => {
+        this.setState({ addPerson: this.handleStaff, actualPerson: e });
+        this.handleShowModal();
+    };
+
+    handleStaffDeselect = (e: string) => {
+        const staff: IStaffForm[] = [...this.state.staff];
+        const index = staff.findIndex((staff) => staff.personId === e);
+
+        if (index !== -1) {
+            staff.splice(index, 1);
+            this.setState({ staff });
+        }
     };
 
     onUploadPoster = (info: UploadChangeParam) => {
@@ -140,8 +196,16 @@ export class UploadMovie extends Component<IUploadMovieProps, IUploadMovieState>
         return option.props.children.join('').toLowerCase().indexOf(input.toLowerCase()) >= 0;
     };
 
+    handleShowModal = () => {
+        this.setState({ modalVisible: true });
+    };
+
+    handleHideModal = () => {
+        this.setState({ modalVisible: false });
+    };
+
     render() {
-        const { title, summary, summarySmall } = this.state;
+        const { title, summary, summarySmall, modalVisible, addPerson, actualPerson } = this.state;
         const { persons, loading } = this.props.uploadMovie;
 
         return (
@@ -203,8 +267,9 @@ export class UploadMovie extends Component<IUploadMovieProps, IUploadMovieState>
                       >
                           <PersonsSelect
                             persons={persons}
-                            handleChange={this.handleActors}
                             filterOptions={this.filterOptions}
+                            onSelect={this.handleActorSelect}
+                            onDeselect={this.handleActorDeselect}
                           />
                       </Form.Item>
                       <Form.Item
@@ -213,8 +278,9 @@ export class UploadMovie extends Component<IUploadMovieProps, IUploadMovieState>
                       >
                           <PersonsSelect
                             persons={persons}
-                            handleChange={this.handleDirectors}
                             filterOptions={this.filterOptions}
+                            onSelect={this.handleDirectorSelect}
+                            onDeselect={this.handleDirectorDeselect}
                           />
                       </Form.Item>
                       <Form.Item
@@ -223,8 +289,9 @@ export class UploadMovie extends Component<IUploadMovieProps, IUploadMovieState>
                       >
                           <PersonsSelect
                             persons={persons}
-                            handleChange={this.handleStaff}
                             filterOptions={this.filterOptions}
+                            onSelect={this.handleStaffSelect}
+                            onDeselect={this.handleStaffDeselect}
                           />
                       </Form.Item>
                       <Form.Item
@@ -269,6 +336,12 @@ export class UploadMovie extends Component<IUploadMovieProps, IUploadMovieState>
                       </Button>
                   </Form>
               </div>
+              <RoleSelect
+                id={actualPerson}
+                visible={modalVisible}
+                handleHideModal={this.handleHideModal}
+                addPerson={addPerson}
+              />
           </Layout>
         );
     }

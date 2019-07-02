@@ -109,27 +109,39 @@ describe('The UploadMovie component', () => {
 
     it('should update actors list state when changing actors', () => {
         const instance = wrapper.instance() as UploadMovie;
-        const actors = [ 'poney', 'magique', '42' ];
+        const actors = [
+            { actorId: 'poney', role: 'licorne' },
+            { actorId: 'magique', role: 'balais' }
+        ];
 
-        instance.handleActors(actors);
+        instance.handleActor('poney', 'licorne');
+        instance.handleActor('magique', 'balais');
 
         expect(wrapper.state('actors')).toEqual(actors);
     });
 
     it('should update directors list state when changing directors', () => {
         const instance = wrapper.instance() as UploadMovie;
-        const directors = [ 'poney', 'magique', '42' ];
+        const directors = [
+            { personId: 'poney' },
+            { personId: 'magique' }
+        ];
 
-        instance.handleDirectors(directors);
+        instance.handleDirectorSelect('poney');
+        instance.handleDirectorSelect('magique');
 
         expect(wrapper.state('directors')).toEqual(directors);
     });
 
     it('should update staff list state when changing staff', () => {
         const instance = wrapper.instance() as UploadMovie;
-        const staff = [ 'poney', 'magique', '42' ];
+        const staff = [
+            { personId: 'poney', job: 'licorne' },
+            { personId: 'magique', job: 'balais' }
+        ];
 
-        instance.handleStaff(staff);
+        instance.handleStaff('poney', 'licorne');
+        instance.handleStaff('magique', 'balais');
 
         expect(wrapper.state('staff')).toEqual(staff);
     });

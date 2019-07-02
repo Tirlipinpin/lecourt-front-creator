@@ -88,8 +88,7 @@ function* postMovie(action: AnyAction): IterableIterator<Object | void> {
 function* uploadMovieFile(action: AnyAction): IterableIterator<Object | void> {
     try {
         const {
-            data: createMovieData,
-            posterFile,
+            id,
             movieFile,
         } = action.payload;
 
@@ -101,7 +100,7 @@ function* uploadMovieFile(action: AnyAction): IterableIterator<Object | void> {
             description: 'Uploading the video in database',
         });
 
-        const res = yield axios.post(`https://upload.stg.lecourt.tv/movies/${createMovieData.id}`, body);
+        const res = yield axios.post(`https://upload.stg.lecourt.tv/movies/${id}`, body);
         if (!res)
             throw new Error('Unable to upload the video');
 
@@ -111,8 +110,6 @@ function* uploadMovieFile(action: AnyAction): IterableIterator<Object | void> {
             type: UPLOAD_MOVIE_FILE_SUCCEEDED,
             payload: {
                 ...data,
-                posterFile,
-                movieFile,
             },
         });
     } catch (e) {
@@ -126,10 +123,82 @@ function* uploadMovieFile(action: AnyAction): IterableIterator<Object | void> {
     }
 }
 
+function* addMovieActors(action: AnyAction): IterableIterator<Object | void> {
+    try {
+        const {
+            id,
+            actors,
+        } = action.payload;
+
+        const res = yield axios.post(`movies/${id}/actors`, actors);
+
+        if (!res)
+            throw new Error('Unable to add actors');
+
+    } catch (e) {
+        yield notification['error']({
+            message: 'Unable to add actors in database',
+            description: e.message,
+        });
+    }
+}
+
+function* addMovieDirectors(action: AnyAction): IterableIterator<Object | void> {
+    try {
+        const {
+            id,
+            directors,
+        } = action.payload;
+
+        const res = yield axios.post(`movies/${id}/directors`, directors);
+        if (!res)
+            throw new Error('Unable to add directors');
+
+        const { data } = res;
+
+        yield put({
+            type: UPLOAD_MOVIE_FILE_SUCCEEDED,
+            payload: {
+                ...data,
+            },
+        });
+    } catch (e) {
+        yield put({
+            type: UPLOAD_MOVIE_FILE_FAILED,
+        });
+        yield notification['error']({
+            message: 'Unable to add directors in database',
+            description: e.message,
+        });
+    }
+}
+
+function* addMovieStaff(action: AnyAction): IterableIterator<Object | void> {
+    try {
+        const {
+            id,
+            staff,
+        } = action.payload;
+
+        const res = yield axios.post(`movies/${id}/staff`, staff);
+        if (!res)
+            throw new Error('Unable to add staff');
+
+    } catch (e) {
+        yield notification['error']({
+            message: 'Unable to add staff in database',
+            description: e.message,
+        });
+    }
+}
+
 function* saga() {
     yield takeEvery(FETCH_PERSONS, fetchPersons);
     yield takeEvery(UPLOAD_MOVIE, postMovie);
     yield takeEvery(UPLOAD_MOVIE_SUCCEEDED, uploadMovieFile);
+    yield takeEvery(UPLOAD_MOVIE_SUCCEEDED, addMovieActors);
+    yield takeEvery(UPLOAD_MOVIE_SUCCEEDED, addMovieDirectors);
+    yield takeEvery(UPLOAD_MOVIE_SUCCEEDED, addMovieStaff);
 }
 
 export default saga;

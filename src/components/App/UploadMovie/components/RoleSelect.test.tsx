@@ -2,20 +2,20 @@ import React from 'react';
 import Enzyme, { shallow, ShallowWrapper } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 
-import PersonsSelect from './PersonsSelect';
+import RoleSelect from './RoleSelect';
 
 Enzyme.configure({ adapter: new Adapter() });
 
-describe('The PersonsSelect component', () => {
+describe('The RoleSelect component', () => {
     let wrapper: ShallowWrapper<any>;
 
     beforeEach(() => {
         wrapper = shallow(
-          <PersonsSelect
-              persons={[]}
-              onSelect={jest.fn()}
-              onDeselect={jest.fn()}
-              filterOptions={jest.fn()}
+          <RoleSelect
+            id="42"
+            visible={true}
+            handleHideModal={jest.fn()}
+            addPerson={jest.fn()}
           />
         );
     });

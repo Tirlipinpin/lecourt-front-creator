@@ -5,6 +5,20 @@ export interface Person {
   birthDate: string
 }
 
+export interface IActorForm {
+  actorId: string
+  role: string
+}
+
+export interface IDirectorForm {
+  personId: string
+}
+
+export interface IStaffForm {
+  personId: string
+  job: string
+}
+
 export interface Genre {
   id: string
   name: string
