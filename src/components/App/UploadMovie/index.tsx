@@ -1,4 +1,4 @@
-import React, { FormEvent, SyntheticEvent, Component } from 'react';
+import React, {FormEvent, SyntheticEvent, Component, ReactElement} from 'react';
 import {
     Button,
     DatePicker,
@@ -16,11 +16,15 @@ import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import { Moment } from 'moment';
 
-import './index.css';
 import { uploadMovie } from './actions';
+import PersonsSelect from './components/PersonsSelect';
+import { FETCH_PERSONS } from '../../../reducers/uploadMovie/constantes';
+import { IUploadMovieStore } from '../../../reducers/uploadMovie';
+import './index.css';
 
 export interface IUploadMovieProps {
     dispatch: Dispatch
+    uploadMovie: IUploadMovieStore
 }
 
 export interface IUploadMovieState {
@@ -28,6 +32,9 @@ export interface IUploadMovieState {
     summary: string
     summarySmall: string
     releaseDate: string
+    actors: string[]
+    directors: string[]
+    staff: string[]
     posterFile: UploadFile | null,
     movieFile: UploadFile | null,
 }
@@ -38,18 +45,37 @@ export class UploadMovie extends Component<IUploadMovieProps, IUploadMovieState>
         summary: '',
         summarySmall: '',
         releaseDate: '',
+        actors: [],
+        directors: [],
+        staff: [],
         posterFile: null,
         movieFile: null,
     };
 
+    componentDidMount(): void {
+        const { dispatch } = this.props;
+
+        dispatch({ type: FETCH_PERSONS });
+    }
+
     handleSubmit = (e: FormEvent) => {
         e.preventDefault();
 
-        const { title, summary, summarySmall, releaseDate, posterFile, movieFile } = this.state;
-        if (!title || !summary || !summarySmall || !releaseDate || !posterFile || !movieFile) return;
+        const { title, summary, summarySmall, releaseDate, actors, directors, staff, posterFile, movieFile } = this.state;
+        if (!title || !summary || !summarySmall || !releaseDate || actors.length < 1 || directors.length < 1 || staff.length < 1 || !posterFile || !movieFile) return;
 
         const { dispatch } = this.props;
-        dispatch(uploadMovie(title, summary, summarySmall, releaseDate, posterFile, movieFile));
+        dispatch(uploadMovie(
+          title,
+          summary,
+          summarySmall,
+          releaseDate,
+          actors,
+          directors,
+          staff,
+          posterFile,
+          movieFile
+        ));
     };
 
     handleTitle = (e: SyntheticEvent) => {
@@ -72,6 +98,18 @@ export class UploadMovie extends Component<IUploadMovieProps, IUploadMovieState>
 
     handleReleaseDate = (date: Moment, dateString: string) => {
         this.setState({ releaseDate: dateString });
+    };
+
+    handleActors = (actors: string[]) => {
+        this.setState({ actors });
+    };
+
+    handleDirectors = (directors: string[]) => {
+        this.setState({ directors });
+    };
+
+    handleStaff = (staff: string[]) => {
+        this.setState({ staff });
     };
 
     onUploadPoster = (info: UploadChangeParam) => {
@@ -98,8 +136,13 @@ export class UploadMovie extends Component<IUploadMovieProps, IUploadMovieState>
         }
     };
 
+    filterOptions = (input: string, option: ReactElement) => {
+        return option.props.children.join('').toLowerCase().indexOf(input.toLowerCase()) >= 0;
+    };
+
     render() {
         const { title, summary, summarySmall } = this.state;
+        const { persons, loading } = this.props.uploadMovie;
 
         return (
           <Layout className="upload-page-container">
@@ -155,6 +198,36 @@ export class UploadMovie extends Component<IUploadMovieProps, IUploadMovieState>
                           />
                       </Form.Item>
                       <Form.Item
+                        label="Les acteurs de votre court métrage"
+                        required
+                      >
+                          <PersonsSelect
+                            persons={persons}
+                            handleChange={this.handleActors}
+                            filterOptions={this.filterOptions}
+                          />
+                      </Form.Item>
+                      <Form.Item
+                        label="Les directeurs de votre court métrage"
+                        required
+                      >
+                          <PersonsSelect
+                            persons={persons}
+                            handleChange={this.handleDirectors}
+                            filterOptions={this.filterOptions}
+                          />
+                      </Form.Item>
+                      <Form.Item
+                        label="Le staff de votre court métrage"
+                        required
+                      >
+                          <PersonsSelect
+                            persons={persons}
+                            handleChange={this.handleStaff}
+                            filterOptions={this.filterOptions}
+                          />
+                      </Form.Item>
+                      <Form.Item
                         required
                         label="Affiche du court métrage"
                       >
@@ -201,4 +274,6 @@ export class UploadMovie extends Component<IUploadMovieProps, IUploadMovieState>
     }
 }
 
-export default connect()(UploadMovie);
+export default connect(({ uploadMovie }: any) => ({
+    uploadMovie,
+}))(UploadMovie);

@@ -17,12 +17,19 @@ describe('The UploadMovie component', () => {
         wrapper = shallow(
             <UploadMovie
               dispatch={dispatch}
+              uploadMovie={{ loading: false, persons: [] }}
             />
         );
     });
 
     it('should render correctly', () => {
         expect(wrapper).toHaveLength(1);
+    });
+
+    it('should dispatch a FETCH_PERSONS action on mount', () => {
+        expect(dispatch).toHaveBeenCalledWith({
+            type: 'FETCH_PERSONS',
+        })
     });
 
     it('should update movie state when uploading a movie', () => {
@@ -100,6 +107,33 @@ describe('The UploadMovie component', () => {
         expect(wrapper.state('releaseDate')).toEqual('1998-09-20');
     });
 
+    it('should update actors list state when changing actors', () => {
+        const instance = wrapper.instance() as UploadMovie;
+        const actors = [ 'poney', 'magique', '42' ];
+
+        instance.handleActors(actors);
+
+        expect(wrapper.state('actors')).toEqual(actors);
+    });
+
+    it('should update directors list state when changing directors', () => {
+        const instance = wrapper.instance() as UploadMovie;
+        const directors = [ 'poney', 'magique', '42' ];
+
+        instance.handleDirectors(directors);
+
+        expect(wrapper.state('directors')).toEqual(directors);
+    });
+
+    it('should update staff list state when changing staff', () => {
+        const instance = wrapper.instance() as UploadMovie;
+        const staff = [ 'poney', 'magique', '42' ];
+
+        instance.handleStaff(staff);
+
+        expect(wrapper.state('staff')).toEqual(staff);
+    });
+
     it('should dispatch a uploadMovie action when submitting form', () => {
         const instance = wrapper.instance() as UploadMovie;
         const state = {
@@ -107,6 +141,9 @@ describe('The UploadMovie component', () => {
             summary: 'poney magique',
             summarySmall: 'my little poney',
             releaseDate: '1998-09-20',
+            actors: ['poney'],
+            directors: ['poney'],
+            staff: ['poney'],
             posterFile: { name: 'poster' } as UploadFile,
             movieFile: { name: 'video'} as UploadFile,
         };

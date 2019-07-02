@@ -9,7 +9,36 @@ import {
     UPLOAD_MOVIE_SUCCEEDED,
     UPLOAD_MOVIE_FILE_FAILED,
     UPLOAD_MOVIE_FILE_SUCCEEDED,
+    FETCH_PERSONS,
+    FETCH_PERSONS_SUCCEEDED,
+    FETCH_PERSONS_FAILED,
 } from '../reducers/uploadMovie/constantes';
+
+function* fetchPersons(): IterableIterator<Object | void> {
+    try {
+        const res = yield axios.get(`persons`);
+
+        if (!res)
+            throw new Error('Unable to fetch persons to add to your short');
+
+        const { data } = res;
+
+        yield put({
+            type: FETCH_PERSONS_SUCCEEDED,
+            payload: {
+                data,
+            },
+        });
+    } catch (e) {
+        yield put({
+            type: FETCH_PERSONS_FAILED,
+        });
+        yield notification['error']({
+            message: 'Unable to fetch persons to add to your short',
+            description: e.message,
+        });
+    }
+}
 
 function* postMovie(action: AnyAction): IterableIterator<Object | void> {
     try {
@@ -18,8 +47,7 @@ function* postMovie(action: AnyAction): IterableIterator<Object | void> {
             summary,
             summarySmall,
             releaseDate,
-            posterFile,
-            movieFile,
+            ...n
         } = action.payload;
 
         yield notification['info']({
@@ -43,8 +71,7 @@ function* postMovie(action: AnyAction): IterableIterator<Object | void> {
             type: UPLOAD_MOVIE_SUCCEEDED,
             payload: {
                 ...data,
-                posterFile,
-                movieFile,
+                ...n,
             },
         });
     } catch (e) {
@@ -66,8 +93,8 @@ function* uploadMovieFile(action: AnyAction): IterableIterator<Object | void> {
             movieFile,
         } = action.payload;
 
-        const body = new FormData()
-        body.append('movie', movieFile)
+        const body = new FormData();
+        body.append('movie', movieFile);
 
         yield notification['info']({
             message: 'Movie successfully created in database',
@@ -100,6 +127,7 @@ function* uploadMovieFile(action: AnyAction): IterableIterator<Object | void> {
 }
 
 function* saga() {
+    yield takeEvery(FETCH_PERSONS, fetchPersons);
     yield takeEvery(UPLOAD_MOVIE, postMovie);
     yield takeEvery(UPLOAD_MOVIE_SUCCEEDED, uploadMovieFile);
 }
