@@ -16,7 +16,7 @@ import {
 
 function* fetchPersons(): IterableIterator<Object | void> {
     try {
-        const res = yield axios.get(`persons`);
+        const res = yield axios.get(`persons?limit=200`);
 
         if (!res)
             throw new Error('Unable to fetch persons to add to your short');

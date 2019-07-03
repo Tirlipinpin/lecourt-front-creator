@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 import { Select } from 'antd';
 
-import { Person } from '../../interfaces';
+import { Person } from '../../../interfaces';
 
 export interface IPersonsSelectProps {
     persons: Person[]
