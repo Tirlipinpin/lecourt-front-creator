@@ -6,7 +6,7 @@ import { REGISTER_USER, REGISTER_USER_SUCCEEDED, REGISTER_USER_FAILED } from '..
 
 function* registerUser(action: any): any {
     try {
-        const token = yield axios.post('tokens/create', {
+        const token = yield axios.post('https://sso.stg.lecourt.tv/users/auth/register', {
             auth: {
                 username: 'user',
                 password: 'password',
