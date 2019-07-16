@@ -81,6 +81,7 @@ export interface IMovieDetails {
 export interface ICampaigns {
   id: string
   name: string
+  note: string
   startTime: number
   endTime: number
   movie: MovieRelation

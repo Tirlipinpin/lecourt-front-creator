@@ -4,7 +4,7 @@ import { RouterProps } from "react-router";
 import { Layout, List, PageHeader, Button, Tooltip } from 'antd';
 import { FETCH_CAMPAIGNS } from '../../../reducers/campaigns/constantes';
 import CreateCampaignForm from './CreateCampaignForm';
-import { IMovieDetails } from "../interfaces";
+import { ICampaigns } from '../interfaces';
 import './index.css';
 
 export interface ICampaignsProps extends RouterProps{}
@@ -43,18 +43,16 @@ export default (props: ICampaignsProps) => {
                 pageSize: 5,
             }}
             dataSource={campaigns.campaigns}
-            renderItem={(item: IMovieDetails) => (
+            renderItem={(item: ICampaigns) => (
               <List.Item
                 onClick={() => goToCampaignDetails(item.id)}
-                key={item.title}
-                extra={<img width={140} alt="logo" src={item.images[0] && item.images[0].node.id} />}
+                key={item.name}
                 className="campaigns-list-item"
               >
                   <List.Item.Meta
-                    title={item.title}
-                    description={item.genres.map(genre => genre.node.name).join(', ')}
+                    title={item.name}
+                    description={item.note}
                   />
-                  {item.summary}
               </List.Item>
             )}
           />
