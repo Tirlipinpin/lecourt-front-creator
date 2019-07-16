@@ -7,11 +7,11 @@ import { FETCH_TOKEN, FETCH_TOKEN_SUCCEEDED, FETCH_TOKEN_FAILED } from '../reduc
 
 function* fetchToken(action: AnyAction): IterableIterator<Object | void> {
     try {
-        const token = yield axios('https://sso.stg.lecourt.tv/tokens/create', {
+        const token = yield axios('https://sso.stg.lecourt.tv/users/auth/login', {
             method: 'POST',
             auth: {
-                username: action.email,
-                password: action.password,
+                username: action.payload.email,
+                password: action.payload.password,
             },
             withCredentials: true,
         });
