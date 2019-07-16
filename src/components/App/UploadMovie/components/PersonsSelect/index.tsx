@@ -6,8 +6,8 @@ import { Person } from '../../../interfaces';
 export interface IPersonsSelectProps {
     persons: Person[]
     filterOptions: (input: string, option: ReactElement) => boolean
-    onSelect: (e: string) => any
-    onDeselect: (e: string) => any
+    onSelect: (e: string | any) => any
+    onDeselect: (e: string | any) => any
 }
 
 export default ({ persons, filterOptions, onSelect, onDeselect }: IPersonsSelectProps) => (

@@ -9,6 +9,7 @@ import register from './register';
 import navbar from './navbar';
 import movieDetails from './movieDetails';
 import uploadMovie from './uploadMovie';
+import uploadedMovies from './uploadedMovies';
 
 const persistConfig = {
     key: 'root',
@@ -27,4 +28,5 @@ export default (history: any) => persistReducer(persistConfig, combineReducers({
     navbar,
     movieDetails,
     uploadMovie,
+    uploadedMovies,
 }));
