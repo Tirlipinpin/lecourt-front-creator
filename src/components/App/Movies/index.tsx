@@ -27,14 +27,14 @@ export default (props: IMovies) => {
     };
 
     return (
-        <Layout className="campaign-page-container">
+        <Layout className="movies-page-container">
         <PageHeader
           title="Films"
           subTitle="Explorez vos courts métrages postés sur la platforme et définissez leurs paramètres"
-          className="campaign-page-header"
+          className="movies-page-header"
         />
             <List
-                className="campaign-list"
+                className="movies-list"
                 itemLayout="vertical"
                 size="large"
                 pagination={{
@@ -46,7 +46,7 @@ export default (props: IMovies) => {
                       onClick={() => goToMovieDetails(item.id)}
                       key={item.title}
                       extra={<img width={140} alt="logo" src={item.images[0] && item.images[0].node.id} />}
-                      className="campaign-list-item"
+                      className="movies-list-item"
                     >
                      <List.Item.Meta
                         title={item.title}

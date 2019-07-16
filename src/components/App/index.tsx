@@ -10,6 +10,7 @@ const Profile = lazy(() => import('./Profile'));
 const UploadMovie = lazy(() => import('./UploadMovie'));
 const Movies = lazy(() => import('./Movies'));
 const MovieDetails = lazy(() => import('./Movies/MovieDetails'));
+const Campaigns = lazy(() => import('./Campaigns'));
 
 import axiosInterceptor from '../../services/axiosInterceptor';
 import { LoginStore } from '../../reducers/login';
@@ -83,6 +84,7 @@ export class App extends Component<AppProps, {}> {
                                     <Route path={`${match.path}/upload`} render={(props) => this.lazyRender(UploadMovie, props)}/>
                                     <Route path={`${match.path}/movies`} exact render={(props) => this.lazyRender(Movies, props)}/>
                                     <Route path={`${match.path}/movies/:id`} render={(props) => this.lazyRender(MovieDetails, props)}/>
+                                    <Route path={`${match.path}/campaigns`} render={(props) => this.lazyRender(Campaigns, props)}/>
                                 </Switch>
                             </Router>
                         </Layout.Content>

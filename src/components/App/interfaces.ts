@@ -56,6 +56,10 @@ export interface FileRelation {
   node: File
 }
 
+export interface MovieRelation {
+  node: IMovieDetails
+}
+
 export interface IMovieDetails {
   id: number
   title: string
@@ -72,4 +76,12 @@ export interface IMovieDetails {
   genres: GenreRelation[]
   file: FileRelation,
   result_quality: number
+}
+
+export interface ICampaigns {
+  id: string
+  name: string
+  startTime: number
+  endTime: number
+  movie: MovieRelation
 }

@@ -74,6 +74,12 @@ export class Navbar extends Component<NavbarProps, {}> {
                             : <> <Icon type="unordered-list" /> Films </>
                         }
                     </Link></Menu.Item>
+                    <Menu.Item key="campaigns" title="campagnes"><Link to='/app/campaigns'>
+                        { collapsed
+                          ? <Icon type="flag" />
+                          : <> <Icon type="flag" /> Campagnes </>
+                        }
+                    </Link></Menu.Item>
                     <Menu.Item key="logout" className="logout-button" onClick={this.logout} title="logout">
                         { collapsed
                             ? <Icon type="logout" />
