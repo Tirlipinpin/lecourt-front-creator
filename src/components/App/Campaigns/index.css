@@ -1,0 +1,35 @@
+.campaigns-page-container {
+    margin: 32px 64px 0 64px;
+}
+
+.campaigns-page-container .campaigns-page-header {
+    margin: auto auto 64px auto;
+    width: 100%;
+    box-shadow: 0 1px 5px 1px rgba(134, 134, 136, 0.35);
+}
+
+.campaigns-page-container .campaigns-list {
+    margin-bottom: 64px;
+    background-color: white;
+    box-shadow: 0 1px 5px 1px rgba(134, 134, 136, 0.35);
+}
+
+.campaigns-page-container .campaigns-list .ant-pagination {
+    padding: 0 8px 8px 0;
+}
+
+.campaigns-page-container .campaigns-list .campaigns-list-item {
+    transition: box-shadow linear 150ms;
+    padding: 16px;
+}
+
+.campaigns-page-container .campaigns-list .campaigns-list-item:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.09);
+    cursor: pointer;
+}
+
+.campaigns-page-container .add-campaign-button {
+    position: absolute;
+    right: 64px;
+    bottom: 128px;
+}

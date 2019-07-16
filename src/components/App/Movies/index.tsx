@@ -20,7 +20,7 @@ export default (props: IMovies) => {
         dispatch({ type: 'FETCH_UPLOADED_MOVIES' });
     }, []);
 
-    const goToMovieDetails = (id: number) => {
+    const goToMovieDetails = (id: string) => {
         const { history } = props;
 
         history.push(`/app/movies/${id}`);

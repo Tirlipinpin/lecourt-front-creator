@@ -61,7 +61,7 @@ export interface MovieRelation {
 }
 
 export interface IMovieDetails {
-  id: number
+  id: string
   title: string
   releaseDate: string
   summary: string
