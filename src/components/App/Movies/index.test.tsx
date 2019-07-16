@@ -7,7 +7,7 @@ import MovieDetails from '.';
 Enzyme.configure({ adapter: new Adapter() });
 
 describe('The Campaign component', () => {
-    let wrapper: ShallowWrapper<MovieDetails>;
+    let wrapper: ShallowWrapper<any>;
     const history = {} as unknown;
 
     beforeEach(() => {
