@@ -1,0 +1,21 @@
+.upload-page-container {
+    margin: 32px 64px 64px 64px;
+}
+
+.upload-page-container .upload-page-header {
+    margin: auto auto 64px auto;
+    width: 100%;
+    box-shadow: 0 1px 5px 1px rgba(134, 134, 136, 0.35);
+}
+
+.upload-page-container .upload-form {
+    background-color: white;
+    margin: auto;
+    width: 100%;
+    padding: 2%;
+    box-shadow: 0 1px 5px 1px rgba(134, 134, 136, 0.35);
+}
+
+.upload-page-container .upload-form .upload-movie-button {
+    float: right;
+}

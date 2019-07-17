@@ -18,6 +18,7 @@ describe('uploadMovie reducer', () => {
         expect(uploadMovie(defaultState, action)).toEqual({
             loading: true,
             persons: [],
+            visible: false,
         });
     });
 
@@ -34,6 +35,7 @@ describe('uploadMovie reducer', () => {
         expect(uploadMovie(defaultState, action)).toEqual({
             loading: false,
             persons: ['poney'],
+            visible: false,
         });
     });
 
@@ -46,6 +48,7 @@ describe('uploadMovie reducer', () => {
         expect(uploadMovie(defaultState, action)).toEqual({
             loading: false,
             persons: [],
+            visible: false,
         });
     });
 });
