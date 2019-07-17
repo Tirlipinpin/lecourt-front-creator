@@ -1,4 +1,5 @@
 import {
+    CREATE_CAMPAIGN_SUCCEEDED,
     FETCH_CAMPAIGNS,
     FETCH_CAMPAIGNS_FAILED,
     FETCH_CAMPAIGNS_SUCCEEDED,
@@ -37,6 +38,11 @@ export default (state = defaultState, action: any) => {
         case FETCH_CAMPAIGNS_FAILED:
             return {
                 ...state,
+            };
+        case CREATE_CAMPAIGN_SUCCEEDED:
+            return {
+                ...state,
+                campaigns: [ ...state.campaigns, action.payload ],
             };
         case UPDATE_CAMPAIGN_ENABLED:
             return {
