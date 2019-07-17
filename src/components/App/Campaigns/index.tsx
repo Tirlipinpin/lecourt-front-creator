@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import { RouterProps } from "react-router";
-import { Layout, List, PageHeader, Button, Tooltip } from 'antd';
-import { FETCH_CAMPAIGNS } from '../../../reducers/campaigns/constantes';
+import { Layout, List, PageHeader, Button, Tooltip, Switch } from 'antd';
+import { FETCH_CAMPAIGNS, UPDATE_CAMPAIGN_ENABLED } from '../../../reducers/campaigns/constantes';
 import CreateCampaignForm from './CreateCampaignForm';
 import { ICampaigns } from '../interfaces';
 import './index.css';
@@ -26,6 +26,16 @@ export default (props: ICampaignsProps) => {
         const { history } = props;
 
         history.push(`/app/campaigns/${id}`);
+    };
+
+    const handleSwitchButton = (enabled: boolean, campaign: ICampaigns) => {
+        dispatch({
+            type: UPDATE_CAMPAIGN_ENABLED,
+            payload: {
+                ...campaign,
+                enabled: enabled,
+            }
+        })
     };
 
     return (
@@ -52,6 +62,13 @@ export default (props: ICampaignsProps) => {
                   <List.Item.Meta
                     title={item.name}
                     description={item.note}
+                  />
+                  <Switch
+                    onClick={(enabled: boolean) => handleSwitchButton(enabled, item)}
+                    checkedChildren="Activée"
+                    unCheckedChildren="Désactivée"
+                    checked={item.enabled}
+                    loading={campaigns.updatingEnabled}
                   />
               </List.Item>
             )}

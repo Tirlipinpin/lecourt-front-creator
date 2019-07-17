@@ -84,5 +84,6 @@ export interface ICampaigns {
   note: string
   startTime: number
   endTime: number
+  enabled: boolean
   movie: MovieRelation
 }

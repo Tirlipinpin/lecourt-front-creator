@@ -1,4 +1,4 @@
-import { put, takeEvery } from 'redux-saga/effects';
+import { put, takeEvery, takeLatest } from 'redux-saga/effects';
 import { AnyAction } from 'redux';
 import axios from 'axios';
 import { notification } from 'antd';
@@ -9,8 +9,9 @@ import {
     CREATE_CAMPAIGN_SUCCEEDED,
     FETCH_CAMPAIGNS,
     FETCH_CAMPAIGNS_FAILED,
-    FETCH_CAMPAIGNS_SUCCEEDED,
+    FETCH_CAMPAIGNS_SUCCEEDED, UPDATE_CAMPAIGN_ENABLED, UPDATE_CAMPAIGN_ENABLED_DONE,
 } from '../reducers/campaigns/constantes';
+import {IMovieDetails, MovieRelation} from "../components/App/interfaces";
 
 
 function* fetchCampaigns(action: AnyAction): IterableIterator<Object | void> {
@@ -64,9 +65,44 @@ function* createCampaign(action: AnyAction): IterableIterator<Object | void> {
     }
 }
 
+function* updateCampaignEnabled(action: AnyAction): IterableIterator<Object | void> {
+    try {
+        console.log(action.payload);
+        const { payload } = action;
+        const { id } = payload;
+
+        const res = yield axios.put(`campaigns/${id}`, {
+            name: payload.name,
+            startTime: payload.startTime,
+            endTime: payload.endTime,
+            enabled: payload.enabled,
+            movies: payload.movies.map((movie: MovieRelation) => movie.node.id),
+        });
+
+        if (!res)
+            throw new Error('Unable to update campaign');
+
+        const { data } = res;
+
+        yield put({
+            type: UPDATE_CAMPAIGN_ENABLED_DONE,
+            payload: data,
+        });
+    } catch (e) {
+        yield put({
+            type: UPDATE_CAMPAIGN_ENABLED_DONE,
+        });
+        yield notification['error']({
+            message: 'Unable to update campaign',
+            description: e.message,
+        });
+    }
+}
+
 function* saga() {
     yield takeEvery(FETCH_CAMPAIGNS, fetchCampaigns);
     yield takeEvery(CREATE_CAMPAIGN, createCampaign);
+    yield takeLatest(UPDATE_CAMPAIGN_ENABLED, updateCampaignEnabled);
 }
 
 export default saga;
