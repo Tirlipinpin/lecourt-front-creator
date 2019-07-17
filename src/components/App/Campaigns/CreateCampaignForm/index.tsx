@@ -56,7 +56,6 @@ export default (props: ICreateCampaignFormProps) => {
     };
 
     const updateFormDates = (_: RangePickerValue, dates: [string, string]) => {
-        console.log(_);
         setFormValues({
             ...form,
             startTime: moment(dates[0]).valueOf(),
@@ -64,7 +63,7 @@ export default (props: ICreateCampaignFormProps) => {
         });
     };
 
-    const updateFormMovies = (value: string[], options: any) => {
+    const updateFormMovies = (value: string[], _: any) => {
         setFormValues({
           ...form,
             movies: value,

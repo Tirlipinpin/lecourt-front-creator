@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import { RouterProps } from "react-router";
-import { Layout, List, PageHeader, Button, Tooltip, Switch } from 'antd';
+import { Layout, List, PageHeader, Button, Tooltip, Switch, Timeline } from 'antd';
+import moment from 'moment';
 import { FETCH_CAMPAIGNS, UPDATE_CAMPAIGN_ENABLED } from '../../../reducers/campaigns/constantes';
 import CreateCampaignForm from './CreateCampaignForm';
 import { ICampaigns } from '../interfaces';
@@ -38,6 +39,8 @@ export default (props: ICampaignsProps) => {
         })
     };
 
+    console.log(moment);
+
     return (
       <Layout className="campaigns-page-container">
           <PageHeader
@@ -58,6 +61,13 @@ export default (props: ICampaignsProps) => {
                 onClick={() => goToCampaignDetails(item.id)}
                 key={item.name}
                 className="campaigns-list-item"
+                extra={
+                    <Timeline>
+                        <Timeline.Item color="green">{moment(item.startTime).format('YYYY-MM-DD')}</Timeline.Item>
+                        <Timeline.Item>{moment(moment.now()).format('YYYY-MM-DD')}</Timeline.Item>
+                        <Timeline.Item color="red">{moment(item.endTime).format('YYYY-MM-DD')}</Timeline.Item>
+                    </Timeline>
+                }
               >
                   <List.Item.Meta
                     title={item.name}
