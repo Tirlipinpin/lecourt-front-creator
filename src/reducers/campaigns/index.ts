@@ -5,17 +5,21 @@ import {
     FETCH_CAMPAIGNS_SUCCEEDED,
     UPDATE_CAMPAIGN_ENABLED,
     UPDATE_CAMPAIGN_ENABLED_DONE,
+    SHOW_CAMPAIGN_CREATION_MODAL,
+    HIDE_CAMPAIGN_CREATION_MODAL
 } from './constantes';
 import { ICampaigns } from '../../components/App/interfaces';
 
 export interface ICampaignsStore {
     campaigns: ICampaigns[]
     updatingEnabled: boolean
+    showCampaignCreationModal: boolean
 }
 
 export const defaultState: ICampaignsStore = {
     campaigns: [],
     updatingEnabled: false,
+    showCampaignCreationModal: false,
 };
 
 export const mergeCampaigns = (campaigns: ICampaigns[], updatedCampaign: ICampaigns) => campaigns.map((campaign: ICampaigns) => {
@@ -43,6 +47,7 @@ export default (state = defaultState, action: any) => {
             return {
                 ...state,
                 campaigns: [ ...state.campaigns, action.payload ],
+                showCampaignCreationModal: false,
             };
         case UPDATE_CAMPAIGN_ENABLED:
             return {
@@ -54,6 +59,16 @@ export default (state = defaultState, action: any) => {
                 ...state,
                 campaigns: mergeCampaigns(state.campaigns, action.payload || null),
                 updatingEnabled: false,
+            };
+        case SHOW_CAMPAIGN_CREATION_MODAL:
+            return {
+                ...state,
+                showCampaignCreationModal: true,
+            };
+        case HIDE_CAMPAIGN_CREATION_MODAL:
+            return {
+                ...state,
+                showCampaignCreationModal: false,
             };
         default:
             return state;

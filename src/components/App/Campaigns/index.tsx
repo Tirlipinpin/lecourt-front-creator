@@ -1,9 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import { RouterProps } from "react-router";
 import { Layout, List, PageHeader, Button, Tooltip, Switch, Timeline } from 'antd';
 import moment from 'moment';
-import { FETCH_CAMPAIGNS, UPDATE_CAMPAIGN_ENABLED } from '../../../reducers/campaigns/constantes';
+import {
+    FETCH_CAMPAIGNS,
+    SHOW_CAMPAIGN_CREATION_MODAL,
+    HIDE_CAMPAIGN_CREATION_MODAL,
+    UPDATE_CAMPAIGN_ENABLED,
+} from '../../../reducers/campaigns/constantes';
 import CreateCampaignForm from './CreateCampaignForm';
 import { ICampaigns } from '../interfaces';
 import './index.css';
@@ -21,7 +26,13 @@ export default (props: ICampaignsProps) => {
         dispatch({ type: FETCH_CAMPAIGNS })
     }, []);
 
-    const [ displayCreationModal, handleDisplayCreationModal ] = useState(false);
+    const showDisplayCreationModal = () => {
+        dispatch({ type: SHOW_CAMPAIGN_CREATION_MODAL });
+    };
+
+    const hideDisplayCreationModal = () => {
+        dispatch({ type: HIDE_CAMPAIGN_CREATION_MODAL });
+    };
 
     const goToCampaignDetails = (id: string) => {
         const { history } = props;
@@ -38,8 +49,6 @@ export default (props: ICampaignsProps) => {
             }
         })
     };
-
-    console.log(moment);
 
     return (
       <Layout className="campaigns-page-container">
@@ -83,15 +92,21 @@ export default (props: ICampaignsProps) => {
               </List.Item>
             )}
           />
-          <CreateCampaignForm visible={displayCreationModal} handleVisibility={handleDisplayCreationModal} />
-          <Tooltip title="Créer une campagne">
+          <CreateCampaignForm
+            visible={campaigns.showCampaignCreationModal}
+            hideModal={hideDisplayCreationModal}
+          />
+          <Tooltip
+            placement="left"
+            title="Créer une campagne"
+          >
             <Button
               type="primary"
               shape="circle"
               icon="plus"
-              className="add-campaign-button"
+              className="add-campaign-button floating-button"
               size="large"
-              onClick={() => handleDisplayCreationModal(true)}
+              onClick={showDisplayCreationModal}
             />
           </Tooltip>
       </Layout>

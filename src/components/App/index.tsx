@@ -7,7 +7,6 @@ import axios from 'axios';
 import Navbar from './Navbar';
 const Dashboard = lazy(() => import('./Dashboard'));
 const Profile = lazy(() => import('./Profile'));
-const UploadMovie = lazy(() => import('./UploadMovie'));
 const Movies = lazy(() => import('./Movies'));
 const MovieDetails = lazy(() => import('./Movies/MovieDetails'));
 const Campaigns = lazy(() => import('./Campaigns'));
@@ -81,7 +80,6 @@ export class App extends Component<AppProps, {}> {
                                 <Switch>
                                     <Route exact path={match.url} render={(props) => this.lazyRender(Dashboard, props)} />
                                     <Route path={`${match.path}/profile`} render={(props) => this.lazyRender(Profile, props)}/>
-                                    <Route path={`${match.path}/upload`} render={(props) => this.lazyRender(UploadMovie, props)}/>
                                     <Route path={`${match.path}/movies`} exact render={(props) => this.lazyRender(Movies, props)}/>
                                     <Route path={`${match.path}/movies/:id`} render={(props) => this.lazyRender(MovieDetails, props)}/>
                                     <Route path={`${match.path}/campaigns`} render={(props) => this.lazyRender(Campaigns, props)}/>

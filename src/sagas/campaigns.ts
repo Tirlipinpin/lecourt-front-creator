@@ -54,6 +54,9 @@ function* createCampaign(action: AnyAction): IterableIterator<Object | void> {
             type: CREATE_CAMPAIGN_SUCCEEDED,
             payload: data,
         });
+        yield notification['success']({
+            message: 'Campaign successfully created',
+        });
     } catch (e) {
         yield put({
             type: CREATE_CAMPAIGN_FAILED,
@@ -67,7 +70,6 @@ function* createCampaign(action: AnyAction): IterableIterator<Object | void> {
 
 function* updateCampaignEnabled(action: AnyAction): IterableIterator<Object | void> {
     try {
-        console.log(action.payload);
         const { payload } = action;
         const { id } = payload;
 

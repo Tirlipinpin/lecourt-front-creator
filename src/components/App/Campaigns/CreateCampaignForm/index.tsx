@@ -10,7 +10,7 @@ const { RangePicker } = DatePicker;
 
 export interface ICreateCampaignFormProps {
     visible: boolean
-    handleVisibility: any
+    hideModal: any
 }
 
 export default (props: ICreateCampaignFormProps) => {
@@ -74,7 +74,7 @@ export default (props: ICreateCampaignFormProps) => {
       <Modal
         title="Créer la campagne de diffusion"
         visible={props.visible}
-        onCancel={() => props.handleVisibility(false)}
+        onCancel={props.hideModal}
         footer={null}
       >
           <Form onSubmit={handleSubmit}>

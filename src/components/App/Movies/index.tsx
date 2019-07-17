@@ -1,21 +1,32 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Layout, PageHeader, List } from 'antd';
+import {Layout, PageHeader, List, Modal, Button, Tooltip} from 'antd';
 import { History } from 'history';
 
 import { IMovieDetails } from '../interfaces';
+import { SHOW_UPLOAD_MOVIE_MODAL, HIDE_UPLOAD_MOVIE_MODAL } from '../../../reducers/uploadMovie/constantes';
 import './index.css';
+import UploadMovie from "./UploadMovie";
 
 export interface IMovies {
     history: History
 }
 
 export default (props: IMovies) => {
-    const { uploadedMovies } = useSelector((state: any) => ({
+    const dispatch = useDispatch();
+    const { uploadedMovies, uploadModalVisible } = useSelector((state: any) => ({
         uploadedMovies: state.uploadedMovies,
+        uploadModalVisible: state.uploadMovie.visible,
     }));
 
-    const dispatch = useDispatch();
+    const showUploadModal = () => {
+        dispatch({ type: SHOW_UPLOAD_MOVIE_MODAL })
+    };
+
+    const hideUploadModal = () => {
+        dispatch({ type: HIDE_UPLOAD_MOVIE_MODAL })
+    };
+
     useEffect(() => {
         dispatch({ type: 'FETCH_UPLOADED_MOVIES' });
     }, []);
@@ -56,6 +67,27 @@ export default (props: IMovies) => {
                     </List.Item>
                   )}
             />
+            <Modal
+              visible={uploadModalVisible}
+              onCancel={hideUploadModal}
+              title="Postez un court métrage !"
+              footer={null}
+            >
+                <UploadMovie />
+            </Modal>
+            <Tooltip
+              placement="left"
+              title="Postez un film"
+            >
+                <Button
+                  type="primary"
+                  shape="circle"
+                  icon="plus"
+                  className="add-movie-button floating-button"
+                  size="large"
+                  onClick={showUploadModal}
+                />
+            </Tooltip>
         </Layout>
     );
 }

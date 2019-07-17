@@ -27,10 +27,3 @@
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.09);
     cursor: pointer;
 }
-
-.campaigns-page-container .add-campaign-button {
-    position: fixed;
-    right: 64px;
-    bottom: 128px;
-    box-shadow: 0 4px 10px rgba(47, 51, 56, 0.35);
-}

@@ -62,12 +62,6 @@ export class Navbar extends Component<NavbarProps, {}> {
                             : <> <Icon type="user" /> Profile </>
                         }
                     </Link></Menu.Item>
-                    <Menu.Item key="upload" title="Upload"><Link to='/app/upload'>
-                        { collapsed
-                            ? <Icon type="plus" />
-                            : <> <Icon type="plus" /> Upload </>
-                        }
-                    </Link></Menu.Item>
                     <Menu.Item key="movies" title="films"><Link to='/app/movies'>
                         { collapsed
                             ? <Icon type="unordered-list" />
