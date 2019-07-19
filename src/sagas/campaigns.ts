@@ -9,10 +9,13 @@ import {
     CREATE_CAMPAIGN_SUCCEEDED,
     FETCH_CAMPAIGNS,
     FETCH_CAMPAIGNS_FAILED,
-    FETCH_CAMPAIGNS_SUCCEEDED, UPDATE_CAMPAIGN_ENABLED, UPDATE_CAMPAIGN_ENABLED_DONE,
+    FETCH_CAMPAIGNS_SUCCEEDED,
+    UPDATE_CAMPAIGN_ENABLED,
+    UPDATE_CAMPAIGN_ENABLED_DONE,
+    DELETE_CAMPAIGN,
+    DELETE_CAMPAIGN_SUCCEEDED,
 } from '../reducers/campaigns/constantes';
-import {IMovieDetails, MovieRelation} from "../components/App/interfaces";
-
+import { MovieRelation } from "../components/App/interfaces";
 
 function* fetchCampaigns(action: AnyAction): IterableIterator<Object | void> {
     try {
@@ -101,10 +104,32 @@ function* updateCampaignEnabled(action: AnyAction): IterableIterator<Object | vo
     }
 }
 
+function* deleteCampaign(action: AnyAction): IterableIterator<Object | void> {
+    try {
+        const { payload } = action;
+
+        const res = yield axios.delete(`campaigns/${payload}`);
+
+        if (!res)
+            throw new Error('Unable to delete campaign');
+
+        yield put({
+            type: DELETE_CAMPAIGN_SUCCEEDED,
+            payload: payload,
+        });
+    } catch (e) {
+        yield notification['error']({
+            message: 'Unable to delete campaign',
+            description: e.message,
+        });
+    }
+}
+
 function* saga() {
     yield takeEvery(FETCH_CAMPAIGNS, fetchCampaigns);
     yield takeEvery(CREATE_CAMPAIGN, createCampaign);
     yield takeLatest(UPDATE_CAMPAIGN_ENABLED, updateCampaignEnabled);
+    yield takeLatest(DELETE_CAMPAIGN, deleteCampaign);
 }
 
 export default saga;

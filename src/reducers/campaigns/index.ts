@@ -6,7 +6,8 @@ import {
     UPDATE_CAMPAIGN_ENABLED,
     UPDATE_CAMPAIGN_ENABLED_DONE,
     SHOW_CAMPAIGN_CREATION_MODAL,
-    HIDE_CAMPAIGN_CREATION_MODAL
+    HIDE_CAMPAIGN_CREATION_MODAL,
+    DELETE_CAMPAIGN_SUCCEEDED,
 } from './constantes';
 import { ICampaigns } from '../../components/App/interfaces';
 
@@ -28,6 +29,8 @@ export const mergeCampaigns = (campaigns: ICampaigns[], updatedCampaign: ICampai
     return campaign;
 });
 
+export const deleteCampaigns = (campaigns: ICampaigns[], id: string) => campaigns.filter((campaign: ICampaigns) => campaign.id !== id);
+
 export default (state = defaultState, action: any) => {
     switch(action.type) {
         case FETCH_CAMPAIGNS:
@@ -46,7 +49,7 @@ export default (state = defaultState, action: any) => {
         case CREATE_CAMPAIGN_SUCCEEDED:
             return {
                 ...state,
-                campaigns: [ ...state.campaigns, action.payload ],
+                campaigns: [ action.payload, ...state.campaigns ],
                 showCampaignCreationModal: false,
             };
         case UPDATE_CAMPAIGN_ENABLED:
@@ -69,6 +72,11 @@ export default (state = defaultState, action: any) => {
             return {
                 ...state,
                 showCampaignCreationModal: false,
+            };
+        case DELETE_CAMPAIGN_SUCCEEDED:
+            return {
+              ...state,
+              campaigns: deleteCampaigns(state.campaigns, action.payload),
             };
         default:
             return state;

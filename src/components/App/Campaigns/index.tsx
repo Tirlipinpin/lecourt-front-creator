@@ -8,6 +8,7 @@ import {
     SHOW_CAMPAIGN_CREATION_MODAL,
     HIDE_CAMPAIGN_CREATION_MODAL,
     UPDATE_CAMPAIGN_ENABLED,
+    DELETE_CAMPAIGN,
 } from '../../../reducers/campaigns/constantes';
 import CreateCampaignForm from './CreateCampaignForm';
 import { ICampaigns } from '../interfaces';
@@ -50,6 +51,13 @@ export default (props: ICampaignsProps) => {
         })
     };
 
+    const deleteCampaign = (id: string) => {
+        dispatch({
+            type: DELETE_CAMPAIGN,
+            payload: id,
+        });
+    };
+
     return (
       <Layout className="campaigns-page-container">
           <PageHeader
@@ -88,6 +96,12 @@ export default (props: ICampaignsProps) => {
                     unCheckedChildren="Désactivée"
                     checked={item.enabled}
                     loading={campaigns.updatingEnabled}
+                  />
+                  <Button
+                    type="danger"
+                    icon="delete"
+                    shape="circle-outline"
+                    onClick={() => deleteCampaign(item.id)}
                   />
               </List.Item>
             )}
