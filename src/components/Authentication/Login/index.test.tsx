@@ -1,10 +1,7 @@
 import React, { SyntheticEvent, FormEvent } from 'react';
-import Adapter from 'enzyme-adapter-react-16';
-import Enzyme, { shallow, ShallowWrapper } from 'enzyme';
+import { shallow, ShallowWrapper } from 'enzyme';
 
 import { Login, LoginState } from '.';
-
-Enzyme.configure({ adapter: new Adapter() });
 
 describe('the Login component', () => {
     let wrapper: ShallowWrapper;

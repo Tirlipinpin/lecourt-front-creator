@@ -1,12 +1,11 @@
 import React, {FormEvent, SyntheticEvent} from 'react';
-import Enzyme, { shallow, ShallowWrapper } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
-Enzyme.configure({ adapter: new Adapter() });
+import { shallow, ShallowWrapper } from 'enzyme';
 import { UploadChangeParam } from 'antd/lib/upload';
 import { UploadFile } from 'antd/es/upload/interface';
 import { Moment } from 'moment';
 
 import { UploadMovie } from '.';
+import { IActorForm, IDirectorForm, IStaffForm } from '../../interfaces';
 
 
 describe('The UploadMovie component', () => {
@@ -17,7 +16,7 @@ describe('The UploadMovie component', () => {
         wrapper = shallow(
             <UploadMovie
               dispatch={dispatch}
-              uploadMovie={{ loading: false, persons: [] }}
+              uploadMovie={{ loading: false, persons: [], visible: false }}
             />
         );
     });
@@ -153,9 +152,9 @@ describe('The UploadMovie component', () => {
             summary: 'poney magique',
             summarySmall: 'my little poney',
             releaseDate: '1998-09-20',
-            actors: ['poney'],
-            directors: ['poney'],
-            staff: ['poney'],
+            actors: [{ actorId: '1234', role: 'batman' }] as IActorForm[],
+            directors: [{ personId: '1234' }] as IDirectorForm[],
+            staff: [{ personId: '1234' }] as IStaffForm[],
             posterFile: { name: 'poster' } as UploadFile,
             movieFile: { name: 'video'} as UploadFile,
         };

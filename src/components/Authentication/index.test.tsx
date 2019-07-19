@@ -1,14 +1,11 @@
 import React from 'react';
-import Enzyme, { shallow, ShallowWrapper } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
+import { shallow, ShallowWrapper } from 'enzyme';
 import { match } from 'react-router';
 
 import { History, Location } from 'history';
 
 import { Authentication } from '.';
 import { LoginStore } from '../../reducers/login';
-
-Enzyme.configure({ adapter: new Adapter() });
 
 describe('The Authentication component', () => {
     let wrapper: ShallowWrapper;

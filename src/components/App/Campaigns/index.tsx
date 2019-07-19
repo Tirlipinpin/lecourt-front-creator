@@ -80,28 +80,30 @@ export default (props: ICampaignsProps) => {
                 className="campaigns-list-item"
                 extra={
                     <Timeline>
-                        <Timeline.Item color="green">{moment(item.startTime).format('YYYY-MM-DD')}</Timeline.Item>
+                        <Timeline.Item color="green">Début de la campagne: {moment(item.startTime).format('YYYY-MM-DD')}</Timeline.Item>
                         <Timeline.Item>{moment(moment.now()).format('YYYY-MM-DD')}</Timeline.Item>
-                        <Timeline.Item color="red">{moment(item.endTime).format('YYYY-MM-DD')}</Timeline.Item>
+                        <Timeline.Item color="red">Fin de la campagne: {moment(item.endTime).format('YYYY-MM-DD')}</Timeline.Item>
                     </Timeline>
                 }
-              >
-                  <List.Item.Meta
-                    title={item.name}
-                    description={item.note}
-                  />
-                  <Switch
-                    onClick={(enabled: boolean) => handleSwitchButton(enabled, item)}
-                    checkedChildren="Activée"
-                    unCheckedChildren="Désactivée"
-                    checked={item.enabled}
-                    loading={campaigns.updatingEnabled}
-                  />
-                  <Button
+                actions={[
+                    <Switch
+                        onClick={(enabled: boolean) => handleSwitchButton(enabled, item)}
+                        checkedChildren="Activée"
+                        unCheckedChildren="Désactivée"
+                        checked={item.enabled}
+                        loading={campaigns.updatingEnabled}
+                    />,
+                    <Button
                     type="danger"
                     icon="delete"
                     shape="circle-outline"
                     onClick={() => deleteCampaign(item.id)}
+                    />
+                ]}
+              >
+                  <List.Item.Meta
+                    title={item.name}
+                    description={item.note}
                   />
               </List.Item>
             )}
