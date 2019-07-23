@@ -78,12 +78,12 @@ export interface IMovieDetails {
   result_quality: number
 }
 
-export interface ICampaigns {
+export interface ICampaign {
   id: string
   name: string
   note: string
   startTime: number
   endTime: number
   enabled: boolean
-  movie: MovieRelation
+  movies: MovieRelation[]
 }

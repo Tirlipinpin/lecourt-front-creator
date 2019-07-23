@@ -1,6 +1,6 @@
 import React, { Component, Dispatch, Suspense, lazy } from 'react';
 import { connect } from 'react-redux';
-import {Switch, Route, Redirect, Router, RouteComponentProps} from 'react-router';
+import { Switch, Route, Redirect, Router, RouteComponentProps } from 'react-router';
 import { Icon, Layout } from 'antd';
 import axios from 'axios';
 
@@ -10,6 +10,7 @@ const Profile = lazy(() => import('./Profile'));
 const Movies = lazy(() => import('./Movies'));
 const MovieDetails = lazy(() => import('./Movies/MovieDetails'));
 const Campaigns = lazy(() => import('./Campaigns'));
+const CampaignEdit = lazy(() => import('./Campaigns/Edit'));
 
 import axiosInterceptor from '../../services/axiosInterceptor';
 import { LoginStore } from '../../reducers/login';
@@ -80,9 +81,10 @@ export class App extends Component<AppProps, {}> {
                                 <Switch>
                                     <Route exact path={match.url} render={(props) => this.lazyRender(Dashboard, props)} />
                                     <Route path={`${match.path}/profile`} render={(props) => this.lazyRender(Profile, props)}/>
-                                    <Route path={`${match.path}/movies`} exact render={(props) => this.lazyRender(Movies, props)}/>
+                                    <Route exact path={`${match.path}/movies`} render={(props) => this.lazyRender(Movies, props)}/>
                                     <Route path={`${match.path}/movies/:id`} render={(props) => this.lazyRender(MovieDetails, props)}/>
-                                    <Route path={`${match.path}/campaigns`} render={(props) => this.lazyRender(Campaigns, props)}/>
+                                    <Route exact path={`${match.path}/campaigns`} render={(props) => this.lazyRender(Campaigns, props)}/>
+                                    <Route path={`${match.path}/campaigns/:id`} render={(props) => this.lazyRender(CampaignEdit, props)}/>
                                 </Switch>
                             </Router>
                         </Layout.Content>

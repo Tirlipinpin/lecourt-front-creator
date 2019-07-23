@@ -3,33 +3,36 @@ import {
     FETCH_CAMPAIGNS,
     FETCH_CAMPAIGNS_FAILED,
     FETCH_CAMPAIGNS_SUCCEEDED,
+    UPDATE_CAMPAIGN_SET_MODEL,
     UPDATE_CAMPAIGN_ENABLED,
     UPDATE_CAMPAIGN_ENABLED_DONE,
     SHOW_CAMPAIGN_CREATION_MODAL,
     HIDE_CAMPAIGN_CREATION_MODAL,
     DELETE_CAMPAIGN_SUCCEEDED,
 } from './constantes';
-import { ICampaigns } from '../../components/App/interfaces';
+import { ICampaign } from '../../components/App/interfaces';
 
 export interface ICampaignsStore {
-    campaigns: ICampaigns[]
+    campaigns: ICampaign[]
+    editingCampaign: ICampaign | null
     updatingEnabled: boolean
     showCampaignCreationModal: boolean
 }
 
 export const defaultState: ICampaignsStore = {
     campaigns: [],
+    editingCampaign: null,
     updatingEnabled: false,
     showCampaignCreationModal: false,
 };
 
-export const mergeCampaigns = (campaigns: ICampaigns[], updatedCampaign: ICampaigns) => campaigns.map((campaign: ICampaigns) => {
+export const mergeCampaigns = (campaigns: ICampaign[], updatedCampaign: ICampaign) => campaigns.map((campaign: ICampaign) => {
     if (updatedCampaign && (campaign.id === updatedCampaign.id))
         return updatedCampaign;
     return campaign;
 });
 
-export const deleteCampaigns = (campaigns: ICampaigns[], id: string) => campaigns.filter((campaign: ICampaigns) => campaign.id !== id);
+export const deleteCampaigns = (campaigns: ICampaign[], id: string) => campaigns.filter((campaign: ICampaign) => campaign.id !== id);
 
 export default (state = defaultState, action: any) => {
     switch(action.type) {
@@ -51,6 +54,11 @@ export default (state = defaultState, action: any) => {
                 ...state,
                 campaigns: [ action.payload, ...state.campaigns ],
                 showCampaignCreationModal: false,
+            };
+        case UPDATE_CAMPAIGN_SET_MODEL:
+            return {
+                ...state,
+                editingCampaign: action.payload,
             };
         case UPDATE_CAMPAIGN_ENABLED:
             return {
