@@ -9,14 +9,15 @@ import {
     HIDE_CAMPAIGN_CREATION_MODAL,
     UPDATE_CAMPAIGN,
     DELETE_CAMPAIGN,
-    UPDATE_CAMPAIGN_SET_MODEL,
+    UPDATE_EDITING_CAMPAIGN,
 } from '../../../reducers/campaigns/constantes';
 import CreateCampaignForm from './CreateCampaignForm';
-import { ICampaign } from '../interfaces';
+import { ICampaign, MovieRelation } from '../interfaces';
 import './index.css';
 import Column from 'antd/lib/table/Column';
 import Paragraph from 'antd/lib/typography/Paragraph';
 import { FETCH_UPLOADED_MOVIES } from '../../../reducers/uploadedMovies/constantes';
+import Title from 'antd/lib/typography/Title';
 
 const { Step } = Steps;
 
@@ -65,7 +66,7 @@ export default (props: ICampaignsProps) => {
 
         dispatch({ type: FETCH_UPLOADED_MOVIES })
         dispatch({
-          type: UPDATE_CAMPAIGN_SET_MODEL,
+          type: UPDATE_EDITING_CAMPAIGN,
           payload: campaign,
         })
         history.push(`/app/campaigns/${campaign.id}`);
@@ -104,7 +105,13 @@ export default (props: ICampaignsProps) => {
                   <Paragraph copyable={campaign.name}>{campaign.name}</Paragraph>
                   <span>
                     {campaign.enabled ? <Tag color="green">ENABLED</Tag> : <Tag color="red">DISABLED</Tag>}
-                    <Popover content={campaign.id} title="Campaign internal identifier">
+                    <Popover content={<div>
+                      <Title level={4}>Identifier</Title>
+                      <Paragraph strong>{campaign.id}</Paragraph>
+                      <Divider type="horizontal" />
+                      <Title level={4}>Movies</Title>
+                      {campaign.movies.map((m: MovieRelation) => <Tag color="blue">{m.node.title}</Tag>)}
+                    </div>} title="Additional informations">
                       <Button
                         type="default"
                         icon="info-circle"

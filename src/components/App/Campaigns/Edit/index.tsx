@@ -1,29 +1,28 @@
-import React, { FormEvent, ReactElement, SyntheticEvent, useState, useEffect } from 'react';
+import React, { FormEvent, ReactElement, SyntheticEvent, useEffect } from 'react';
 import { useSelector, useDispatch } from "react-redux";
-import { Form, Input, Button, DatePicker, Select, Layout, PageHeader, Icon } from 'antd';
+import { Form, Input, Button, DatePicker, Select, Layout, PageHeader } from 'antd';
 import moment from 'moment';
 import { RangePickerValue } from 'antd/es/date-picker/interface';
-import { IMovieDetails, MovieRelation, ICampaign } from '../../interfaces';
+import { IMovieDetails, MovieRelation } from '../../interfaces';
 import { Location } from 'history';
 import { FETCH_CAMPAIGN, UPDATE_EDITING_CAMPAIGN, UPDATE_CAMPAIGN } from '../../../../reducers/campaigns/constantes';
-import { match } from 'react-router';
-import { MovieDetails } from '../../Movies/MovieDetails';
+import { match, RouterProps } from 'react-router';
 
 const { RangePicker } = DatePicker;
 
-interface IProps {
-    history: History
+interface IProps extends RouterProps {
     location: Location
     match: match<{ id: string }>
 }
 
 export default (props: IProps) => {
     const dispatch = useDispatch();
-    const { uploadedMovies, editingCampaign } = useSelector((state: any) => ({
+    const { uploadedMovies, editingCampaign, editedCampaign } = useSelector((state: any) => ({
         uploadedMovies: state.uploadedMovies,
         editingCampaign: state.campaigns.editingCampaign,
+        editedCampaign: state.campaigns.editedCampaign,
     }));
-    
+
     useEffect(() => {
         dispatch({
             type: FETCH_CAMPAIGN,
@@ -34,6 +33,15 @@ export default (props: IProps) => {
         dispatch({ type: 'FETCH_UPLOADED_MOVIES' })
     }, [])
 
+    /*useEffect(() => {
+        return () => {
+            dispatch({
+                type: UPDATE_EDITING_CAMPAIGN,
+                payload: null,
+            })
+        }
+    }, [])*/
+
     const form = {
         enabled: editingCampaign ? editingCampaign.enabled : false,
         id: editingCampaign ? editingCampaign.id : '',
@@ -41,7 +49,8 @@ export default (props: IProps) => {
         startTime: editingCampaign ? editingCampaign.startTime : 0,
         endTime: editingCampaign ? editingCampaign.endTime : 0,
         movies: editingCampaign ? editingCampaign.movies : [],
-        note: editingCampaign ? editingCampaign.note : '',
+        // note: editingCampaign ? editingCampaign.note : '-',
+        note: '-',
     }
 
     const filterOptions = (input: string, option: ReactElement): boolean => {
@@ -105,6 +114,16 @@ export default (props: IProps) => {
         })
     };
 
+    const handleCancel = () => {
+        props.history.push('/app/campaigns')
+    }
+
+    useEffect(() => {
+        if (editedCampaign) {
+            handleCancel()
+        }
+    })
+
     return (
         <Layout className="campaigns-page-container">
             <PageHeader
@@ -159,7 +178,10 @@ export default (props: IProps) => {
                         {uploadedMovies.movies.map((movie: IMovieDetails) => <Select.Option key={movie.id}>{movie.title}</Select.Option>)}
                     </Select>
                 </Form.Item>
-                <Button htmlType="submit">Créer</Button>
+                <span style={{ display: 'flex' }}>
+                    <Button htmlType="submit" block>Valider</Button>
+                    <Button block onClick={handleCancel}>Annuler</Button>
+                </span>
             </Form>
         </Layout>
     )

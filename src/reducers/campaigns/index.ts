@@ -1,7 +1,6 @@
 import {
     CREATE_CAMPAIGN_SUCCEEDED,
     FETCH_CAMPAIGNS_SUCCEEDED,
-    UPDATE_CAMPAIGN_SET_MODEL,
     UPDATE_CAMPAIGN,
     UPDATE_CAMPAIGN_DONE,
     SHOW_CAMPAIGN_CREATION_MODAL,
@@ -11,11 +10,12 @@ import {
     FETCH_CAMPAIGN_FAILED,
     UPDATE_EDITING_CAMPAIGN,
 } from './constantes';
-import { ICampaign, MovieRelation } from '../../components/App/interfaces';
+import { ICampaign } from '../../components/App/interfaces';
 
 export interface ICampaignsStore {
     campaigns: ICampaign[]
     editingCampaign: ICampaign | null
+    editedCampaign: boolean
     updatingEnabled: boolean
     showCampaignCreationModal: boolean
 }
@@ -23,6 +23,7 @@ export interface ICampaignsStore {
 export const defaultState: ICampaignsStore = {
     campaigns: [],
     editingCampaign: null,
+    editedCampaign: false,
     updatingEnabled: false,
     showCampaignCreationModal: false,
 };
@@ -56,17 +57,13 @@ export default (state = defaultState, action: any) => {
             return {
                 ...state,
                 editingCampaign: action.payload,
+                editedCampaign: false,
             };
         case CREATE_CAMPAIGN_SUCCEEDED:
             return {
                 ...state,
                 campaigns: [ action.payload, ...state.campaigns ],
                 showCampaignCreationModal: false,
-            };
-        case UPDATE_CAMPAIGN_SET_MODEL:
-            return {
-                ...state,
-                editingCampaign: action.payload,
             };
         case UPDATE_CAMPAIGN:
             return {
@@ -78,6 +75,7 @@ export default (state = defaultState, action: any) => {
                 ...state,
                 campaigns: mergeCampaigns(state.campaigns, action.payload || null),
                 updatingEnabled: false,
+                editedCampaign: true,
             };
         case SHOW_CAMPAIGN_CREATION_MODAL:
             return {
