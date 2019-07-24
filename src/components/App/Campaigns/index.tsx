@@ -26,6 +26,21 @@ function getRandomInt(max: number) {
   return Math.floor(Math.random() * Math.floor(max));
 }
 
+function getTimelineCurrentState(campaign: ICampaign): number {
+  const now = moment().unix()
+  let current = 2
+
+  if (campaign.startTime / 1000 > now) {
+    current = 1
+  } else if (campaign.endTime / 1000 < now) {
+    current = 3
+  }
+  if (!campaign.enabled) {
+    current = 0
+  }
+  return current
+}
+
 export default (props: ICampaignsProps) => {
     const { campaigns } = useSelector((state: any) => ({
         campaigns: state.campaigns,
@@ -80,7 +95,7 @@ export default (props: ICampaignsProps) => {
             subTitle="Paramétrez les campagnes de diffusion de vos films ajoutés sur la plateforme"
             className="campaigns-page-header"
           />
-          <Table dataSource={campaigns.campaigns}>
+          <Table dataSource={campaigns.campaigns} className="campaigns-table">
             <Column
               title="Name"
               key="name"
@@ -103,27 +118,14 @@ export default (props: ICampaignsProps) => {
             <Column
               title="Timeline"
               key="timeline"
-              render={(_: any, campaign: any) => {
-                const now = moment().unix()
-                let current = 2
-                if (campaign.startTime / 1000 > now) {
-                  current = 1
-                } else if (campaign.endTime / 1000 < now) {
-                  current = 3
-                }
-                if (!campaign.enabled) {
-                  current = 0
-                }
-
-                return (
-                  <Steps current={current}>
+              render={(_: any, campaign: any) => (
+                  <Steps current={getTimelineCurrentState(campaign)}>
                     <Step title="Disabled" description="Your campaign is currently disabled" />
                     <Step title="Beign started" description={moment(campaign.startTime).format("MMM Do YYYY")} />
                     <Step title="In Progress" description="Your campaign is currently beign broadcast" />
                     <Step title="Terminated" description={moment(campaign.endTime).format("MMM Do YYYY")} />
                   </Steps>
-                )
-              }}
+              )}
             />
             <Column 
               title="Clicks"
