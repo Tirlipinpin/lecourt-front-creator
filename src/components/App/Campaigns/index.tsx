@@ -7,7 +7,7 @@ import {
     FETCH_CAMPAIGNS,
     SHOW_CAMPAIGN_CREATION_MODAL,
     HIDE_CAMPAIGN_CREATION_MODAL,
-    UPDATE_CAMPAIGN_ENABLED,
+    UPDATE_CAMPAIGN,
     DELETE_CAMPAIGN,
     UPDATE_CAMPAIGN_SET_MODEL,
 } from '../../../reducers/campaigns/constantes';
@@ -73,7 +73,7 @@ export default (props: ICampaignsProps) => {
 
     const handleSwitchButton = (enabled: boolean, campaign: ICampaign) => {
         dispatch({
-            type: UPDATE_CAMPAIGN_ENABLED,
+            type: UPDATE_CAMPAIGN,
             payload: {
                 ...campaign,
                 enabled: enabled,

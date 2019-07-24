@@ -1,14 +1,20 @@
-import React, { FormEvent, ReactElement, SyntheticEvent, useState } from 'react';
+import React, { FormEvent, ReactElement, SyntheticEvent, useState, useEffect } from 'react';
 import { useSelector, useDispatch } from "react-redux";
-import { Form, Input, Button, DatePicker, Select, Layout, PageHeader } from 'antd';
+import { Form, Input, Button, DatePicker, Select, Layout, PageHeader, Icon } from 'antd';
 import moment from 'moment';
 import { RangePickerValue } from 'antd/es/date-picker/interface';
-import { IMovieDetails, MovieRelation } from '../../interfaces';
+import { IMovieDetails, MovieRelation, ICampaign } from '../../interfaces';
+import { Location } from 'history';
+import { FETCH_CAMPAIGN, UPDATE_EDITING_CAMPAIGN, UPDATE_CAMPAIGN } from '../../../../reducers/campaigns/constantes';
+import { match } from 'react-router';
+import { MovieDetails } from '../../Movies/MovieDetails';
 
 const { RangePicker } = DatePicker;
 
 interface IProps {
     history: History
+    location: Location
+    match: match<{ id: string }>
 }
 
 export default (props: IProps) => {
@@ -17,59 +23,86 @@ export default (props: IProps) => {
         uploadedMovies: state.uploadedMovies,
         editingCampaign: state.campaigns.editingCampaign,
     }));
+    
+    useEffect(() => {
+        dispatch({
+            type: FETCH_CAMPAIGN,
+            payload: {
+                id: props.match.params.id,
+            },
+        })
+        dispatch({ type: 'FETCH_UPLOADED_MOVIES' })
+    }, [])
 
-    if (!editingCampaign) {
-        // TODO : Error handling
+    const form = {
+        enabled: editingCampaign ? editingCampaign.enabled : false,
+        id: editingCampaign ? editingCampaign.id : '',
+        name: editingCampaign ? editingCampaign.name : '',
+        startTime: editingCampaign ? editingCampaign.startTime : 0,
+        endTime: editingCampaign ? editingCampaign.endTime : 0,
+        movies: editingCampaign ? editingCampaign.movies : [],
+        note: editingCampaign ? editingCampaign.note : '',
     }
-
-    const [ form, setFormValues ] = useState({
-        name: editingCampaign.name,
-        startTime: editingCampaign.startTime,
-        endTime: editingCampaign.endTime,
-        note: '',
-        movies: editingCampaign.movies.map((m: MovieRelation) => m.node.id),
-    });
 
     const filterOptions = (input: string, option: ReactElement): boolean => {
         return option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0;
     };
 
-    const fetchUploadedMovies = () => {
-        dispatch({ type: 'FETCH_UPLOADED_MOVIES' })
-    }
-
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
 
         const { name, startTime, endTime, note, movies} = form;
+        if (!name || !startTime || !endTime || !note || !movies)
+             return;
 
-        if (!name || !startTime || !endTime || !note || movies.length < 1)
-            return;
-
-        // dispatch(createCampaign(form));
+        dispatch({
+            type: UPDATE_CAMPAIGN,
+            payload: form,
+        });
     };
 
     const updateFormStrings = (e: SyntheticEvent): void => {
         const { value, name } = e.target as HTMLInputElement;
-        setFormValues({
-            ...form,
-            [name]: value,
-        });
+        if (!editingCampaign) {
+            return
+        }
+
+        dispatch({
+            type: UPDATE_EDITING_CAMPAIGN,
+            payload: {
+                ...editingCampaign,
+                [name]: value,
+            },
+        })
     };
 
     const updateFormDates = (_: RangePickerValue, dates: [string, string]) => {
-        setFormValues({
-            ...form,
-            startTime: moment(dates[0]).valueOf(),
-            endTime: moment(dates[1]).valueOf(),
-        });
+        if (!editingCampaign) {
+            return
+        }
+
+        dispatch({
+            type: UPDATE_EDITING_CAMPAIGN,
+            payload: {
+                ...editingCampaign,
+                startTime: moment(dates[0]).valueOf(),
+                endTime: moment(dates[1]).valueOf(),
+            },
+        })
     };
 
-    const updateFormMovies = (value: string[], _: any) => {
-        setFormValues({
-          ...form,
-            movies: value,
-        });
+    const updateFormMovies = (movies: string[], _: any) => {
+        if (!editingCampaign) {
+            return
+        }
+
+        dispatch({
+            type: UPDATE_EDITING_CAMPAIGN,
+            payload: {
+                ...editingCampaign,
+                movies: movies.map((id) => ({ node: { id } })),
+            },
+        })
     };
 
     return (
@@ -94,11 +127,11 @@ export default (props: IProps) => {
                     label="Note de la campagne"
                     required
                 >
-                    <Input.TextArea
+                <Input.TextArea
                     value={form.note}
                     onChange={updateFormStrings}
                     name="note"
-                    />
+                />
                 </Form.Item>
                 <Form.Item
                     label="Dates de diffusion de la campagne"
@@ -108,7 +141,7 @@ export default (props: IProps) => {
                         showTime
                         format="YYYY-MM-DD"
                         onChange={updateFormDates}
-                        defaultValue={[moment(editingCampaign.startTime), moment(editingCampaign.endTime)]}
+                        value={[moment(form.startTime), moment(form.endTime)]}
                     />
                 </Form.Item>
                 <Form.Item
@@ -121,8 +154,7 @@ export default (props: IProps) => {
                         allowClear
                         mode="multiple"
                         onChange={updateFormMovies}
-                        onFocus={fetchUploadedMovies}
-                        value={form.movies}
+                        value={form.movies.map((m: MovieRelation) => m.node.id)}
                     >
                         {uploadedMovies.movies.map((movie: IMovieDetails) => <Select.Option key={movie.id}>{movie.title}</Select.Option>)}
                     </Select>

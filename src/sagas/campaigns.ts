@@ -10,10 +10,13 @@ import {
     FETCH_CAMPAIGNS,
     FETCH_CAMPAIGNS_FAILED,
     FETCH_CAMPAIGNS_SUCCEEDED,
-    UPDATE_CAMPAIGN_ENABLED,
-    UPDATE_CAMPAIGN_ENABLED_DONE,
+    UPDATE_CAMPAIGN,
+    UPDATE_CAMPAIGN_DONE,
     DELETE_CAMPAIGN,
     DELETE_CAMPAIGN_SUCCEEDED,
+    FETCH_CAMPAIGN,
+    FETCH_CAMPAIGN_SUCCEEDED,
+    FETCH_CAMPAIGN_FAILED,
 } from '../reducers/campaigns/constantes';
 import { MovieRelation } from "../components/App/interfaces";
 
@@ -36,6 +39,32 @@ function* fetchCampaigns(action: AnyAction): IterableIterator<Object | void> {
         });
         yield notification['error']({
             message: 'Unable to fetch campaigns',
+            description: e.message,
+        });
+    }
+}
+
+function* fetchCampaign(action: AnyAction): IterableIterator<Object | void> {
+    try {
+        const { payload } = action;
+        const { id } = payload;
+        const res = yield axios.get(`campaigns/${id}`);
+
+        if (!res)
+            throw new Error(`Unable to fetch campaign ${id}`);
+
+        const { data } = res;
+
+        yield put({
+            type: FETCH_CAMPAIGN_SUCCEEDED,
+            payload: data,
+        });
+    } catch (e) {
+        yield put({
+            type: FETCH_CAMPAIGN_FAILED,
+        });
+        yield notification['error']({
+            message: `Unable to fetch campaign`,
             description: e.message,
         });
     }
@@ -71,16 +100,13 @@ function* createCampaign(action: AnyAction): IterableIterator<Object | void> {
     }
 }
 
-function* updateCampaignEnabled(action: AnyAction): IterableIterator<Object | void> {
+function* updateCampaign(action: AnyAction): IterableIterator<Object | void> {
     try {
         const { payload } = action;
         const { id } = payload;
 
         const res = yield axios.put(`campaigns/${id}`, {
-            name: payload.name,
-            startTime: payload.startTime,
-            endTime: payload.endTime,
-            enabled: payload.enabled,
+            ...payload,
             movies: payload.movies.map((movie: MovieRelation) => movie.node.id),
         });
 
@@ -90,12 +116,12 @@ function* updateCampaignEnabled(action: AnyAction): IterableIterator<Object | vo
         const { data } = res;
 
         yield put({
-            type: UPDATE_CAMPAIGN_ENABLED_DONE,
+            type: UPDATE_CAMPAIGN_DONE,
             payload: data,
         });
     } catch (e) {
         yield put({
-            type: UPDATE_CAMPAIGN_ENABLED_DONE,
+            type: UPDATE_CAMPAIGN_DONE,
         });
         yield notification['error']({
             message: 'Unable to update campaign',
@@ -127,8 +153,9 @@ function* deleteCampaign(action: AnyAction): IterableIterator<Object | void> {
 
 function* saga() {
     yield takeEvery(FETCH_CAMPAIGNS, fetchCampaigns);
+    yield takeEvery(FETCH_CAMPAIGN, fetchCampaign);
     yield takeEvery(CREATE_CAMPAIGN, createCampaign);
-    yield takeLatest(UPDATE_CAMPAIGN_ENABLED, updateCampaignEnabled);
+    yield takeLatest(UPDATE_CAMPAIGN, updateCampaign);
     yield takeLatest(DELETE_CAMPAIGN, deleteCampaign);
 }
 
