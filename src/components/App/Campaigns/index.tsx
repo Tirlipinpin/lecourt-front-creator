@@ -96,7 +96,7 @@ export default (props: ICampaignsProps) => {
             subTitle="Paramétrez les campagnes de diffusion de vos films ajoutés sur la plateforme"
             className="campaigns-page-header"
           />
-          <Table dataSource={campaigns.campaigns} className="campaigns-table">
+          <Table loading={campaigns.updatingEnabled} dataSource={campaigns.campaigns} className="campaigns-table">
             <Column
               title="Name"
               key="name"
@@ -168,7 +168,6 @@ export default (props: ICampaignsProps) => {
                         onClick={(enabled: boolean) => handleSwitchButton(enabled, campaign)}
                         checked={campaign.enabled}
                         title="Campaign status"
-                        loading={campaigns.updatingEnabled}
                     />
                 </Fragment>
               )}
