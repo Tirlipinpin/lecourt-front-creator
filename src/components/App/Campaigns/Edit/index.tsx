@@ -7,6 +7,7 @@ import { IMovieDetails, MovieRelation } from '../../interfaces';
 import { Location } from 'history';
 import { FETCH_CAMPAIGN, UPDATE_EDITING_CAMPAIGN, UPDATE_CAMPAIGN } from '../../../../reducers/campaigns/constantes';
 import { match, RouterProps } from 'react-router';
+import './index.css'
 
 const { RangePicker } = DatePicker;
 
@@ -125,7 +126,7 @@ export default (props: IProps) => {
     })
 
     return (
-        <Layout className="campaigns-page-container">
+        <Layout className="campaigns-edit-page-container">
             <PageHeader
                 title="Edition d'une campagne"
                 subTitle="Explorez vos courts métrages postés sur la platforme et définissez leurs paramètres"

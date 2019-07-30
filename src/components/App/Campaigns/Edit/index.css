@@ -1,3 +1,9 @@
-.campaigns-page-container {
+.campaigns-edit-page-container {
     margin: 32px 64px 0 64px;
+}
+
+.campaigns-edit-page-container .campaigns-page-header {
+    margin: auto auto 64px auto;
+    width: 100%;
+    box-shadow: 0 1px 5px 1px rgba(134, 134, 136, 0.35);
 }
