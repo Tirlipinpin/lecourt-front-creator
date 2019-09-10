@@ -4,7 +4,7 @@
 
 .campaigns-page-container .campaigns-table {
     padding: 10px;
-    overflow-x: scroll;
+    overflow-x: auto;
     background-color: white;
     margin-bottom: 10px;
 }

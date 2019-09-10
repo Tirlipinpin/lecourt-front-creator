@@ -128,7 +128,7 @@ export default (props: ICampaignsProps) => {
               render={(_: any, campaign: any) => (
                   <Steps current={getTimelineCurrentState(campaign)}>
                     <Step title="Disabled" description="Your campaign is currently disabled" />
-                    <Step title="Beign started" description={moment(campaign.startTime).format("MMM Do YYYY")} />
+                    <Step title="Being started" description={moment(campaign.startTime).format("MMM Do YYYY")} />
                     <Step title="In Progress" description="Your campaign is currently beign broadcast" />
                     <Step title="Terminated" description={moment(campaign.endTime).format("MMM Do YYYY")} />
                   </Steps>
