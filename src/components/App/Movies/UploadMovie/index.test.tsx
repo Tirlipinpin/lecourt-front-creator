@@ -5,7 +5,12 @@ import { UploadFile } from 'antd/es/upload/interface';
 import { Moment } from 'moment';
 
 import { UploadMovie } from '.';
-import { IActorForm, IDirectorForm, IStaffForm } from '../../interfaces';
+import {
+    IActorForm,
+    IDirectorForm,
+    IGenreForm,
+    IStaffForm,
+} from '../../interfaces';
 
 
 describe('The UploadMovie component', () => {
@@ -16,7 +21,7 @@ describe('The UploadMovie component', () => {
         wrapper = shallow(
             <UploadMovie
               dispatch={dispatch}
-              uploadMovie={{ loading: false, persons: [], visible: false }}
+              uploadMovie={{ persons: [], genres: [], visible: false }}
             />
         );
     });
@@ -25,9 +30,9 @@ describe('The UploadMovie component', () => {
         expect(wrapper).toHaveLength(1);
     });
 
-    it('should dispatch a FETCH_PERSONS action on mount', () => {
+    it('should dispatch a FETCH_MOVIE_CREATION_DATA action on mount', () => {
         expect(dispatch).toHaveBeenCalledWith({
-            type: 'FETCH_PERSONS',
+            type: 'FETCH_MOVIE_CREATION_DATA',
         })
     });
 
@@ -38,9 +43,10 @@ describe('The UploadMovie component', () => {
                 name: 'poney',
                 type: 'video/mp4',
             },
-        } as UploadChangeParam;
+            fileList: [],
+        } as any;
 
-        instance.onUploadMovie(info);
+        instance.onUploadMovie(info as UploadChangeParam);
 
         expect(wrapper.state('movieFile')).toEqual(info.file);
     });
@@ -52,9 +58,10 @@ describe('The UploadMovie component', () => {
                 name: 'poney',
                 type: 'image',
             },
-        } as UploadChangeParam;
+            fileList: [],
+        } as any;
 
-        instance.onUploadPoster(info);
+        instance.onUploadPoster(info as UploadChangeParam);
 
         expect(wrapper.state('posterFile')).toEqual(info.file);
     });
@@ -155,6 +162,7 @@ describe('The UploadMovie component', () => {
             actors: [{ actorId: '1234', role: 'batman' }] as IActorForm[],
             directors: [{ personId: '1234' }] as IDirectorForm[],
             staff: [{ personId: '1234' }] as IStaffForm[],
+            genres: [{ genreId: '1234' }] as IGenreForm[],
             posterFile: { name: 'poster' } as UploadFile,
             movieFile: { name: 'video'} as UploadFile,
         };

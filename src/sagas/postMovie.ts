@@ -2,16 +2,17 @@ import { put, takeEvery } from 'redux-saga/effects';
 import { AnyAction } from 'redux';
 import axios from 'axios';
 import { notification } from 'antd';
-
 import {
+    FETCH_MOVIE_CREATION_DATA,
     UPLOAD_MOVIE,
     UPLOAD_MOVIE_FAILED,
     UPLOAD_MOVIE_SUCCEEDED,
     UPLOAD_MOVIE_FILE_FAILED,
     UPLOAD_MOVIE_FILE_SUCCEEDED,
-    FETCH_PERSONS,
-    FETCH_PERSONS_SUCCEEDED,
     FETCH_PERSONS_FAILED,
+    FETCH_PERSONS_SUCCEEDED,
+    FETCH_GENRES_FAILED,
+    FETCH_GENRES_SUCCEEDED,
 } from '../reducers/uploadMovie/constantes';
 
 function* fetchPersons(): IterableIterator<Object | void> {
@@ -35,6 +36,32 @@ function* fetchPersons(): IterableIterator<Object | void> {
         });
         yield notification['error']({
             message: 'Unable to fetch persons to add to your short',
+            description: e.message,
+        });
+    }
+}
+
+function* fetchGenres(): IterableIterator<Object | void> {
+    try {
+        const res = yield axios.get(`genres?limit=200`);
+
+        if (!res)
+            throw new Error('Unable to fetch genres to add to your short');
+
+        const { data } = res;
+
+        yield put({
+            type: FETCH_GENRES_SUCCEEDED,
+            payload: {
+                data,
+            },
+        });
+    } catch (e) {
+        yield put({
+            type: FETCH_GENRES_FAILED,
+        });
+        yield notification['error']({
+            message: 'Unable to fetch genres to add to your short',
             description: e.message,
         });
     }
@@ -117,7 +144,33 @@ function* uploadMovieFile(action: AnyAction): IterableIterator<Object | void> {
             type: UPLOAD_MOVIE_FILE_FAILED,
         });
         yield notification['error']({
-            message: 'Unable to upload movie in database',
+            message: 'Unable to upload the movie in database',
+            description: e.message,
+        });
+    }
+}
+
+function* uploadMoviePosterFile(action: AnyAction): IterableIterator<Object | void> {
+    try {
+        const {
+            id,
+            posterFile,
+        } = action.payload;
+
+        const body = new FormData();
+        body.append('image', posterFile);
+
+        yield notification['info']({
+            message: 'Movie successfully created in database',
+            description: 'Uploading the video in database',
+        });
+
+        const res = yield axios.post(`https://upload.stg.lecourt.tv/images/${id}`, body);
+        if (!res)
+            throw new Error('Unable to upload the poster');
+    } catch (e) {
+        yield notification['error']({
+            message: 'Unable to upload the poster in database',
             description: e.message,
         });
     }
@@ -154,18 +207,7 @@ function* addMovieDirectors(action: AnyAction): IterableIterator<Object | void> 
         if (!res)
             throw new Error('Unable to add directors');
 
-        const { data } = res;
-
-        yield put({
-            type: UPLOAD_MOVIE_FILE_SUCCEEDED,
-            payload: {
-                ...data,
-            },
-        });
     } catch (e) {
-        yield put({
-            type: UPLOAD_MOVIE_FILE_FAILED,
-        });
         yield notification['error']({
             message: 'Unable to add directors in database',
             description: e.message,
@@ -192,13 +234,35 @@ function* addMovieStaff(action: AnyAction): IterableIterator<Object | void> {
     }
 }
 
+function* addMovieGenres(action: AnyAction): IterableIterator<Object | void> {
+    try {
+        const {
+            id,
+            genres,
+        } = action.payload;
+
+        const res = yield axios.post(`movies/${id}/genres`, genres);
+        if (!res)
+            throw new Error('Unable to add genres');
+
+    } catch (e) {
+        yield notification['error']({
+            message: 'Unable to add genres in database',
+            description: e.message,
+        });
+    }
+}
+
 function* saga() {
-    yield takeEvery(FETCH_PERSONS, fetchPersons);
+    yield takeEvery(FETCH_MOVIE_CREATION_DATA, fetchPersons);
+    yield takeEvery(FETCH_MOVIE_CREATION_DATA, fetchGenres);
     yield takeEvery(UPLOAD_MOVIE, postMovie);
     yield takeEvery(UPLOAD_MOVIE_SUCCEEDED, uploadMovieFile);
+    yield takeEvery(UPLOAD_MOVIE_SUCCEEDED, uploadMoviePosterFile);
     yield takeEvery(UPLOAD_MOVIE_SUCCEEDED, addMovieActors);
     yield takeEvery(UPLOAD_MOVIE_SUCCEEDED, addMovieDirectors);
     yield takeEvery(UPLOAD_MOVIE_SUCCEEDED, addMovieStaff);
+    yield takeEvery(UPLOAD_MOVIE_SUCCEEDED, addMovieGenres);
 }
 
 export default saga;

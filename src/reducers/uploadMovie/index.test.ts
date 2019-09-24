@@ -1,54 +1,53 @@
 import uploadMovie, { defaultState } from '.';
-import {
-    FETCH_PERSONS,
-    FETCH_PERSONS_SUCCEEDED,
-    FETCH_PERSONS_FAILED,
-} from './constantes';
 
 describe('uploadMovie reducer', () => {
     it('should return initial state', () => {
         expect(uploadMovie(defaultState, {})).toEqual(defaultState);
     });
 
-    it('should start loading when uploadMovie is triggered', () => {
+    it('should update persons when receiving FETCH_PERSONS_SUCCEEDED', () => {
         const action = {
-            type: FETCH_PERSONS,
-        };
-
-        expect(uploadMovie(defaultState, action)).toEqual({
-            loading: true,
-            persons: [],
-            visible: false,
-        });
-    });
-
-    it('should stop loading and have persons when uploadMovie is successful', () => {
-        const action = {
-            type: FETCH_PERSONS_SUCCEEDED,
+            type: 'FETCH_PERSONS_SUCCEEDED',
             payload: {
                 data: [
-                  'poney',
+                    { personId: '42', name: 'laurent' },
                 ],
             },
         };
 
         expect(uploadMovie(defaultState, action)).toEqual({
-            loading: false,
-            persons: ['poney'],
+            genres: [],
+            persons: [{ personId: '42', name: 'laurent' }],
             visible: false,
-        });
+        })
     });
 
-    it('should return an error state when uploadMovie fails', () => {
+    it('should update persons when receiving FETCH_GENRES_SUCCEEDED', () => {
         const action = {
-            type: FETCH_PERSONS_FAILED,
-            payload: 'error message',
+            type: 'FETCH_GENRES_SUCCEEDED',
+            payload: {
+                data: [
+                    { genreId: '42', name: 'laurent' },
+                ],
+            },
         };
 
         expect(uploadMovie(defaultState, action)).toEqual({
-            loading: false,
+            genres: [{ genreId: '42', name: 'laurent' }],
             persons: [],
             visible: false,
-        });
+        })
+    });
+
+    it('should update visibility to true when receiving SHOW_UPLOAD_MOVIE_MODAL', () => {
+        const action = {
+            type: 'SHOW_UPLOAD_MOVIE_MODAL',
+        };
+
+        expect(uploadMovie(defaultState, action)).toEqual({
+            genres: [],
+            persons: [],
+            visible: true,
+        })
     });
 });

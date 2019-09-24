@@ -7,6 +7,7 @@ import {
     Input,
     message,
     Upload,
+    Select,
 } from 'antd';
 import { UploadChangeParam } from 'antd/lib/upload';
 import { UploadFile } from 'antd/lib/upload/interface';
@@ -17,9 +18,15 @@ import { Moment } from 'moment';
 import { uploadMovie } from './actions';
 import PersonsSelect from './components/PersonsSelect';
 import RoleSelect from './components/RoleSelect';
-import { FETCH_PERSONS } from '../../../../reducers/uploadMovie/constantes';
+import { FETCH_MOVIE_CREATION_DATA } from '../../../../reducers/uploadMovie/constantes';
 import { IUploadMovieStore } from '../../../../reducers/uploadMovie';
-import { IActorForm, IDirectorForm, IStaffForm } from '../../interfaces';
+import {
+    IActorForm,
+    IDirectorForm,
+    IStaffForm,
+    IGenreForm,
+    Genre,
+} from '../../interfaces';
 import './index.css';
 
 export interface IUploadMovieProps {
@@ -35,6 +42,7 @@ export interface IUploadMovieState {
     actors: IActorForm[]
     directors: IDirectorForm[]
     staff: IStaffForm[]
+    genres: IGenreForm[]
     posterFile: UploadFile | null
     movieFile: UploadFile | null
     modalVisible: boolean
@@ -53,6 +61,7 @@ export class UploadMovie extends Component<IUploadMovieProps, IUploadMovieState>
         actors: [],
         directors: [],
         staff: [],
+        genres: [],
         posterFile: null,
         movieFile: null,
         modalVisible: false,
@@ -64,14 +73,14 @@ export class UploadMovie extends Component<IUploadMovieProps, IUploadMovieState>
     componentDidMount(): void {
         const { dispatch } = this.props;
 
-        dispatch({ type: FETCH_PERSONS });
+        dispatch({ type: FETCH_MOVIE_CREATION_DATA });
     }
 
     handleSubmit = (e: FormEvent) => {
         e.preventDefault();
 
-        const { title, summary, summarySmall, releaseDate, actors, directors, staff, posterFile, movieFile } = this.state;
-        if (!title || !summary || !summarySmall || !releaseDate || actors.length < 1 || directors.length < 1 || staff.length < 1 || !posterFile || !movieFile) return;
+        const { title, summary, summarySmall, releaseDate, actors, directors, staff, genres, posterFile, movieFile } = this.state;
+        if (!title || !summary || !summarySmall || !releaseDate || actors.length < 1 || directors.length < 1 || staff.length < 1 || genres.length < 1 || !posterFile || !movieFile) return;
 
         const { dispatch } = this.props;
         dispatch(uploadMovie(
@@ -82,8 +91,9 @@ export class UploadMovie extends Component<IUploadMovieProps, IUploadMovieState>
           actors,
           directors,
           staff,
+          genres,
           posterFile,
-          movieFile
+          movieFile,
         ));
     };
 
@@ -170,6 +180,23 @@ export class UploadMovie extends Component<IUploadMovieProps, IUploadMovieState>
         }
     };
 
+    handleGenreSelect = (genreId: any) => {
+        const genres = [ ...this.state.genres ];
+
+        genres.push({ genreId });
+        this.setState({ genres });
+    };
+
+    handleGenreDeselect = (e: any) => {
+        const genres: IGenreForm[] = [...this.state.genres];
+        const index = genres.findIndex((genre) => genre.genreId === e);
+
+        if (index !== -1) {
+            genres.splice(index, 1);
+            this.setState({ genres });
+        }
+    };
+
     onUploadPoster = (info: UploadChangeParam) => {
         const { file } = info;
 
@@ -222,7 +249,7 @@ export class UploadMovie extends Component<IUploadMovieProps, IUploadMovieState>
             actualPerson,
             movieFileList,
         } = this.state;
-        const { persons, loading } = this.props.uploadMovie;
+        const { persons, genres } = this.props.uploadMovie;
 
         return (
           <div>
@@ -304,6 +331,27 @@ export class UploadMovie extends Component<IUploadMovieProps, IUploadMovieState>
                             onSelect={this.handleStaffSelect}
                             onDeselect={this.handleStaffDeselect}
                           />
+                      </Form.Item>
+                      <Form.Item
+                        label="Les genres de votre court métrage"
+                        required
+                      >
+                          <Select
+                            mode="multiple"
+                            style={{ width: '100%' }}
+                            allowClear
+                            placeholder="Vous pouvez en rechercher"
+                            optionFilterProp="children"
+                            filterOption={this.filterOptions}
+                            onSelect={this.handleGenreSelect}
+                            onDeselect={this.handleGenreDeselect}
+                          >
+                              {genres.map((genre: Genre) => (
+                                <Select.Option key={genre.id}>
+                                    {genre.name}
+                                </Select.Option>
+                              ))}
+                          </Select>
                       </Form.Item>
                       <Form.Item
                         required

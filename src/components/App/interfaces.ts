@@ -19,6 +19,10 @@ export interface IStaffForm {
   job: string
 }
 
+export interface IGenreForm {
+  genreId: string
+}
+
 export interface Genre {
   id: string
   name: string
