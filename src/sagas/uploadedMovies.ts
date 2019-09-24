@@ -12,7 +12,7 @@ import {
 
 function* fetchUploadedMovies(action: AnyAction): IterableIterator<Object | void> {
     try {
-        const res = yield axios.get(`movies`);
+        const res = yield axios.get(`movies?limit=100`);
 
         if (!res)
             throw new Error('Unable to fetch uploaded movies');

@@ -40,6 +40,8 @@ export interface IUploadMovieState {
     modalVisible: boolean
     addPerson?: (id: string, role: string) => void
     actualPerson: string
+    posterFileList: UploadFile[]
+    movieFileList: UploadFile[]
 }
 
 export class UploadMovie extends Component<IUploadMovieProps, IUploadMovieState> {
@@ -55,6 +57,8 @@ export class UploadMovie extends Component<IUploadMovieProps, IUploadMovieState>
         movieFile: null,
         modalVisible: false,
         actualPerson: '',
+        posterFileList: [],
+        movieFileList: [],
     };
 
     componentDidMount(): void {
@@ -171,7 +175,10 @@ export class UploadMovie extends Component<IUploadMovieProps, IUploadMovieState>
 
         if (file && file.type.split('/')[0] === 'image') {
             message.success(`${file.name} file uploaded successfully.`);
-            this.setState({ posterFile: file });
+            this.setState({
+                posterFile: file,
+                posterFileList: [ ...info.fileList ].slice(-1),
+            });
         }
         else {
             message.error(`${file.name} file upload failed.`);
@@ -183,7 +190,10 @@ export class UploadMovie extends Component<IUploadMovieProps, IUploadMovieState>
 
         if (file.type === 'video/mp4') {
             message.success(`${file.name} file uploaded successfully.`);
-            this.setState({ movieFile: file });
+            this.setState({
+                movieFile: file,
+                movieFileList: [ ...info.fileList ].slice(-1),
+            });
         }
         else {
             message.error(`${file.name} file upload failed.`);
@@ -203,7 +213,15 @@ export class UploadMovie extends Component<IUploadMovieProps, IUploadMovieState>
     };
 
     render() {
-        const { title, summary, summarySmall, modalVisible, addPerson, actualPerson } = this.state;
+        const {
+            title,
+            summary,
+            summarySmall,
+            modalVisible,
+            addPerson,
+            actualPerson,
+            movieFileList,
+        } = this.state;
         const { persons, loading } = this.props.uploadMovie;
 
         return (
@@ -313,6 +331,7 @@ export class UploadMovie extends Component<IUploadMovieProps, IUploadMovieState>
                             onChange={this.onUploadMovie}
                             beforeUpload={() => false}
                             accept="video/*"
+                            fileList={movieFileList}
                           >
                               <p className="ant-upload-drag-icon">
                                   <Icon type="inbox"/>
