@@ -34,8 +34,8 @@ export default ({ id, visible, handleHideModal, addPerson }: IRoleSelectProps) =
     return (
       <Modal
         visible={visible}
-        onCancel={handleHideModal}
         footer={false}
+        closable={false}
       >
           <Form onSubmit={onSubmit}>
               <Form.Item
