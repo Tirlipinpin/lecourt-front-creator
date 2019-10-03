@@ -8,9 +8,12 @@
     border-right: 1px solid #e8e8e8;
     height: 100vh;
     position: fixed;
+    background-color: #292929;
+    color: white;
 }
 
 .navbar-container .ant-layout-sider-trigger {
+    color: white;
     border-right: 1px solid #e8e8e8;
     background-color: inherit;
     transition: all 0.2s;
@@ -21,7 +24,8 @@
 }
 
 .navbar-container .ant-layout-sider-trigger:hover {
-    background-color: #e6f7ff;
+    color: #2E8CFF;
+    background-color: #C7E0FF;
 }
 
 .content-container {

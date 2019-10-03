@@ -1,8 +1,39 @@
+.navbar-menu {
+    background: #292929;
+}
+
+.navbar-menu .logout-button {
+    color: white;
+}
+
+.navbar-menu .ant-menu-item a {
+    color: white;
+}
+
+.navbar-menu .ant-menu-item-selected,
+.navbar-menu .ant-menu-item-active:active
+{
+    background-color: #C7E0FF !important;
+}
+
+.navbar-menu .ant-menu-item-selected::after {
+    display: none;
+}
+
+.navbar-menu .ant-menu-item a:hover,
+.navbar-menu .ant-menu-item-active a:hover,
+.navbar-menu .ant-menu-item-selected a,
+.navbar-menu .logout-button:hover
+{
+    color: #2E8CFF;
+}
+
 .collapsed-logo {
     padding: 1% 0;
     display: flex;
     align-items: center;
     justify-content: center;
+    margin: 16px 0;
 }
 
 .navbar-logo {
@@ -17,6 +48,7 @@
     height: 48px;
     cursor: pointer;
     text-align: center;
+    margin: 16px 8% 16px 0;
 }
 
 .navbar-logo .lecourt-title {
