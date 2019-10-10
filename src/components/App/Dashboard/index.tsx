@@ -26,56 +26,36 @@ export class Dashboard extends Component<{}, {}> {
 
     dataTest1 = [
         {
-          "name": "Group A",
-          "value": 400
+          "name": "Age moyen",
+          "value": 26,
         },
         {
-          "name": "Group B",
-          "value": 300
+          "name": "Nombre de vues total",
+          "value": 30000
         },
         {
-          "name": "Group C",
-          "value": 300
+          "name": "Nombre de films postés",
+          "value": 30
         },
         {
-          "name": "Group D",
-          "value": 200
+            "name": "Nombre de campagnes",
+            "value": 5
         },
-        {
-          "name": "Group E",
-          "value": 278
-        },
-        {
-          "name": "Group F",
-          "value": 189
-        }
     ];
 
     dataTest2 = [
         {
-          "name": "Group A",
+          "name": "Quantité de revisionnages",
           "value": 2400
         },
         {
-          "name": "Group B",
-          "value": 4567
+          "name": "Note moyenne de vos courts (/5)",
+          "value": 4.2
         },
         {
-          "name": "Group C",
-          "value": 1398
+          "name": "Durée moyenne de vos courts (en minutes)",
+          "value": 13.75
         },
-        {
-          "name": "Group D",
-          "value": 9800
-        },
-        {
-          "name": "Group E",
-          "value": 3908
-        },
-        {
-          "name": "Group F",
-          "value": 4800
-        }
     ];
 
     dataTest3 = [
@@ -142,7 +122,20 @@ export class Dashboard extends Component<{}, {}> {
                         >
                             <PieChart>
                                 <Tooltip />
-                                <Pie data={this.dataTest1} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={50} fill={this.getRandomColor()} />
+                                <Legend verticalAlign="top" height={36} />
+                                <Pie data={this.dataTest1} dataKey="value" nameKey="name" cx="50%" cy="50%" innerRadius={60} outerRadius={80} fill={this.getRandomColor()} label />
+                            </PieChart>
+                        </ResponsiveContainer>
+                    </Col>
+                    <Col span={8}>
+                        <ResponsiveContainer
+                            height={350}
+                            width="100%"
+                            className="chart-container"
+                        >
+                            <PieChart>
+                                <Tooltip />
+                                <Legend verticalAlign="top" height={36} />
                                 <Pie data={this.dataTest2} dataKey="value" nameKey="name" cx="50%" cy="50%" innerRadius={60} outerRadius={80} fill={this.getRandomColor()} label />
                             </PieChart>
                         </ResponsiveContainer>
@@ -155,21 +148,8 @@ export class Dashboard extends Component<{}, {}> {
                         >
                             <PieChart>
                                 <Tooltip />
-                                <Pie data={this.dataTest1} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={50} fill={this.getRandomColor()} />
-                                <Pie data={this.dataTest2} dataKey="value" nameKey="name" cx="50%" cy="50%" innerRadius={60} outerRadius={80} fill={this.getRandomColor()} label />
-                            </PieChart>
-                        </ResponsiveContainer>
-                    </Col>
-                    <Col span={8}>
-                        <ResponsiveContainer
-                            height={350}
-                            width="100%"
-                            className="chart-container"
-                        >
-                            <PieChart>
-                                <Tooltip />
-                                <Pie data={this.dataTest1} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={50} fill={this.getRandomColor()} />
-                                <Pie data={this.dataTest2} dataKey="value" nameKey="name" cx="50%" cy="50%" innerRadius={60} outerRadius={80} fill={this.getRandomColor()} label />
+                                <Legend verticalAlign="top" height={36} />
+                                <Pie data={this.dataTest1} dataKey="value" nameKey="name" cx="50%" cy="50%" innerRadius={60} outerRadius={80} fill={this.getRandomColor()} label />
                             </PieChart>
                         </ResponsiveContainer>
                     </Col>
@@ -199,7 +179,7 @@ export class Dashboard extends Component<{}, {}> {
                         >
                             <PieChart>
                                 <Tooltip />
-                                <Pie data={this.dataTest1} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={50} fill={this.getRandomColor()} />
+                                <Legend verticalAlign="top" height={36} />
                                 <Pie data={this.dataTest2} dataKey="value" nameKey="name" cx="50%" cy="50%" innerRadius={60} outerRadius={80} fill={this.getRandomColor()} label />
                             </PieChart>
                         </ResponsiveContainer>
@@ -214,8 +194,8 @@ export class Dashboard extends Component<{}, {}> {
                         >
                             <PieChart>
                                 <Tooltip />
-                                <Pie data={this.dataTest1} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={50} fill={this.getRandomColor()} />
-                                <Pie data={this.dataTest2} dataKey="value" nameKey="name" cx="50%" cy="50%" innerRadius={60} outerRadius={80} fill={this.getRandomColor()} label />
+                                <Legend verticalAlign="top" height={36} />
+                                <Pie data={this.dataTest1} dataKey="value" nameKey="name" cx="50%" cy="50%" innerRadius={60} outerRadius={80} fill={this.getRandomColor()} label />
                             </PieChart>
                         </ResponsiveContainer>
                     </Col>
@@ -227,7 +207,7 @@ export class Dashboard extends Component<{}, {}> {
                         >
                             <PieChart>
                                 <Tooltip />
-                                <Pie data={this.dataTest1} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={50} fill={this.getRandomColor()} />
+                                <Legend verticalAlign="top" height={36} />
                                 <Pie data={this.dataTest2} dataKey="value" nameKey="name" cx="50%" cy="50%" innerRadius={60} outerRadius={80} fill={this.getRandomColor()} label />
                             </PieChart>
                         </ResponsiveContainer>
