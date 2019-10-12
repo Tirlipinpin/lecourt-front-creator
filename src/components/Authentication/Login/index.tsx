@@ -1,9 +1,12 @@
-import React, { Component, Dispatch, SyntheticEvent, FormEvent } from 'react';
+import React, {
+    Component, Dispatch, Fragment, FormEvent, SyntheticEvent,
+} from 'react';
 import { connect } from 'react-redux';
 import { Form, Icon, Input, Button, Tooltip, Typography } from 'antd';
 import { Trans } from 'react-i18next';
-
 import './index.css';
+
+const { Item } = Form;
 
 export interface LoginProps {
     dispatch: Dispatch<any>
@@ -57,36 +60,48 @@ export class Login extends Component<LoginProps, LoginState> {
         const { loading } = this.props;
 
         return (
-            <>
-                <Typography.Title level={1}>
+            <Fragment>
+                <Typography.Title level={1} className="auth-form-title">
                     <Trans i18nKey='LOGIN' />
                 </Typography.Title>
-                <Form onSubmit={this.fetchToken}>
-                    <Input
-                        className="auth-form-item" allowClear required
-                        prefix={<Icon type="mail" />}
-                        value={email}
-                        onChange={this.handleEmail}
-                        placeholder="Email"
-                        suffix={
-                            <Tooltip title="Email address">
-                                <Icon type="info-circle" style={{ color: 'rgba(0,0,0,.45)' }} />
-                            </Tooltip>
-                        }
-                    />
-                    <Input
-                        className="auth-form-item" allowClear required
-                        prefix={<Icon type="lock" />}
-                        value={password}
-                        onChange={this.handlePassword}
-                        type="password"
-                        placeholder="Password"
-                        suffix={
-                            <Tooltip title="Password">
-                                <Icon type="info-circle" style={{ color: 'rgba(0,0,0,.45)' }} />
-                            </Tooltip>
-                        }
-                    />
+                <Form onSubmit={this.fetchToken} className="auth-form-container">
+                    <Item
+                        label="Email"
+                        colon={false}
+                        className="auth-form-item"
+                    >
+                        <Input
+                            allowClear
+                            required
+                            prefix={<Icon type="mail" />}
+                            value={email}
+                            onChange={this.handleEmail}
+                            suffix={
+                                <Tooltip title="Email address">
+                                    <Icon type="info-circle" style={{ color: 'rgba(0,0,0,.45)' }} />
+                                </Tooltip>
+                            }
+                        />
+                    </Item>
+                    <Item
+                        label="Password"
+                        colon={false}
+                        className="auth-form-item"
+                    >
+                        <Input
+                            allowClear
+                            required
+                            prefix={<Icon type="lock" />}
+                            value={password}
+                            onChange={this.handlePassword}
+                            type="password"
+                            suffix={
+                                <Tooltip title="Password">
+                                    <Icon type="info-circle" style={{ color: 'rgba(0,0,0,.45)' }} />
+                                </Tooltip>
+                            }
+                        />
+                    </Item>
                     <Button
                         loading={loading}
                         htmlType="submit"
@@ -99,7 +114,7 @@ export class Login extends Component<LoginProps, LoginState> {
                     </Button>
                     <a href="/authentication/register">Looking to <b>register</b> ?</a>
                 </Form>
-            </>
+            </Fragment>
         );
     }
 };

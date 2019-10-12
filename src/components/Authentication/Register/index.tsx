@@ -1,11 +1,11 @@
-import React, { Component, Dispatch, FormEvent, SyntheticEvent } from 'react';
+import React, { Component, Dispatch, Fragment, FormEvent, SyntheticEvent } from 'react';
 import { connect } from 'react-redux';
 import { Form, Icon, Input, Button, Typography, Tooltip } from 'antd';
 import { Trans } from 'react-i18next';
-
 import { RegisterStore } from '../../../reducers/register';
-
 import './index.css';
+
+const { Item } = Form;
 
 export interface RegisterState {
     displayName: string
@@ -80,61 +80,85 @@ export class Register extends Component<RegisterProps, RegisterState> {
         const { register } = this.props;
     
         return (
-            <>
-                <Typography.Title level={1}>
+            <Fragment>
+                <Typography.Title level={1} className="auth-form-title">
                     <Trans i18nKey="REGISTER" />
                 </Typography.Title>
-                <Form onSubmit={this.registerUser}>
-                    <Input
-                        className="auth-form-item" allowClear required
-                        prefix={<Icon type="user" />}
-                        value={displayName}
-                        onChange={this.handleDisplayName}
-                        placeholder='Display name'
-                        suffix={
-                            <Tooltip title="Display name">
-                                <Icon type="info-circle" style={{ color: 'rgba(0,0,0,.45)' }} />
-                            </Tooltip>
-                        }
-                    />        
-                    <Input
-                        className="auth-form-item" allowClear required
-                        prefix={<Icon type="mail" />}
-                        value={email}
-                        onChange={this.handleEmail}
-                        placeholder='Email'
-                        suffix={
-                            <Tooltip title="Email address">
-                                <Icon type="info-circle" style={{ color: 'rgba(0,0,0,.45)' }} />
-                            </Tooltip>
-                        }
-                    />
-                    <Input
-                        className="auth-form-item" allowClear required
-                        prefix={<Icon type="lock" />}
-                        value={password}
-                        onChange={this.handlePassword}
-                        placeholder='Password'
-                        type='password'
-                        suffix={
-                            <Tooltip title="Password">
-                                <Icon type="info-circle" style={{ color: 'rgba(0,0,0,.45)' }} />
-                            </Tooltip>
-                        }
-                    />
-                    <Input
-                        className="auth-form-item" allowClear required
-                        prefix={<Icon type="lock" />}
-                        value={passwordConfirm}
-                        onChange={this.handlePasswordConfirm}
-                        placeholder='Password (confirmation)'
-                        type='password'
-                        suffix={
-                            <Tooltip title="Password (confirmation), the same as the previous password">
-                                <Icon type="info-circle" style={{ color: 'rgba(0,0,0,.45)' }} />
-                            </Tooltip>
-                        }
-                    />
+                <Form onSubmit={this.registerUser} className="auth-form-container">
+                    <Item
+                        className="auth-form-item"
+                        label="Display name"
+                        colon={false}
+                    >
+                        <Input
+                            allowClear
+                            required
+                            prefix={<Icon type="user" />}
+                            value={displayName}
+                            onChange={this.handleDisplayName}
+                            suffix={
+                                <Tooltip title="Display name">
+                                    <Icon type="info-circle" style={{ color: 'rgba(0,0,0,.45)' }} />
+                                </Tooltip>
+                            }
+                        />
+                    </Item>
+                    <Item
+                        className="auth-form-item"
+                        label="Email"
+                        colon={false}
+                    >
+                        <Input
+                            allowClear
+                            required
+                            prefix={<Icon type="mail" />}
+                            value={email}
+                            onChange={this.handleEmail}
+                            suffix={
+                                <Tooltip title="Email address">
+                                    <Icon type="info-circle" style={{ color: 'rgba(0,0,0,.45)' }} />
+                                </Tooltip>
+                            }
+                        />
+                    </Item>
+                    <Item
+                        className="auth-form-item"
+                        label="Password"
+                        colon={false}
+                    >
+                        <Input
+                            allowClear
+                            required
+                            prefix={<Icon type="lock" />}
+                            value={password}
+                            onChange={this.handlePassword}
+                            type='password'
+                            suffix={
+                                <Tooltip title="Password">
+                                    <Icon type="info-circle" style={{ color: 'rgba(0,0,0,.45)' }} />
+                                </Tooltip>
+                            }
+                        />
+                    </Item>
+                    <Item
+                        className="auth-form-item"
+                        label="Password (confirmation)"
+                        colon={false}
+                    >
+                        <Input
+                            allowClear
+                            required
+                            prefix={<Icon type="lock" />}
+                            value={passwordConfirm}
+                            onChange={this.handlePasswordConfirm}
+                            type='password'
+                            suffix={
+                                <Tooltip title="Password (confirmation), the same as the previous password">
+                                    <Icon type="info-circle" style={{ color: 'rgba(0,0,0,.45)' }} />
+                                </Tooltip>
+                            }
+                        />
+                    </Item>
                     <Button
                         className="auth-form-button"
                         htmlType="submit"
@@ -147,7 +171,7 @@ export class Register extends Component<RegisterProps, RegisterState> {
                     </Button>
                     <a href="/">Looking to <b>login</b> ?</a>
                 </Form>
-            </>
+            </Fragment>
         );
     }
 }
