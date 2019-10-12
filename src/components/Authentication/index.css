@@ -5,7 +5,31 @@
 
 .left-auth-container {
     background-image: -webkit-linear-gradient(30deg, #263A54 50%, rgb(50, 83, 126) 50%);
-    flex: 5;
+}
+
+@media screen and (min-width: 1250px) {
+    .left-auth-container {
+        flex: 4; 
+    }
+}
+
+@media screen and (max-width: 1250px) {
+    .left-auth-container {
+        flex: 2; 
+    }
+}
+
+
+@media screen and (max-width: 1250px) {
+    .left-auth-container {
+        flex: 2; 
+    }
+}
+
+@media screen and (max-width: 720px) {
+    .left-auth-container {
+        flex: 0;
+    }
 }
 
 .right-auth-container {
