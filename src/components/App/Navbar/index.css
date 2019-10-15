@@ -23,13 +23,29 @@
 .navbar-menu .ant-menu-item a:hover,
 .navbar-menu .ant-menu-item-active a:hover,
 .navbar-menu .ant-menu-item-selected a,
-.navbar-menu .logout-button:hover
+.navbar-menu .logout-button:hover,
+.navbar-submenu-popup .ant-menu-item-selected a
 {
     color: #2E8CFF;
 }
 
 .navbar-menu .navbar-menu-item {
     margin-top: 32px;
+}
+
+.navbar-menu .navbar-submenu {
+    margin-top: 32px;
+    color: white;
+}
+
+.navbar-menu .navbar-submenu .ant-menu-sub,
+.navbar-submenu-popup ul
+{
+    background: #292929 !important;
+}
+
+.navbar-submenu-popup a {
+    color: white;
 }
 
 .collapsed-logo {

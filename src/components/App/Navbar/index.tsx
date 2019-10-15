@@ -7,6 +7,8 @@ import logo from '../../../assets/Logo.png';
 import './index.css';
 import { LOGOUT } from '../../../reducers/login/constants';
 
+const { SubMenu } = Menu;
+
 interface NavbarProps extends RouteComponentProps {
     dispatch: Dispatch<any>
     collapsed: boolean
@@ -23,18 +25,21 @@ export class Navbar extends Component<NavbarProps, {}> {
         history.push('/');
     };
 
-    isActive = (): string[] => {
+    getActiveKey = (): string[] => {
         const { location } = this.props;
+        const pathname = location.pathname.split('/');
+
+        if (pathname[2] === 'adminDashboard') return [`${pathname[2]}:${pathname[3]}`];
 
         return [
-            location.pathname.split('/')[2] || 'dashboard',
+            pathname[2] || 'dashboard',
         ];
     };
 
-    renderMenuItemContent = (iconType: string, title: string) => {
+    renderMenuItemContent = (iconType: string, title: string, submenu?: boolean) => {
         const { collapsed } = this.props;
 
-        if (collapsed) return <Icon type={iconType} />;
+        if (collapsed && !submenu) return <Icon type={iconType} />;
 
         return (
             <Fragment>
@@ -47,6 +52,8 @@ export class Navbar extends Component<NavbarProps, {}> {
     render() {
         const { history, collapsed } = this.props;
         const { url } = this.props.match;
+
+        console.log(this.getActiveKey());
 
         return (
             <Fragment>
@@ -61,7 +68,7 @@ export class Navbar extends Component<NavbarProps, {}> {
                     mode="inline"
                     style={{ lineHeight: '64px' }}
                     className={`menu-items-container navbar-menu ${!collapsed && 'not-collapsed'}`}
-                    selectedKeys={this.isActive()}
+                    selectedKeys={this.getActiveKey()}
                 >
                     <Menu.Item
                         className="navbar-menu-item"
@@ -91,13 +98,38 @@ export class Navbar extends Component<NavbarProps, {}> {
                     ><Link to='/app/campaigns'>
                         {this.renderMenuItemContent('flag', 'Campagnes')}
                     </Link></Menu.Item>
-                    <Menu.Item
-                        className="navbar-menu-item"
+                    <SubMenu
+                        className="navbar-submenu"
+                        popupClassName="navbar-submenu-popup"
                         key="adminDashboard"
-                        title="Admin dashboard"
-                    ><Link to='/app/adminDashboard'>
-                        {this.renderMenuItemContent('appstore', 'Admin dashboard')}
-                    </Link></Menu.Item>
+                        title={
+                            <span>
+                                {this.renderMenuItemContent('appstore', 'Admin dashboard')}
+                            </span>
+                        }
+                    >
+                        <Menu.Item
+                            className="navbar-menu-item"
+                            key="adminDashboard:persons"
+                            title="Persons"
+                        ><Link to='/app/adminDashboard/persons'>
+                            {this.renderMenuItemContent('team', 'Persons', true)}
+                        </Link></Menu.Item>
+                        <Menu.Item
+                            className="navbar-menu-item"
+                            key="adminDashboard:genres"
+                            title="Genres"
+                        ><Link to='/app/adminDashboard/genres'>
+                            {this.renderMenuItemContent('woman', 'Genres', true)}
+                        </Link></Menu.Item>
+                        <Menu.Item
+                            className="navbar-menu-item"
+                            key="adminDashboard:countries"
+                            title="Countries"
+                        ><Link to='/app/adminDashboard/countries'>
+                            {this.renderMenuItemContent('global', 'Countries', true)}
+                        </Link></Menu.Item>
+                    </SubMenu>
                     <Menu.Item
                         className="logout-button navbar-menu-item"
                         key="logout"
