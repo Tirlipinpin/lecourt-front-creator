@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import logo from '../../../assets/Logo.png';
 import './index.css';
-import { LOGOUT } from '../../../reducers/login/constantes';
+import { LOGOUT } from '../../../reducers/login/constants';
 
 interface NavbarProps extends RouteComponentProps {
     dispatch: Dispatch<any>

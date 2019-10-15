@@ -7,7 +7,7 @@ import {
   FETCH_MOVIE_DETAILS,
   FETCH_MOVIE_DETAILS_SUCCEEDED,
   FETCH_MOVIE_DETAILS_FAILED,
-} from '../reducers/movieDetails/constantes';
+} from '../reducers/movieDetails/constants';
 
 
 function* fetchMovieDetails(action: AnyAction): IterableIterator<Object | void> {

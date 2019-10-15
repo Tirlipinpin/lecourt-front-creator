@@ -17,7 +17,7 @@ import {
     FETCH_CAMPAIGN,
     FETCH_CAMPAIGN_SUCCEEDED,
     FETCH_CAMPAIGN_FAILED,
-} from '../reducers/campaigns/constantes';
+} from '../reducers/campaigns/constants';
 import { MovieRelation } from "../components/App/interfaces";
 
 function* fetchCampaigns(action: AnyAction): IterableIterator<Object | void> {

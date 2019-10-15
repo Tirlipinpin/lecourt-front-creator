@@ -7,7 +7,7 @@ import {
     FETCH_UPLOADED_MOVIES,
     FETCH_UPLOADED_MOVIES_FAILED,
     FETCH_UPLOADED_MOVIES_SUCCEEDED,
-} from '../reducers/uploadedMovies/constantes';
+} from '../reducers/uploadedMovies/constants';
 
 
 function* fetchUploadedMovies(action: AnyAction): IterableIterator<Object | void> {

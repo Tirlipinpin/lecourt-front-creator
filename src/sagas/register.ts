@@ -2,7 +2,7 @@ import { put, takeLatest } from 'redux-saga/effects';
 import axios from 'axios';
 import { notification } from 'antd';
 
-import { REGISTER_USER, REGISTER_USER_SUCCEEDED, REGISTER_USER_FAILED } from '../reducers/register/constantes';
+import { REGISTER_USER, REGISTER_USER_SUCCEEDED, REGISTER_USER_FAILED } from '../reducers/register/constants';
 
 function* registerUser(action: any): any {
     try {

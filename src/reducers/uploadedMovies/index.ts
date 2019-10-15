@@ -1,4 +1,4 @@
-import { FETCH_UPLOADED_MOVIES, FETCH_UPLOADED_MOVIES_FAILED, FETCH_UPLOADED_MOVIES_SUCCEEDED } from './constantes';
+import { FETCH_UPLOADED_MOVIES, FETCH_UPLOADED_MOVIES_FAILED, FETCH_UPLOADED_MOVIES_SUCCEEDED } from './constants';
 import { IMovieDetails } from "../../components/App/interfaces";
 
 export interface IMoviesStore {

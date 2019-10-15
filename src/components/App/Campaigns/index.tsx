@@ -10,13 +10,13 @@ import {
     UPDATE_CAMPAIGN,
     DELETE_CAMPAIGN,
     UPDATE_EDITING_CAMPAIGN,
-} from '../../../reducers/campaigns/constantes';
+} from '../../../reducers/campaigns/constants';
 import CreateCampaignForm from './CreateCampaignForm';
 import { ICampaign, MovieRelation } from '../interfaces';
 import './index.css';
 import Column from 'antd/lib/table/Column';
 import Paragraph from 'antd/lib/typography/Paragraph';
-import { FETCH_UPLOADED_MOVIES } from '../../../reducers/uploadedMovies/constantes';
+import { FETCH_UPLOADED_MOVIES } from '../../../reducers/uploadedMovies/constants';
 import Title from 'antd/lib/typography/Title';
 
 const { Step } = Steps;

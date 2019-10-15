@@ -4,7 +4,7 @@ import {Layout, PageHeader, List, Modal, Button, Tooltip} from 'antd';
 import { History } from 'history';
 
 import { IMovieDetails } from '../interfaces';
-import { SHOW_UPLOAD_MOVIE_MODAL, HIDE_UPLOAD_MOVIE_MODAL } from '../../../reducers/uploadMovie/constantes';
+import { SHOW_UPLOAD_MOVIE_MODAL, HIDE_UPLOAD_MOVIE_MODAL } from '../../../reducers/uploadMovie/constants';
 import './index.css';
 import UploadMovie from "./UploadMovie";
 

@@ -3,7 +3,7 @@ import {
     UPLOAD_MOVIE_SUCCEEDED,
     SHOW_UPLOAD_MOVIE_MODAL,
     HIDE_UPLOAD_MOVIE_MODAL,
-} from './constantes';
+} from './constants';
 import {
     FETCH_PERSONS_SUCCEEDED,
     FETCH_GENRES_SUCCEEDED

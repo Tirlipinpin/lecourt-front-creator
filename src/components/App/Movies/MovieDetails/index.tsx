@@ -3,7 +3,7 @@ import { RouteComponentProps } from 'react-router';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
-import { FETCH_MOVIE_DETAILS } from '../../../../reducers/movieDetails/constantes';
+import { FETCH_MOVIE_DETAILS } from '../../../../reducers/movieDetails/constants';
 
 export interface IMovieDetailsMatchParams {
   id: string

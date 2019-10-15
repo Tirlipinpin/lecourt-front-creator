@@ -11,7 +11,7 @@ import {
 } from '../reducers/constants';
 import {
     FETCH_MOVIE_CREATION_DATA,
-} from '../reducers/uploadMovie/constantes';
+} from '../reducers/uploadMovie/constants';
 
 function* fetchPersons(): IterableIterator<Object | void> {
     try {

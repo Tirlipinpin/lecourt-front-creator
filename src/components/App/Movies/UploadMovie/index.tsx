@@ -18,7 +18,7 @@ import { Moment } from 'moment';
 import { uploadMovie } from './actions';
 import PersonsSelect from './components/PersonsSelect';
 import RoleSelect from './components/RoleSelect';
-import { FETCH_MOVIE_CREATION_DATA } from '../../../../reducers/uploadMovie/constantes';
+import { FETCH_MOVIE_CREATION_DATA } from '../../../../reducers/uploadMovie/constants';
 import { IUploadMovieStore } from '../../../../reducers/uploadMovie';
 import {
     IActorForm,

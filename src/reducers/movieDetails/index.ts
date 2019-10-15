@@ -1,4 +1,4 @@
-import {FETCH_MOVIE_DETAILS, FETCH_MOVIE_DETAILS_FAILED, FETCH_MOVIE_DETAILS_SUCCEEDED} from './constantes';
+import {FETCH_MOVIE_DETAILS, FETCH_MOVIE_DETAILS_FAILED, FETCH_MOVIE_DETAILS_SUCCEEDED} from './constants';
 import { IMovieDetails } from '../../components/App/interfaces';
 
 export interface IMovieDetailsStore {

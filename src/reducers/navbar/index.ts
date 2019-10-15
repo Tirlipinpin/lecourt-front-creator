@@ -1,4 +1,4 @@
-import { COLLAPSE_NAVBAR } from './constantes';
+import { COLLAPSE_NAVBAR } from './constants';
 
 export interface NavbarStore {
     collapsed: boolean

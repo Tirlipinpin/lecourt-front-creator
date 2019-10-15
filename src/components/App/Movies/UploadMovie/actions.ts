@@ -1,6 +1,6 @@
 import {UploadFile} from "antd/es/upload/interface";
 
-import { UPLOAD_MOVIE } from '../../../../reducers/uploadMovie/constantes';
+import { UPLOAD_MOVIE } from '../../../../reducers/uploadMovie/constants';
 import {IActorForm, IDirectorForm, IGenreForm, IStaffForm} from '../../interfaces';
 
 export const uploadMovie = (

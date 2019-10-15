@@ -8,7 +8,7 @@ import {
     UPLOAD_MOVIE_SUCCEEDED,
     UPLOAD_MOVIE_FILE_FAILED,
     UPLOAD_MOVIE_FILE_SUCCEEDED,
-} from '../reducers/uploadMovie/constantes';
+} from '../reducers/uploadMovie/constants';
 
 function* postMovie(action: AnyAction): IterableIterator<Object | void> {
     try {

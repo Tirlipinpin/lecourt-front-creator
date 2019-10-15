@@ -5,7 +5,7 @@ import moment from 'moment';
 import { RangePickerValue } from 'antd/es/date-picker/interface';
 import { IMovieDetails, MovieRelation } from '../../interfaces';
 import { Location } from 'history';
-import { FETCH_CAMPAIGN, UPDATE_EDITING_CAMPAIGN, UPDATE_CAMPAIGN } from '../../../../reducers/campaigns/constantes';
+import { FETCH_CAMPAIGN, UPDATE_EDITING_CAMPAIGN, UPDATE_CAMPAIGN } from '../../../../reducers/campaigns/constants';
 import { match, RouterProps } from 'react-router';
 import './index.css'
 

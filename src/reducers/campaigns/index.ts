@@ -9,7 +9,7 @@ import {
     FETCH_CAMPAIGN_SUCCEEDED,
     FETCH_CAMPAIGN_FAILED,
     UPDATE_EDITING_CAMPAIGN,
-} from './constantes';
+} from './constants';
 import { ICampaign } from '../../components/App/interfaces';
 
 export interface ICampaignsStore {
