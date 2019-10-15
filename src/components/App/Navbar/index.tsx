@@ -53,8 +53,6 @@ export class Navbar extends Component<NavbarProps, {}> {
         const { history, collapsed } = this.props;
         const { url } = this.props.match;
 
-        console.log(this.getActiveKey());
-
         return (
             <Fragment>
                 <div className={collapsed ? 'collapsed-logo' : 'navbar-logo'}>

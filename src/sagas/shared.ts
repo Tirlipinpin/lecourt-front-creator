@@ -8,6 +8,9 @@ import {
     FETCH_PERSONS,
     FETCH_PERSONS_SUCCEEDED,
     FETCH_PERSONS_FAILED,
+    FETCH_COUNTRIES,
+    FETCH_COUNTRIES_SUCCEEDED,
+    FETCH_COUNTRIES_FAILED,
 } from '../reducers/constants';
 import {
     FETCH_MOVIE_CREATION_DATA,
@@ -24,9 +27,7 @@ function* fetchPersons(): IterableIterator<Object | void> {
 
         yield put({
             type: FETCH_PERSONS_SUCCEEDED,
-            payload: {
-                data,
-            },
+            payload: data,
         });
     } catch (e) {
         yield put({
@@ -50,9 +51,7 @@ function* fetchGenres(): IterableIterator<Object | void> {
 
         yield put({
             type: FETCH_GENRES_SUCCEEDED,
-            payload: {
-                data,
-            },
+            payload: data,
         });
     } catch (e) {
         yield put({
@@ -65,12 +64,36 @@ function* fetchGenres(): IterableIterator<Object | void> {
     }
 }
 
+function* fetchCountries(): IterableIterator<Object | void> {
+    try {
+        const res = yield axios.get(`countries?limit=200`);
+
+        if (!res)
+            throw new Error('Unable to fetch countries');
+
+        const { data } = res;
+
+        yield put({
+            type: FETCH_COUNTRIES_SUCCEEDED,
+            payload: data,
+        });
+    } catch (e) {
+        yield put({
+            type: FETCH_COUNTRIES_FAILED,
+        });
+        yield notification['error']({
+            message: 'Unable to fetch countries',
+            description: e.message,
+        });
+    }
+}
+
 function* saga() {
-    yield takeEvery(FETCH_GENRES, fetchGenres);
-    yield takeEvery(FETCH_PERSONS, fetchPersons);
     yield takeEvery(FETCH_MOVIE_CREATION_DATA, fetchPersons);
     yield takeEvery(FETCH_MOVIE_CREATION_DATA, fetchGenres);
-
+    yield takeEvery(FETCH_PERSONS, fetchPersons);
+    yield takeEvery(FETCH_GENRES, fetchGenres);
+    yield takeEvery(FETCH_COUNTRIES, fetchCountries);
 }
 
 export default saga;

@@ -1,11 +1,14 @@
-import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import React from 'react';
 import { Layout, PageHeader } from 'antd';
 
+import AdminDashboardContent from './AdminDashboardContent';
 import './index.css';
+import { RouteComponentProps } from 'react-router';
 
-export const AdminDashboard = () => {
-    const dispatch = useDispatch();
+export interface IAdminDashboardProps extends RouteComponentProps {};
+
+export const AdminDashboard = ({ location }: IAdminDashboardProps) => {
+    const entityType = location.pathname.split('/')[3];
 
     return (
         <Layout className="admin-dashboard-page-container">
@@ -15,7 +18,7 @@ export const AdminDashboard = () => {
                 className="admin-dashboard-header"
             />
             <div className="admin-dashboard-content">
-
+                <AdminDashboardContent entityType={entityType} />
             </div>
         </Layout>
     );

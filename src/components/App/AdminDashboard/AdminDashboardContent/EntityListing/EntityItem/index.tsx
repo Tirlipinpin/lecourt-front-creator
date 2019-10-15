@@ -1,10 +1,10 @@
 import React from 'react';
-import { List, Icon } from 'antd';
+import { Button, List, Icon } from 'antd';
 import {
     Person,
     Genre,
     Country,
-} from '../../../interfaces';
+} from '../../../../interfaces';
 
 const { Item } = List;
 
@@ -12,7 +12,7 @@ export interface IEntityItemProps {
     entity: Person | Genre | Country
 };
 
-export const getEntityName = (entity: Person | Genre | Country): string => {
+const getEntityName = (entity: Person | Genre | Country): string => {
     if ('firstName' in entity) return `${entity.firstName} ${entity.lastName}`;
 
     return entity.name;
@@ -26,7 +26,7 @@ export const EntityItem = ({ entity }: IEntityItemProps) => {
     return (
         <Item>
             {getEntityName(entity)}
-            <Icon type="bin" onClick={deleteEntity} />
+            <Button type="danger"><Icon type="delete" onClick={deleteEntity} /></Button>
         </Item>
     );
 };

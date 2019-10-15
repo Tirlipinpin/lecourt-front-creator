@@ -3,14 +3,15 @@ import { connectRouter } from 'connected-react-router';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
+import adminDashboard from './adminDashboard';
+import campaigns from './campaigns';
 import homepage from './homepage';
 import login from './login';
 import register from './register';
-import navbar from './navbar';
 import movieDetails from './movieDetails';
-import uploadMovie from './uploadMovie';
+import navbar from './navbar';
 import uploadedMovies from './uploadedMovies';
-import campaigns from './campaigns';
+import uploadMovie from './uploadMovie';
 
 const persistConfig = {
     key: 'root',
@@ -23,12 +24,13 @@ const persistConfig = {
 
 export default (history: any) => persistReducer(persistConfig, combineReducers({
     router: connectRouter(history),
+    adminDashboard,
+    campaigns,
     homepage,
     login,
     register,
-    navbar,
     movieDetails,
-    uploadMovie,
+    navbar,
     uploadedMovies,
-    campaigns,
+    uploadMovie,
 }));
