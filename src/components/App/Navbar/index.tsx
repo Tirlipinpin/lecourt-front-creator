@@ -92,6 +92,13 @@ export class Navbar extends Component<NavbarProps, {}> {
                         {this.renderMenuItemContent('flag', 'Campagnes')}
                     </Link></Menu.Item>
                     <Menu.Item
+                        className="navbar-menu-item"
+                        key="adminDashboard"
+                        title="Admin dashboard"
+                    ><Link to='/app/adminDashboard'>
+                        {this.renderMenuItemContent('appstore', 'Admin dashboard')}
+                    </Link></Menu.Item>
+                    <Menu.Item
                         className="logout-button navbar-menu-item"
                         key="logout"
                         onClick={this.logout}

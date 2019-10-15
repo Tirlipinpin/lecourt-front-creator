@@ -28,6 +28,11 @@ export interface Genre {
   name: string
 }
 
+export interface Country {
+    id: string
+    name: string
+}
+
 export interface Image {
   id: string
   type: string
@@ -90,4 +95,19 @@ export interface ICampaign {
   endTime: number
   enabled: boolean
   movies: MovieRelation[]
+}
+
+/* Entity creation data models */
+export interface IPersonCreationModel {
+    firstName: string
+    lastName: string
+    birthDate: string
+};
+
+export interface IGenreCreationModel {
+    name: string
+};
+
+export interface ICountryCreationModel {
+    name: string
 }

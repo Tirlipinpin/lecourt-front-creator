@@ -115,7 +115,7 @@ export class UploadMovie extends Component<IUploadMovieProps, IUploadMovieState>
         this.setState({ summarySmall: target.value });
     };
 
-    handleReleaseDate = (date: Moment, dateString: string) => {
+    handleReleaseDate = (date: Moment | null, dateString: string) => {
         this.setState({ releaseDate: dateString });
     };
 

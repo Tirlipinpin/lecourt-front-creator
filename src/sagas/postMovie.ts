@@ -3,69 +3,12 @@ import { AnyAction } from 'redux';
 import axios from 'axios';
 import { notification } from 'antd';
 import {
-    FETCH_MOVIE_CREATION_DATA,
     UPLOAD_MOVIE,
     UPLOAD_MOVIE_FAILED,
     UPLOAD_MOVIE_SUCCEEDED,
     UPLOAD_MOVIE_FILE_FAILED,
     UPLOAD_MOVIE_FILE_SUCCEEDED,
-    FETCH_PERSONS_FAILED,
-    FETCH_PERSONS_SUCCEEDED,
-    FETCH_GENRES_FAILED,
-    FETCH_GENRES_SUCCEEDED,
 } from '../reducers/uploadMovie/constantes';
-
-function* fetchPersons(): IterableIterator<Object | void> {
-    try {
-        const res = yield axios.get(`persons?limit=200`);
-
-        if (!res)
-            throw new Error('Unable to fetch persons to add to your short');
-
-        const { data } = res;
-
-        yield put({
-            type: FETCH_PERSONS_SUCCEEDED,
-            payload: {
-                data,
-            },
-        });
-    } catch (e) {
-        yield put({
-            type: FETCH_PERSONS_FAILED,
-        });
-        yield notification['error']({
-            message: 'Unable to fetch persons to add to your short',
-            description: e.message,
-        });
-    }
-}
-
-function* fetchGenres(): IterableIterator<Object | void> {
-    try {
-        const res = yield axios.get(`genres?limit=200`);
-
-        if (!res)
-            throw new Error('Unable to fetch genres to add to your short');
-
-        const { data } = res;
-
-        yield put({
-            type: FETCH_GENRES_SUCCEEDED,
-            payload: {
-                data,
-            },
-        });
-    } catch (e) {
-        yield put({
-            type: FETCH_GENRES_FAILED,
-        });
-        yield notification['error']({
-            message: 'Unable to fetch genres to add to your short',
-            description: e.message,
-        });
-    }
-}
 
 function* postMovie(action: AnyAction): IterableIterator<Object | void> {
     try {
@@ -254,8 +197,6 @@ function* addMovieGenres(action: AnyAction): IterableIterator<Object | void> {
 }
 
 function* saga() {
-    yield takeEvery(FETCH_MOVIE_CREATION_DATA, fetchPersons);
-    yield takeEvery(FETCH_MOVIE_CREATION_DATA, fetchGenres);
     yield takeEvery(UPLOAD_MOVIE, postMovie);
     yield takeEvery(UPLOAD_MOVIE_SUCCEEDED, uploadMovieFile);
     yield takeEvery(UPLOAD_MOVIE_SUCCEEDED, uploadMoviePosterFile);

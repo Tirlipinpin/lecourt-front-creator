@@ -1,11 +1,13 @@
 import {Genre, Person} from '../../components/App/interfaces';
 import {
-    FETCH_PERSONS_SUCCEEDED,
-    FETCH_GENRES_SUCCEEDED,
     UPLOAD_MOVIE_SUCCEEDED,
     SHOW_UPLOAD_MOVIE_MODAL,
     HIDE_UPLOAD_MOVIE_MODAL,
 } from './constantes';
+import {
+    FETCH_PERSONS_SUCCEEDED,
+    FETCH_GENRES_SUCCEEDED
+} from '../constants';
 
 export interface IUploadMovieStore {
     persons: Person[]
