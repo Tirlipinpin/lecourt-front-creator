@@ -130,9 +130,9 @@ export default (props: IProps) => {
             <PageHeader
                 title="Edition d'une campagne"
                 subTitle="Explorez vos courts métrages postés sur la platforme et définissez leurs paramètres"
-                className="movies-page-header"
+                className="campaigns-edit-page-header"
             />
-            <Form onSubmit={handleSubmit}>
+            <Form onSubmit={handleSubmit} className="campaign-edit-form">
                 <Form.Item
                     label="Nom de la campagne"
                     required
@@ -179,9 +179,9 @@ export default (props: IProps) => {
                         {uploadedMovies.movies.map((movie: IMovieDetails) => <Select.Option key={movie.id}>{movie.title}</Select.Option>)}
                     </Select>
                 </Form.Item>
-                <span style={{ display: 'flex' }}>
-                    <Button htmlType="submit" block>Valider</Button>
+                <span className="campaigns-edit-form-buttons">
                     <Button block onClick={handleCancel}>Annuler</Button>
+                    <Button htmlType="submit" block type="primary">Valider</Button>
                 </span>
             </Form>
         </Layout>

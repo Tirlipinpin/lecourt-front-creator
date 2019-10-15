@@ -1,9 +1,27 @@
 .campaigns-edit-page-container {
     margin: 32px 64px 0 64px;
+    padding-bottom: 32px;
+    background-color: transparent;
 }
 
-.campaigns-edit-page-container .campaigns-page-header {
+.campaigns-edit-page-container .campaigns-edit-page-header {
     margin: auto auto 64px auto;
     width: 100%;
     box-shadow: 0 1px 5px 1px rgba(134, 134, 136, 0.35);
+}
+
+.campaigns-edit-page-container .campaign-edit-form {
+    background-color: white;
+    padding: 16px;
+    box-shadow: 0 1px 5px 1px rgba(134, 134, 136, 0.35);
+}
+
+.campaigns-edit-page-container .campaigns-edit-form-buttons {
+    display: flex;
+    width: 20%;
+    margin-left: auto;
+}
+
+.campaigns-edit-page-container .campaigns-edit-form-buttons button {
+    margin: 0 16px;
 }
