@@ -1,4 +1,4 @@
-import React, { Component, Dispatch } from 'react';
+import React, { Component, Dispatch, Fragment } from 'react';
 import { Menu, Icon } from 'antd';
 import {Link, RouteComponentProps} from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -31,12 +31,25 @@ export class Navbar extends Component<NavbarProps, {}> {
         ];
     };
 
+    renderMenuItemContent = (iconType: string, title: string) => {
+        const { collapsed } = this.props;
+
+        if (collapsed) return <Icon type={iconType} />;
+
+        return (
+            <Fragment>
+                <Icon type={iconType} />
+                {title}
+            </Fragment>
+        );
+    };
+
     render() {
         const { history, collapsed } = this.props;
         const { url } = this.props.match;
 
         return (
-            <>
+            <Fragment>
                 <div className={collapsed ? 'collapsed-logo' : 'navbar-logo'}>
                     <img src={logo} onClick={() => history.push(url)} alt="Lecourt" />
                     <span className="lecourt-title">
@@ -50,38 +63,44 @@ export class Navbar extends Component<NavbarProps, {}> {
                     className={`menu-items-container navbar-menu ${!collapsed && 'not-collapsed'}`}
                     selectedKeys={this.isActive()}
                 >
-                    <Menu.Item key="dashboard" title="Dashboard"><Link to='/app'>
-                            { collapsed
-                                ? <Icon type="pie-chart" />
-                                : <> <Icon type="pie-chart" /> Dashboard </>
-                            }
+                    <Menu.Item
+                        className="navbar-menu-item"
+                        key="dashboard"
+                        title="Dashboard"
+                    ><Link to='/app'>
+                        {this.renderMenuItemContent('pie-chart', 'Dasboard')}
                     </Link></Menu.Item>
-                    <Menu.Item key="profile" title="Profile"><Link to='/app/profile'>
-                        { collapsed
-                            ? <Icon type="user" />
-                            : <> <Icon type="user" /> Profile </>
-                        }
+                    <Menu.Item
+                        className="navbar-menu-item"
+                        key="profile"
+                        title="Profile"
+                    ><Link to='/app/profile'>
+                        {this.renderMenuItemContent('user', 'Profile')}
                     </Link></Menu.Item>
-                    <Menu.Item key="movies" title="films"><Link to='/app/movies'>
-                        { collapsed
-                            ? <Icon type="unordered-list" />
-                            : <> <Icon type="unordered-list" /> Films </>
-                        }
+                    <Menu.Item
+                        className="navbar-menu-item"
+                        key="movies"
+                        title="films"
+                    ><Link to='/app/movies'>
+                        {this.renderMenuItemContent('unordered-list', 'Films')}
                     </Link></Menu.Item>
-                    <Menu.Item key="campaigns" title="campagnes"><Link to='/app/campaigns'>
-                        { collapsed
-                          ? <Icon type="flag" />
-                          : <> <Icon type="flag" /> Campagnes </>
-                        }
+                    <Menu.Item
+                        className="navbar-menu-item"
+                        key="campaigns"
+                        title="campagnes"
+                    ><Link to='/app/campaigns'>
+                        {this.renderMenuItemContent('flag', 'Campagnes')}
                     </Link></Menu.Item>
-                    <Menu.Item key="logout" className="logout-button" onClick={this.logout} title="logout">
-                        { collapsed
-                            ? <Icon type="logout" />
-                            : <> <Icon type="logout" /> Logout </>
-                        }
+                    <Menu.Item
+                        className="logout-button navbar-menu-item"
+                        key="logout"
+                        onClick={this.logout}
+                        title="logout"
+                    >
+                        {this.renderMenuItemContent('logout', 'Logout')}
                     </Menu.Item>
                 </Menu>
-            </>
+            </Fragment>
         );
     }
 }

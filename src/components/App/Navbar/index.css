@@ -28,6 +28,10 @@
     color: #2E8CFF;
 }
 
+.navbar-menu .navbar-menu-item {
+    margin-top: 32px;
+}
+
 .collapsed-logo {
     padding: 1% 0;
     display: flex;
