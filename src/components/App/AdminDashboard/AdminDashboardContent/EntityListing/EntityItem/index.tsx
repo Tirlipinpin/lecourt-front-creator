@@ -5,6 +5,7 @@ import {
     Genre,
     Country,
 } from '../../../../interfaces';
+import './index.css';
 
 const { Item } = List;
 
@@ -24,7 +25,7 @@ export const EntityItem = ({ entity }: IEntityItemProps) => {
     };
 
     return (
-        <Item>
+        <Item className="entity-item">
             {getEntityName(entity)}
             <Button type="danger"><Icon type="delete" onClick={deleteEntity} /></Button>
         </Item>
