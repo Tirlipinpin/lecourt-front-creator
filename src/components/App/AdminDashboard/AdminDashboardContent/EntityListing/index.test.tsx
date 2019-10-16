@@ -1,7 +1,8 @@
 import React from 'react';
-import EntityListing from '.';
+import EntityListing, { IEntityListingProps } from '.';
 import { shallow, ShallowWrapper } from 'enzyme';
 import { Genre } from '../../../interfaces';
+import { ListProps } from 'antd/lib/list';
 
 describe('EntityItem', () => {
     let wrapper: ShallowWrapper<any>;
@@ -14,7 +15,9 @@ describe('EntityItem', () => {
         expect(wrapper.find('List').exists()).toBe(true);
     });
 
-    test('should only have one child to list', () => {
-        expect(wrapper.find('List').children()).toHaveLength(1);
+    test('should use the entityList as dataSource', () => {
+        const props: ListProps<IEntityListingProps> = wrapper.find('List').props();
+
+        expect(props.dataSource).toEqual(entityList);
     });
 });

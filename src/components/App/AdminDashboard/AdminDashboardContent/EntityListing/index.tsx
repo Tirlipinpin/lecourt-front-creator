@@ -18,13 +18,11 @@ export const EntityListing = ({ entityList, entityName }: IEntityListingProps) =
         pagination={{
             pageSize: 10,
         }}
-    >
-        {
-            entityList.map((entity: Person | Genre | Country) => (
-                <EntityItem key={entity.id} entity={entity} />
-            ))
-        }
-    </List>
+        dataSource={entityList}
+        renderItem={(entity: Person | Genre | Country) => (
+          <EntityItem key={entity.id} entity={entity} />
+      )}
+    />
 );
 
 export default EntityListing;
