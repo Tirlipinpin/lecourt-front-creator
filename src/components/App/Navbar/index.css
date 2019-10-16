@@ -1,5 +1,7 @@
 .navbar-menu {
     background: #292929;
+    max-height:100%;
+    overflow-y: auto;
 }
 
 .navbar-menu .logout-button {
