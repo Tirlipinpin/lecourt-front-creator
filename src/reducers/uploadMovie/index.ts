@@ -26,12 +26,12 @@ export default (state = defaultState, action: any) => {
         case FETCH_PERSONS_SUCCEEDED:
             return {
                 ...state,
-                persons: action.payload. data,
+                persons: action.payload,
             };
         case FETCH_GENRES_SUCCEEDED:
             return {
                 ...state,
-                genres: action.payload.data,
+                genres: action.payload,
             };
         case UPLOAD_MOVIE_SUCCEEDED:
             return {
