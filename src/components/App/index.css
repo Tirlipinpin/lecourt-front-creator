@@ -23,9 +23,9 @@
     transition-delay: 0s;
 }
 
-.navbar-container .ant-layout-sider-trigger:hover {
-    color: #2E8CFF;
-    background-color: #C7E0FF;
+.navbar-container .ant-layout-sider-trigger {
+    color: white;
+    background-color: #17457d;
 }
 
 .content-container {

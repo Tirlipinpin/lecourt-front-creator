@@ -2,6 +2,7 @@
     background: #292929;
     max-height:100%;
     overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .navbar-menu .logout-button {
@@ -13,9 +14,11 @@
 }
 
 .navbar-menu .ant-menu-item-selected,
-.navbar-menu .ant-menu-item-active:active
+.navbar-menu .ant-menu-item-active:active,
+.navbar-submenu-popup .ant-menu-item-selected,
+.navbar-menu .ant-menu-submenu-selected
 {
-    background-color: #C7E0FF !important;
+    background-color: #17457d !important;
 }
 
 .navbar-menu .ant-menu-item-selected::after {
@@ -28,7 +31,7 @@
 .navbar-menu .logout-button:hover,
 .navbar-submenu-popup .ant-menu-item-selected a
 {
-    color: #2E8CFF;
+    color: white;
 }
 
 .navbar-menu .navbar-menu-item {
