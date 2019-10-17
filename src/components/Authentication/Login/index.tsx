@@ -4,6 +4,7 @@ import React, {
 import { connect } from 'react-redux';
 import { Form, Icon, Input, Button, Tooltip, Typography } from 'antd';
 import { Trans } from 'react-i18next';
+import { Link } from 'react-router-dom';
 import './index.css';
 
 const { Item } = Form;
@@ -112,7 +113,7 @@ export class Login extends Component<LoginProps, LoginState> {
                     >
                         <Trans i18nKey="LOGIN" />
                     </Button>
-                    <a href="/authentication/register">Looking to <b>register</b> ?</a>
+                    <Link to="/authentication/register">Looking to <b>register</b> ?</Link>
                 </Form>
             </Fragment>
         );
