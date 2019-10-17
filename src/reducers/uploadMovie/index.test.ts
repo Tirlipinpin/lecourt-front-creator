@@ -8,11 +8,9 @@ describe('uploadMovie reducer', () => {
     it('should update persons when receiving FETCH_PERSONS_SUCCEEDED', () => {
         const action = {
             type: 'FETCH_PERSONS_SUCCEEDED',
-            payload: {
-                data: [
-                    { personId: '42', name: 'laurent' },
-                ],
-            },
+            payload: [
+                { personId: '42', name: 'laurent' },
+            ],
         };
 
         expect(uploadMovie(defaultState, action)).toEqual({
@@ -25,11 +23,9 @@ describe('uploadMovie reducer', () => {
     it('should update persons when receiving FETCH_GENRES_SUCCEEDED', () => {
         const action = {
             type: 'FETCH_GENRES_SUCCEEDED',
-            payload: {
-                data: [
-                    { genreId: '42', name: 'laurent' },
-                ],
-            },
+            payload: [
+                { genreId: '42', name: 'laurent' },
+            ],
         };
 
         expect(uploadMovie(defaultState, action)).toEqual({
