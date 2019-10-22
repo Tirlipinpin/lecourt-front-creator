@@ -3,6 +3,6 @@ services:
   front:
     image: $CONTAINER_STAGING_IMAGE
     environment:
-      - VIRTUAL_HOST=creators.front.stg.lecourt.tv
+      - VIRTUAL_HOST=creators.stg.lecourt.tv
       - VIRTUAL_PORT=3000
     restart: always
