@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { Switch, Route, Redirect, Router, RouteComponentProps } from 'react-router';
 import { Icon, Layout } from 'antd';
 import axios from 'axios';
+import { getManagementUrl } from '../../services/requestURL';
+import { collapseNavbar } from './Navbar/actions';
 
 import Navbar from './Navbar';
 const Dashboard = lazy(() => import('./Dashboard'));
@@ -17,7 +19,6 @@ import axiosInterceptor from '../../services/axiosInterceptor';
 import { LoginStore } from '../../reducers/login';
 
 import './index.css';
-import { collapseNavbar } from './Navbar/actions';
 
 interface AppProps extends RouteComponentProps {
     login: LoginStore
@@ -28,16 +29,15 @@ interface AppProps extends RouteComponentProps {
 export class App extends Component<AppProps, {}> {
     componentDidMount() {
         const { history, dispatch, login } = this.props;
-        // const { token } = login;
+        const { token } = login;
 
         axiosInterceptor(() => {
             dispatch({ type: 'LOGOUT' });
             history.push('/');
         });
 
-        axios.defaults.baseURL = 'https://management.stg.lecourt.tv/';
-        axios.defaults.headers.common['Authorization'] = `changeIt`;
-        // axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+        axios.defaults.baseURL = getManagementUrl();
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     }
 
     onCollapse = (collapsed: boolean) => {

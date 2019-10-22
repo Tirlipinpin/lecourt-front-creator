@@ -9,6 +9,7 @@ import {
     UPLOAD_MOVIE_FILE_FAILED,
     UPLOAD_MOVIE_FILE_SUCCEEDED,
 } from '../reducers/uploadMovie/constants';
+import { getUploadUrl } from '../services/requestURL';
 
 function* postMovie(action: AnyAction): IterableIterator<Object | void> {
     try {
@@ -70,7 +71,7 @@ function* uploadMovieFile(action: AnyAction): IterableIterator<Object | void> {
             description: 'Uploading the video in database',
         });
 
-        const res = yield axios.post(`https://upload.stg.lecourt.tv/movies/${id}`, body);
+        const res = yield axios.post(`${getUploadUrl()}/movies/${id}`, body);
         if (!res)
             throw new Error('Unable to upload the video');
 
@@ -108,7 +109,7 @@ function* uploadMoviePosterFile(action: AnyAction): IterableIterator<Object | vo
             description: 'Uploading the video in database',
         });
 
-        const res = yield axios.post(`https://upload.stg.lecourt.tv/images/${id}`, body);
+        const res = yield axios.post(`${getUploadUrl()}/images/${id}`, body);
         if (!res)
             throw new Error('Unable to upload the poster');
     } catch (e) {
