@@ -9,7 +9,7 @@ import {
     UPLOAD_MOVIE_FILE_FAILED,
     UPLOAD_MOVIE_FILE_SUCCEEDED,
 } from '../reducers/uploadMovie/constants';
-import { getUploadUrl } from '../services/requestURL';
+import { getUploadUrl } from '../services/requestUrl';
 
 function* postMovie(action: AnyAction): IterableIterator<Object | void> {
     try {

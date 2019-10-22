@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Switch, Route, Redirect, Router, RouteComponentProps } from 'react-router';
 import { Icon, Layout } from 'antd';
 import axios from 'axios';
-import { getManagementUrl } from '../../services/requestURL';
+import { getManagementUrl } from '../../services/requestUrl';
 import { collapseNavbar } from './Navbar/actions';
 
 import Navbar from './Navbar';
