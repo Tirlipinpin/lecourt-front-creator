@@ -20,7 +20,7 @@ export default (state = defaultState, action: any) => {
             return {
                 ...state,
                 loading: false,
-                token: action.payload.data,
+                token: action.payload,
             };
         case FETCH_TOKEN_FAILED:
             return {
