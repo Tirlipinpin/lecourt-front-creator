@@ -2,10 +2,11 @@
 # Gitlab-CI bliink.io
 #-------------------------------------------------------------------------------
 
-image: bsingr/docker-and-compose:17-1.12.0
+image: tmaier/docker-compose:latest
 
 variables:
-  DOCKER_DRIVER: overlay
+  DOCKER_DRIVER: overlay2
+  DOCKER_TLS_CERTDIR: ''
   CONTAINER_STAGING_IMAGE: $CI_REGISTRY_IMAGE/staging:$CI_COMMIT_REF_SLUG
 
 before_script:
@@ -68,7 +69,7 @@ build_staging:
   stage: build
   <<: [ *branch-test, *runner-docker ]
   services:
-    - docker:17-dind
+    - docker:dind
   script:
     - docker build --pull -t $CONTAINER_STAGING_IMAGE -f development.Dockerfile .
     - docker push $CONTAINER_STAGING_IMAGE
