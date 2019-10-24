@@ -4,10 +4,12 @@ services:
     build:
       context: .
       dockerfile: development.Dockerfile
-    environment:
-      - VIRTUAL_HOST=creators.docker
-      - VIRTUAL_PORT=3000
     ports:
       - 3000:3000
     volumes:
       - .:/app
+
+networks:
+  default:
+    external: true
+    name: lecourt
