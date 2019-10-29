@@ -2,8 +2,9 @@ import React, { Component, Dispatch, Fragment, FormEvent, SyntheticEvent } from 
 import { connect } from 'react-redux';
 import { Form, Icon, Input, Button, Typography, Tooltip } from 'antd';
 import { Trans } from 'react-i18next';
-import { RegisterStore } from '../../../reducers/register';
 import { Link } from 'react-router-dom';
+
+import { RegisterStore } from '../../../reducers/register';
 import './index.css';
 
 const { Item } = Form;
@@ -160,16 +161,19 @@ export class Register extends Component<RegisterProps, RegisterState> {
                             }
                         />
                     </Item>
-                    <Button
-                        className="auth-form-button"
-                        htmlType="submit"
-                        type="primary"
-                        disabled={register.loading}
-                        shape="round"
-                        block
+                    <Tooltip
+                        title="Les inscriptions ne sont pas ouvertes !"
                     >
-                        <Trans i18nKey="REGISTER" />
-                    </Button>
+                        <Button
+                            className="auth-form-button"
+                            htmlType="submit"
+                            type="primary"
+                            disabled={/* register.loading */ true}
+                            block
+                        >
+                            <Trans i18nKey="REGISTER" />
+                        </Button>
+                    </Tooltip>
                     <Link to="/authentication/login">Looking to <b>login</b> ?</Link>
                 </Form>
             </Fragment>

@@ -2,9 +2,10 @@ import React, {
     Component, Dispatch, Fragment, FormEvent, SyntheticEvent,
 } from 'react';
 import { connect } from 'react-redux';
-import { Form, Icon, Input, Button, Tooltip, Typography } from 'antd';
+import { Form, Icon, Input, Button, Tooltip, Typography, Checkbox } from 'antd';
 import { Trans } from 'react-i18next';
 import { Link } from 'react-router-dom';
+
 import './index.css';
 
 const { Item } = Form;
@@ -62,7 +63,7 @@ export class Login extends Component<LoginProps, LoginState> {
 
         return (
             <Fragment>
-                <Typography.Title level={1} className="auth-form-title">
+                <Typography.Title level={3} className="auth-form-title">
                     <Trans i18nKey='LOGIN' />
                 </Typography.Title>
                 <Form onSubmit={this.fetchToken} className="auth-form-container">
@@ -103,17 +104,18 @@ export class Login extends Component<LoginProps, LoginState> {
                             }
                         />
                     </Item>
+                    <Checkbox className="auth-form-checkbox">Remember me</Checkbox>
                     <Button
                         loading={loading}
                         htmlType="submit"
                         type="primary"
-                        shape="round"
                         className="auth-form-button"
                         block={true}
                     >
                         <Trans i18nKey="LOGIN" />
                     </Button>
-                    <Link to="/authentication/register">Looking to <b>register</b> ?</Link>
+
+                    <Trans i18nKey="AUTH_NO_ACCOUNT" /> <Link to="/authentication/register"><b><Trans i18nKey="AUTH_REGISTER" /></b></Link>
                 </Form>
             </Fragment>
         );

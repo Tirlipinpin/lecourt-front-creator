@@ -14,6 +14,8 @@ i18n
             FOOTER: 'Lecourt ©2019 Created with love by the best developers ever',
             REGISTER: 'Register',
             LOGIN: 'Sign in',
+            AUTH_NO_ACCOUNT: `Don't have an account yet?`,
+            AUTH_REGISTER: `Register!`,
         }
       },
       fr: {
@@ -23,6 +25,8 @@ i18n
             FOOTER: 'Lecourt ©2019 Créé avec amour par les meilleurs développeurs',
             REGISTER: 'Inscription',
             LOGIN: 'Connexion',
+            AUTH_NO_ACCOUNT: `Pas encore inscrit ?`,
+            AUTH_REGISTER: `Inscrivez-vous !`,
         }
       }
     },
