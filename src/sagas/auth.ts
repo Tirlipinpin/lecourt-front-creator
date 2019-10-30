@@ -8,7 +8,7 @@ import { REGISTER_USER, REGISTER_USER_SUCCEEDED, REGISTER_USER_FAILED } from '..
 
 function* fetchToken(action: AnyAction): IterableIterator<Object | void> {
     try {
-        const res: unknown = yield axios(getLoginUrl(), {
+        const res: any = yield axios(getLoginUrl(), {
             method: 'POST',
             auth: {
                 username: action.payload.email,
@@ -17,10 +17,13 @@ function* fetchToken(action: AnyAction): IterableIterator<Object | void> {
             withCredentials: true,
         });
 
+        if (!res.data)
+          throw new Error(res.message);
+
         const { data: { access_token } } = res as AxiosResponse;
 
         if (!access_token)
-            throw new Error('Network error');
+            throw new Error('Bad Credentials');
 
         yield put({
             type: FETCH_TOKEN_SUCCEEDED,
