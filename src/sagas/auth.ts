@@ -8,13 +8,9 @@ import { REGISTER_USER, REGISTER_USER_SUCCEEDED, REGISTER_USER_FAILED } from '..
 
 function* fetchToken(action: AnyAction): IterableIterator<Object | void> {
     try {
-        const res: any = yield axios(getLoginUrl(), {
-            method: 'POST',
-            auth: {
-                username: action.payload.email,
-                password: action.payload.password,
-            },
-            withCredentials: true,
+        const res: any = yield axios.post(getLoginUrl(), {
+            username: action.payload.email,
+            password: action.payload.password,
         });
 
         if (!res.data)
