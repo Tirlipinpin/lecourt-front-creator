@@ -16,7 +16,8 @@
 .navbar-menu .ant-menu-item-selected,
 .navbar-menu .ant-menu-item-active:active,
 .navbar-submenu-popup .ant-menu-item-selected,
-.navbar-menu .ant-menu-submenu-selected
+.navbar-menu .ant-menu-submenu-selected,
+.navbar-menu .navbar-menu-item:hover
 {
     background-color: #17457d !important;
 }
@@ -35,11 +36,16 @@
 }
 
 .navbar-menu .navbar-menu-item {
-    margin-top: 32px;
+    margin: 0 !important;
+    padding: 32px 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
 }
 
 .navbar-menu .navbar-submenu {
-    margin-top: 32px;
+    padding: 16px 0;
     color: white;
 }
 

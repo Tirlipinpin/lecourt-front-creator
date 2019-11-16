@@ -33,7 +33,7 @@ export class Authentication extends Component<AuthenticationProps, {}> {
                         </Switch>
                     </div>
                     <div className="auth-element auth-right">
-                        <img className="logo" src={logo} />
+                        <img alt="LC-logo" className="logo" src={logo} />
                     </div>
                 </div>
             </div>

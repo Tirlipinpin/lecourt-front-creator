@@ -79,7 +79,6 @@ export class Register extends Component<RegisterProps, RegisterState> {
 
     render() {
         const { displayName, email, password, passwordConfirm } = this.state;
-        const { register } = this.props;
     
         return (
             <Fragment>
@@ -168,7 +167,7 @@ export class Register extends Component<RegisterProps, RegisterState> {
                             className="auth-form-button"
                             htmlType="submit"
                             type="primary"
-                            disabled={/* register.loading */ true}
+                            disabled={true}
                             block
                         >
                             <Trans i18nKey="REGISTER" />

@@ -5,8 +5,11 @@ import { Icon, Layout } from 'antd';
 import axios from 'axios';
 import { getManagementUrl } from '../../services/requestUrl';
 import { collapseNavbar } from './Navbar/actions';
-
+import axiosInterceptor from '../../services/axiosInterceptor';
+import { LoginStore } from '../../reducers/login';
 import Navbar from './Navbar';
+import './index.css';
+
 const Dashboard = lazy(() => import('./Dashboard'));
 const Profile = lazy(() => import('./Profile'));
 const Movies = lazy(() => import('./Movies'));
@@ -14,11 +17,6 @@ const MovieDetails = lazy(() => import('./Movies/MovieDetails'));
 const Campaigns = lazy(() => import('./Campaigns'));
 const CampaignEdit = lazy(() => import('./Campaigns/Edit'));
 const AdminDashboard = lazy(() => import('./AdminDashboard'));
-
-import axiosInterceptor from '../../services/axiosInterceptor';
-import { LoginStore } from '../../reducers/login';
-
-import './index.css';
 
 interface AppProps extends RouteComponentProps {
     login: LoginStore

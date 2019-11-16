@@ -36,7 +36,7 @@ function* postMovie(action: AnyAction): IterableIterator<Object | void> {
         if (!res)
             throw new Error('Unable to create movie');
 
-        const { data } = res;
+        const { data }: any = res;
 
         yield put({
             type: UPLOAD_MOVIE_SUCCEEDED,
@@ -75,7 +75,7 @@ function* uploadMovieFile(action: AnyAction): IterableIterator<Object | void> {
         if (!res)
             throw new Error('Unable to upload the video');
 
-        const { data } = res;
+        const { data }: any = res;
 
         yield put({
             type: UPLOAD_MOVIE_FILE_SUCCEEDED,
