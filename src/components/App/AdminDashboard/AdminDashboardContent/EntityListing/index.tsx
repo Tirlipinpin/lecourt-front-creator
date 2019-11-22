@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import { List } from 'antd';
 import {
     Person,
@@ -12,7 +12,7 @@ export interface IEntityListingProps {
     entityName: string
 };
 
-export const EntityListing = ({ entityList, entityName }: IEntityListingProps) => (
+export const EntityListing: FunctionComponent<IEntityListingProps> = ({ entityList, entityName }) => (
     <List
         header={<h1>{entityName}</h1>}
         pagination={{
@@ -20,7 +20,7 @@ export const EntityListing = ({ entityList, entityName }: IEntityListingProps) =
         }}
         dataSource={entityList}
         renderItem={(entity: Person | Genre | Country) => (
-          <EntityItem key={entity.id} entity={entity} />
+          <EntityItem key={entity.id} entity={entity} entityName={entityName} />
       )}
     />
 );

@@ -10,10 +10,11 @@ import {
     FETCH_COUNTRIES_SUCCEEDED,
     FETCH_COUNTRIES_FAILED,
 } from '../constants';
+import { DELETE_ENTITY_SUCCEEDED } from './constants';
 
 export interface IAdminDashboardStore {
     list: (Person | Genre | Country)[]
-};
+}
 
 const defaultState: IAdminDashboardStore = {
     list: [],
@@ -44,6 +45,12 @@ export default (state = defaultState, action: any) => {
                 ...state,
                 loading: false,
             }
+        case DELETE_ENTITY_SUCCEEDED:
+            
+            return {
+                ...state,
+                list: state.list.filter(entity => entity.id !== action.payload.id),
+            };
         default:
             return state;
     };

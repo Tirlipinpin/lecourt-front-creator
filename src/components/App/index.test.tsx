@@ -3,6 +3,7 @@ import { shallow, ShallowWrapper } from 'enzyme';
 
 import { App } from '.';
 import { LoginStore } from '../../reducers/login';
+import styles from './index.module.scss';
 
 describe('The App component', () => {
     let wrapper: ShallowWrapper;
@@ -40,7 +41,7 @@ describe('The App component', () => {
     });
 
     it('should display app when user is logged', () => {
-        expect(wrapper.find('.app-container')).toHaveLength(1);
+        expect(wrapper.find(`.${styles.appContainer}`)).toHaveLength(1);
     });
 
     it('should collape navbar when collapsed is true', () => {

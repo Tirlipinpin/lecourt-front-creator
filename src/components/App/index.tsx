@@ -8,7 +8,8 @@ import { collapseNavbar } from './Navbar/actions';
 import axiosInterceptor from '../../services/axiosInterceptor';
 import { LoginStore } from '../../reducers/login';
 import Navbar from './Navbar';
-import './index.css';
+import styles from './index.module.scss';
+import './index.scss';
 
 const Dashboard = lazy(() => import('./Dashboard'));
 const Profile = lazy(() => import('./Profile'));
@@ -63,19 +64,19 @@ export class App extends Component<AppProps, {}> {
             );
 
         return (
-            <div className="app-wrapper">
+            <div className={styles.appWrapper}>
                 <Layout>
                     <Layout.Sider
                         collapsible
                         collapsed={collapsed}
                         onCollapse={this.onCollapse}
                         theme="light"
-                        className="navbar-container"
+                        className={styles.navbarContainer}
                     >
                         <Navbar { ...this.props } collapsed={collapsed} />
                     </Layout.Sider>
-                    <Layout className="app-container">
-                        <Layout.Content className={`content-container ${collapsed && 'content-container-extended'}`}>
+                    <Layout className={styles.appContainer}>
+                        <Layout.Content className={`${styles.contentContainer} ${collapsed && styles.contentContainerExtended}`}>
                             <Router history={this.props.history}>
                                 <Switch>
                                     <Route exact path={match.url} render={(props) => this.lazyRender(Dashboard, props)} />

@@ -1,0 +1,17 @@
+.floating-button {
+    position: fixed;
+    right: 16px;
+    bottom: 100px;
+    box-shadow: 0 4px 10px rgba(47, 51, 56, 0.35);
+}
+
+.ant-layout-sider-trigger {
+    color: white !important;
+    border-right: 1px solid #e8e8e8;
+    background-color: #17457d !important;
+    transition: all 0.2s;
+    transition-property: all;
+    transition-duration: 0.2s;
+    transition-timing-function: ease;
+    transition-delay: 0s;
+}

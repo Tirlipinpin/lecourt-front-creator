@@ -1,33 +1,40 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
+import { useDispatch } from 'react-redux';
 import { Button, List, Icon } from 'antd';
 import {
     Person,
     Genre,
     Country,
 } from '../../../../interfaces';
-import './index.css';
+import { deleteEntity } from './actions';
+import styles from './index.module.scss';
 
 const { Item } = List;
 
 export interface IEntityItemProps {
     entity: Person | Genre | Country
+    entityName: string
 };
 
 const getEntityName = (entity: Person | Genre | Country): string => {
     if ('firstName' in entity) return `${entity.firstName} ${entity.lastName}`;
 
     return entity.name;
-}
+};
 
-export const EntityItem = ({ entity }: IEntityItemProps) => {
-    const deleteEntity = () => {
-        // delete entity
-    };
+export const EntityItem: FunctionComponent<IEntityItemProps> = ({ entity, entityName }) => {
+    const dispatch = useDispatch();
 
     return (
-        <Item className="entity-item">
+        <Item className={styles.entityItem}>
             {getEntityName(entity)}
-            <Button type="danger"><Icon type="delete" onClick={deleteEntity} /></Button>
+            <Button
+                type="danger"
+                className={styles.button}
+                onClick={() => dispatch(deleteEntity(entity.id, entityName))} 
+            >
+                <Icon type="delete" />
+            </Button>
         </Item>
     );
 };

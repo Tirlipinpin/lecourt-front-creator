@@ -1,13 +1,15 @@
 import { fork, all } from 'redux-saga/effects';
 
-import shared from './shared';
 import auth from './auth';
+import adminDashboard from './adminDashboard';
+import campaigns from './campaigns';
 import postMovie from './postMovie';
 import uploadedMovies from './uploadedMovies';
-import campaigns from './campaigns';
+import shared from './shared';
 
 export default function* sagas() {
     yield all([
+        fork(adminDashboard),
         fork(auth),
         fork(campaigns),
         fork(postMovie),

@@ -54,3 +54,17 @@
 .anchor-title {
     padding-left: 16px;
 }
+
+@media screen and (max-width: 1256px) {
+    .page-container {
+        margin: 0 32px;
+        background: white;
+    }
+}
+
+@media screen and (min-width: 1256px) {
+    .page-container {
+        padding: 0 32px;
+        background: white;
+    }
+}    
