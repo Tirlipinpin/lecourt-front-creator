@@ -58,4 +58,4 @@ export default ({ id, visible, handleHideModal, addPerson }: IRoleSelectProps) =
           </Form>
       </Modal>
     );
-}
+};

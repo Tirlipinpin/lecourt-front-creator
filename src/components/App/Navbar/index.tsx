@@ -2,7 +2,7 @@ import React, { Component, Dispatch, Fragment } from 'react';
 import { Menu, Icon } from 'antd';
 import {Link, RouteComponentProps} from 'react-router-dom';
 import { connect } from 'react-redux';
-
+import Cookies from 'js-cookie';
 import logo from '../../../assets/Logo.png';
 import './index.css';
 import { LOGOUT } from '../../../reducers/login/constants';
@@ -16,13 +16,16 @@ interface NavbarProps extends RouteComponentProps {
 
 export class Navbar extends Component<NavbarProps, {}> {
     logout = () => {
-        const { dispatch, history } = this.props;
+        const { dispatch } = this.props;
 
         dispatch({
             type: LOGOUT,
         });
 
-        history.push('/');
+        Cookies.remove('user_authorization', {
+          domain: process.env.REACT_APP_DOMAIN_URL,
+        });
+        window.location.href = process.env.REACT_APP_FRONT_URL!;
     };
 
     getActiveKey = (): string[] => {

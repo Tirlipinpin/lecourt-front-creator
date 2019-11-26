@@ -2,10 +2,9 @@ import React, { Component, Dispatch, Fragment, FormEvent, SyntheticEvent } from 
 import { connect } from 'react-redux';
 import { Form, Icon, Input, Button, Typography, Tooltip } from 'antd';
 import { Trans } from 'react-i18next';
-import { Link } from 'react-router-dom';
 
 import { RegisterStore } from '../../../reducers/register';
-import './index.css';
+import styles from '../index.module.scss';
 
 const { Item } = Form;
 
@@ -82,12 +81,12 @@ export class Register extends Component<RegisterProps, RegisterState> {
     
         return (
             <Fragment>
-                <Typography.Title level={1} className="auth-form-title">
+                <Typography.Title level={3} className={styles.authFormTitle}>
                     <Trans i18nKey="REGISTER" />
                 </Typography.Title>
-                <Form onSubmit={this.registerUser} className="auth-form-container">
+                <Form onSubmit={this.registerUser} className={styles.authFormContainer}>
                     <Item
-                        className="auth-form-item"
+                        className={styles.authFormItem}
                         label="Display name"
                         colon={false}
                     >
@@ -105,7 +104,7 @@ export class Register extends Component<RegisterProps, RegisterState> {
                         />
                     </Item>
                     <Item
-                        className="auth-form-item"
+                        className={styles.authFormItem}
                         label="Email"
                         colon={false}
                     >
@@ -123,7 +122,7 @@ export class Register extends Component<RegisterProps, RegisterState> {
                         />
                     </Item>
                     <Item
-                        className="auth-form-item"
+                        className={styles.authFormItem}
                         label="Password"
                         colon={false}
                     >
@@ -142,7 +141,7 @@ export class Register extends Component<RegisterProps, RegisterState> {
                         />
                     </Item>
                     <Item
-                        className="auth-form-item"
+                        className={styles.authFormItem}
                         label="Password (confirmation)"
                         colon={false}
                     >
@@ -164,7 +163,7 @@ export class Register extends Component<RegisterProps, RegisterState> {
                         title="Les inscriptions ne sont pas ouvertes !"
                     >
                         <Button
-                            className="auth-form-button"
+                            className={styles.authFormButton}
                             htmlType="submit"
                             type="primary"
                             disabled={true}
@@ -173,7 +172,6 @@ export class Register extends Component<RegisterProps, RegisterState> {
                             <Trans i18nKey="REGISTER" />
                         </Button>
                     </Tooltip>
-                    <Link to="/authentication/login">Looking to <b>login</b> ?</Link>
                 </Form>
             </Fragment>
         );

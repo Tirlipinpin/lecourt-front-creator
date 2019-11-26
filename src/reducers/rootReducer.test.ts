@@ -1,6 +1,5 @@
 import { History } from 'history';
 import { AnyAction } from 'redux';
-import { PersistState } from 'redux-persist';
 
 import rootReducer from './rootReducer';
 import { IAdminDashboardStore } from './adminDashboard';
@@ -29,11 +28,9 @@ describe('rootReducer', () => {
             navbar: {} as NavbarStore,
             uploadedMovies: {} as IMoviesStore,
             uploadMovie: {} as IUploadMovieStore,
-            _persist: {} as PersistState,
         }, {} as AnyAction);
 
         expect(reducers).toEqual({
-            _persist: {},
             adminDashboard: {},
             campaigns: {},
             homepage: {},

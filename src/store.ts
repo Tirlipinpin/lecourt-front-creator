@@ -1,5 +1,4 @@
 import { applyMiddleware, createStore } from 'redux';
-import { persistStore } from 'redux-persist';
 import { createBrowserHistory } from 'history';
 import createSagaMiddleware from 'redux-saga';
 import { composeWithDevTools } from 'redux-devtools-extension';
@@ -24,7 +23,6 @@ export default function configureStore() {
     );
     return {
         store,
-        persistor: persistStore(store),
     };
 }
 

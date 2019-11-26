@@ -7,9 +7,12 @@
     "axios": "^0.19.0",
     "connected-react-router": "^6.5.2",
     "cross-env": "^6.0.3",
+    "env-cmd": "^10.0.1",
     "i18next": "^19.0.0",
     "i18next-browser-languagedetector": "^4.0.1",
+    "js-cookie": "^2.2.1",
     "node-sass": "^4.13.0",
+    "query-string": "^6.9.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-i18next": "^11.2.1",
@@ -29,6 +32,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "start:staging": "env-cmd -f .env.staging react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "testci": "cross-env CI=true react-scripts test --all --ci",
@@ -37,7 +41,8 @@
   "eslintConfig": {
     "extends": "react-app",
     "rules": {
-        "semi": "warn"
+      "react-hooks/exhaustive-deps": "off",
+      "semi": "warn"
     }
   },
   "browserslist": [
@@ -52,6 +57,7 @@
     "@types/enzyme-adapter-react-16": "^1.0.5",
     "@types/history": "^4.7.3",
     "@types/jest": "24.0.23",
+    "@types/js-cookie": "^2.2.4",
     "@types/node": "12.12.8",
     "@types/react": "^16.9.11",
     "@types/react-dom": "16.9.4",

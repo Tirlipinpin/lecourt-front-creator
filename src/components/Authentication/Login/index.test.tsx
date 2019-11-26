@@ -1,7 +1,8 @@
 import React, { SyntheticEvent, FormEvent } from 'react';
-import { shallow, ShallowWrapper } from 'enzyme';
+import  { shallow, ShallowWrapper } from 'enzyme';
 
-import { Login, LoginState } from '.';
+import { Login, LoginState } from '../Login';
+import { CheckboxChangeEvent } from 'antd/lib/checkbox';
 
 describe('the Login component', () => {
     let wrapper: ShallowWrapper;
@@ -25,6 +26,7 @@ describe('the Login component', () => {
         const state: LoginState = {
             email: 'poney@is.magic',
             password: 'unicorn',
+            rememberMe: false,
         }
         instance.setState(state);
         const event = {
@@ -52,6 +54,7 @@ describe('the Login component', () => {
         expect(instance.state).toEqual({
             email: 'poney@is.magic',
             password: '',
+            rememberMe: false,
         });
     });
         
@@ -68,6 +71,24 @@ describe('the Login component', () => {
         expect(instance.state).toEqual({
             email: '',
             password: 'unicorn',
+            rememberMe: false,
+        });
+    });
+
+    test('should update rememberMe in state when calling handleRememberMe', () => {
+        const instance = wrapper.instance() as Login;
+        const event = {
+            target: {
+                checked: true,
+            },
+        } as unknown;
+
+        instance.handleRememberMe(event as CheckboxChangeEvent);
+
+        expect(instance.state).toEqual({
+            email: '',
+            password: '',
+            rememberMe: true,
         });
     });
 });

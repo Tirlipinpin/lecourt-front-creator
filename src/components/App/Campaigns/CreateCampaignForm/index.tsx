@@ -33,8 +33,8 @@ export default (props: ICreateCampaignFormProps) => {
     };
 
     const fetchUploadedMovies = () => {
-        dispatch({ type: 'FETCH_UPLOADED_MOVIES' })
-    }
+        dispatch({ type: 'FETCH_UPLOADED_MOVIES' });
+    };
 
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
@@ -131,5 +131,5 @@ export default (props: ICreateCampaignFormProps) => {
               <Button htmlType="submit">Créer</Button>
         </Form>
       </Modal>
-    )
-}
+    );
+};

@@ -44,7 +44,7 @@ export default (state = defaultState, action: any) => {
             return {
                 ...state,
                 loading: false,
-            }
+            };
         case DELETE_ENTITY_SUCCEEDED:
             
             return {

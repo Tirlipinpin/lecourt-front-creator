@@ -1,0 +1,164 @@
+@import 'styles/colors';
+
+.authPageContainer {
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: inherit;
+}
+
+.authContainer {
+    min-height: 60%;
+    width: 55%;
+    border-radius: 5px;
+    box-shadow: 0 1px 20px 1px rgba(47, 51, 56, 0.35);
+    display: flex;
+
+    .authElement {
+        padding: 1.5rem 1rem;
+    }
+
+    .authForm {
+        flex: 3;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        text-align: center;
+        height: 100%;
+        background-color: rgba(255, 255, 255, 0.9);
+        backdrop-filter: blur(10px);
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+    }
+
+    .authRight {        
+        flex: 5;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: rgba(41, 41, 41, 0.9);
+        backdrop-filter: blur(10px);
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+
+        .logo {
+            height: auto;
+            width: 45%;
+            cursor: auto;
+        }
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .authContainer {
+        width: 65%;
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    .authContainer {
+        width: 75%;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .authContainer {
+        flex-direction: column-reverse;
+        width: 40%;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .authContainer {
+        flex-direction: column-reverse;
+        width: 50%;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .authContainer {
+        flex-direction: column-reverse;
+        width: 60%;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .authContainer {
+        flex-direction: column-reverse;
+        width: 70%;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .authContainer {
+        flex-direction: column-reverse;
+        width: 80%;
+    }
+}
+
+@media screen and (max-width: 300px) {
+    .authContainer {
+        flex-direction: column-reverse;
+        width: 90%;
+    }
+}
+
+.authForm {
+    .authFormContainer {
+        display: flex;
+        flex-direction: column;
+        width: 90%;
+        height: 100%;
+    }
+    
+    .authFormItem {
+        margin-bottom: 1%;
+        width: 100%;
+        text-align: left;
+    }
+    
+    .authFormButton {
+        margin: 3vh 0 0 0;
+    }
+    
+    .authFormCheckbox {
+        margin-right: auto;
+        color: $lc-black;
+        font-weight: 500;
+    }
+    
+    .authFormTitle {
+        color: $lc-black !important;
+        margin-top: 5px;
+    }
+}
+
+.authFormFooter {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin-top: 3vh;
+
+    .socialLoginLink {
+        font-size: 1.5rem;
+        margin: 4px;
+    }
+
+    .divider {
+        background-color: $lc-black;
+    }
+
+    .switchFormLink {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        align-items: flex-start;
+        color: $lc-black;
+    }
+}

@@ -6,7 +6,7 @@ import axios from 'axios';
 import { getManagementUrl } from '../../services/requestUrl';
 import { collapseNavbar } from './Navbar/actions';
 import axiosInterceptor from '../../services/axiosInterceptor';
-import { LoginStore } from '../../reducers/login';
+import { ILoginStore } from '../../reducers/login';
 import Navbar from './Navbar';
 import styles from './index.module.scss';
 import './index.scss';
@@ -20,7 +20,7 @@ const CampaignEdit = lazy(() => import('./Campaigns/Edit'));
 const AdminDashboard = lazy(() => import('./AdminDashboard'));
 
 interface AppProps extends RouteComponentProps {
-    login: LoginStore
+    login: ILoginStore
     dispatch: Dispatch<any>
     collapsed: boolean
 }

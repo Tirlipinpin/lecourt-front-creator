@@ -1,7 +1,7 @@
 import React, { FormEvent, SyntheticEvent } from 'react';
-import { shallow, ShallowWrapper } from 'enzyme';
+import  { shallow, ShallowWrapper } from 'enzyme';
 
-import { Register, RegisterState } from '.';
+import { Register, RegisterState } from '../Register';
 
 describe('The Register component', () => {
     let wrapper: ShallowWrapper;

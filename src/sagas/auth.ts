@@ -1,30 +1,61 @@
 import { put, takeLatest } from 'redux-saga/effects';
-import { AnyAction } from 'redux';
 import axios, { AxiosResponse } from 'axios';
 import { notification } from 'antd';
+import Cookies from 'js-cookie';
 import { getLoginUrl, getRegisterUrl } from '../services/requestUrl';
-import { FETCH_TOKEN, FETCH_TOKEN_SUCCEEDED, FETCH_TOKEN_FAILED } from '../reducers/login/constants';
-import { REGISTER_USER, REGISTER_USER_SUCCEEDED, REGISTER_USER_FAILED } from '../reducers/register/constants';
+import {
+    FETCH_TOKEN,
+    FETCH_TOKEN_FAILED,
+    FETCH_TOKEN_SUCCEEDED,
+} from '../reducers/login/constants';
+import {
+    REGISTER_USER,
+    REGISTER_USER_SUCCEEDED,
+    REGISTER_USER_FAILED,
+} from '../reducers/register/constants';
 
-function* fetchToken(action: AnyAction): IterableIterator<Object | void> {
+export interface IFetchTokenAction {
+    type: string
+    payload: {
+        email: string
+        password: string
+        rememberMe: boolean
+    }
+}
+
+function* fetchToken(action: IFetchTokenAction): IterableIterator<Object | void> {
     try {
-        const res: any = yield axios.post(getLoginUrl(), {
-            username: action.payload.email,
-            password: action.payload.password,
+        const { payload: { email, password, rememberMe } } = action;
+
+        const res: unknown = yield axios.post(getLoginUrl(), {
+            username: email,
+            password: password,
+        }, {
+            withCredentials: true,
         });
 
-        if (!res.data)
-          throw new Error(res.message);
-
-        const { data: { access_token } } = res as AxiosResponse;
+        const { data: { access_token, expires_in } } = res as AxiosResponse;
 
         if (!access_token)
-            throw new Error('Bad Credentials');
+            throw new Error('Network error');
+
 
         yield put({
             type: FETCH_TOKEN_SUCCEEDED,
-            payload: access_token,
         });
+
+        if (rememberMe) {
+            Cookies.set('user_authorization', access_token, {
+                expires: new Date(Date.now() + expires_in),
+                domain: process.env.REACT_APP_DOMAIN_URL,
+              });
+        } else {
+            Cookies.set('user_authorization', access_token, {
+              domain: process.env.REACT_APP_DOMAIN_URL,
+            });
+        }
+        window.location.href = process.env.REACT_APP_FRONT_URL!;
+
     } catch (e) {
         yield put({
             type: FETCH_TOKEN_FAILED,
@@ -36,13 +67,32 @@ function* fetchToken(action: AnyAction): IterableIterator<Object | void> {
     }
 }
 
-function* registerUser(action: any): any {
+export interface IRegisterUserAction {
+    type: string
+    payload: {
+        displayName: string
+        email: string
+        password: string
+        passwordConfirmation: string
+    }
+}
+
+function* registerUser(action: IRegisterUserAction): IterableIterator<Object | void> {
     try {
-        const res = yield axios.post(getRegisterUrl(), {
-            auth: {
-                username: 'user',
-                password: 'password',
-            },
+        const {
+            payload: {
+                displayName,
+                email,
+                password,
+                passwordConfirmation
+            }
+        } = action;
+
+        const res: unknown = yield axios.post(getRegisterUrl(), {
+            display_name: displayName,
+            email: email,
+            password: password,
+            password_confirm: passwordConfirmation,
         });
 
         const { data: { access_token } } = res as AxiosResponse;

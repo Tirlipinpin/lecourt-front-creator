@@ -2,14 +2,14 @@ import React from 'react';
 import { shallow, ShallowWrapper } from 'enzyme';
 
 import { App } from '.';
-import { LoginStore } from '../../reducers/login';
+import { ILoginStore } from '../../reducers/login';
 import styles from './index.module.scss';
 
 describe('The App component', () => {
     let wrapper: ShallowWrapper;
 
     beforeEach(() => {
-        const loginStore: LoginStore = {
+        const loginStore: ILoginStore = {
             token: 'something',
             loading: false,
         };

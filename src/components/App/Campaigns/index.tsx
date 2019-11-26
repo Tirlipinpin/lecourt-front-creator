@@ -28,18 +28,18 @@ function getRandomInt(max: number) {
 }
 
 function getTimelineCurrentState(campaign: ICampaign): number {
-  const now = moment().unix()
-  let current = 2
+  const now = moment().unix();
+  let current = 2;
 
   if (campaign.startTime / 1000 > now) {
-    current = 1
+    current = 1;
   } else if (campaign.endTime / 1000 < now) {
-    current = 3
+    current = 3;
   }
   if (!campaign.enabled) {
-    current = 0
+    current = 0;
   }
-  return current
+  return current;
 }
 
 export default (props: ICampaignsProps) => {
@@ -50,7 +50,7 @@ export default (props: ICampaignsProps) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch({ type: FETCH_CAMPAIGNS })
+        dispatch({ type: FETCH_CAMPAIGNS });
     }, []);
 
     const showDisplayCreationModal = () => {
@@ -64,11 +64,11 @@ export default (props: ICampaignsProps) => {
     const handleEditButton = (campaign: ICampaign) => {
         const { history } = props;
 
-        dispatch({ type: FETCH_UPLOADED_MOVIES })
+        dispatch({ type: FETCH_UPLOADED_MOVIES });
         dispatch({
           type: UPDATE_EDITING_CAMPAIGN,
           payload: campaign,
-        })
+        });
         history.push(`/app/campaigns/${campaign.id}`);
     };
 
@@ -79,7 +79,7 @@ export default (props: ICampaignsProps) => {
                 ...campaign,
                 enabled: enabled,
             }
-        })
+        });
     };
 
     const deleteCampaign = (id: string) => {
@@ -192,4 +192,4 @@ export default (props: ICampaignsProps) => {
           </Tooltip>
       </Layout>
     );
-}
+};

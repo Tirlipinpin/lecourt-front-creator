@@ -33,4 +33,4 @@ export default (state = defaultState, action: any) => {
     default:
       return state;
   }
-}
+};

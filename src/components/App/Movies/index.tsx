@@ -20,11 +20,11 @@ export default (props: IMovies) => {
     }));
 
     const showUploadModal = () => {
-        dispatch({ type: SHOW_UPLOAD_MOVIE_MODAL })
+        dispatch({ type: SHOW_UPLOAD_MOVIE_MODAL });
     };
 
     const hideUploadModal = () => {
-        dispatch({ type: HIDE_UPLOAD_MOVIE_MODAL })
+        dispatch({ type: HIDE_UPLOAD_MOVIE_MODAL });
     };
 
     useEffect(() => {
@@ -90,4 +90,4 @@ export default (props: IMovies) => {
             </Tooltip>
         </Layout>
     );
-}
+};

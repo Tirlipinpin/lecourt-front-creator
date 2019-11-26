@@ -1,11 +1,17 @@
-import { FETCH_TOKEN, FETCH_TOKEN_SUCCEEDED, FETCH_TOKEN_FAILED, LOGOUT } from './constants';
+import {
+  FETCH_TOKEN,
+  FETCH_TOKEN_SUCCEEDED,
+  FETCH_TOKEN_FAILED,
+  RESTORE_TOKEN,
+  LOGOUT,
+} from './constants';
 
-export interface LoginStore {
+export interface ILoginStore {
     loading: boolean
     token?: string | null
 }
 
-export const defaultState: LoginStore = {
+export const defaultState: ILoginStore = {
     loading: false,
 };
 
@@ -27,6 +33,11 @@ export default (state = defaultState, action: any) => {
                 ...state,
                 loading: false,
             };
+        case RESTORE_TOKEN:
+          return {
+              ...state,
+              token: action.payload,
+          };
         case LOGOUT:
             return {
                 ...state,
@@ -35,4 +46,4 @@ export default (state = defaultState, action: any) => {
         default:
             return state;
     }
-}
+};

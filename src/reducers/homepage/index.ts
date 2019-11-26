@@ -11,4 +11,4 @@ export default (state: any = defaultState, action: any) => {
         default:
             return state;
     }
-}
+};

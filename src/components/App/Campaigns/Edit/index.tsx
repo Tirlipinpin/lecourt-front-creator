@@ -7,7 +7,7 @@ import { IMovieDetails, MovieRelation } from '../../interfaces';
 import { Location } from 'history';
 import { FETCH_CAMPAIGN, UPDATE_EDITING_CAMPAIGN, UPDATE_CAMPAIGN } from '../../../../reducers/campaigns/constants';
 import { match, RouterProps } from 'react-router';
-import './index.css'
+import './index.css';
 
 const { RangePicker } = DatePicker;
 
@@ -30,18 +30,10 @@ export default (props: IProps) => {
             payload: {
                 id: props.match.params.id,
             },
-        })
-        dispatch({ type: 'FETCH_UPLOADED_MOVIES' })
-    }, [])
+        });
+        dispatch({ type: 'FETCH_UPLOADED_MOVIES' });
+    }, []);
 
-    /*useEffect(() => {
-        return () => {
-            dispatch({
-                type: UPDATE_EDITING_CAMPAIGN,
-                payload: null,
-            })
-        }
-    }, [])*/
 
     const form = {
         enabled: editingCampaign ? editingCampaign.enabled : false,
@@ -50,9 +42,8 @@ export default (props: IProps) => {
         startTime: editingCampaign ? editingCampaign.startTime : 0,
         endTime: editingCampaign ? editingCampaign.endTime : 0,
         movies: editingCampaign ? editingCampaign.movies : [],
-        // note: editingCampaign ? editingCampaign.note : '-',
         note: '-',
-    }
+    };
 
     const filterOptions = (input: string, option: ReactElement): boolean => {
         return option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0;
@@ -74,7 +65,7 @@ export default (props: IProps) => {
     const updateFormStrings = (e: SyntheticEvent): void => {
         const { value, name } = e.target as HTMLInputElement;
         if (!editingCampaign) {
-            return
+            return;
         }
 
         dispatch({
@@ -83,12 +74,12 @@ export default (props: IProps) => {
                 ...editingCampaign,
                 [name]: value,
             },
-        })
+        });
     };
 
     const updateFormDates = (_: RangePickerValue, dates: [string, string]) => {
         if (!editingCampaign) {
-            return
+            return;
         }
 
         dispatch({
@@ -98,12 +89,12 @@ export default (props: IProps) => {
                 startTime: moment(dates[0]).valueOf(),
                 endTime: moment(dates[1]).valueOf(),
             },
-        })
+        });
     };
 
     const updateFormMovies = (movies: string[], _: any) => {
         if (!editingCampaign) {
-            return
+            return;
         }
 
         dispatch({
@@ -112,18 +103,18 @@ export default (props: IProps) => {
                 ...editingCampaign,
                 movies: movies.map((id) => ({ node: { id } })),
             },
-        })
+        });
     };
 
     const handleCancel = () => {
-        props.history.push('/app/campaigns')
-    }
+        props.history.push('/app/campaigns');
+    };
 
     useEffect(() => {
         if (editedCampaign) {
-            handleCancel()
+            handleCancel();
         }
-    })
+    });
 
     return (
         <Layout className="campaigns-edit-page-container">
@@ -185,5 +176,5 @@ export default (props: IProps) => {
                 </span>
             </Form>
         </Layout>
-    )
-}
+    );
+};
