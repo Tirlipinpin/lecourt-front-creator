@@ -34,6 +34,8 @@ export class App extends Component<AppProps, {}> {
             dispatch({ type: 'LOGOUT' });
             history.push('/');
         });
+        
+        if (!token) return;
 
         axios.defaults.baseURL = getManagementUrl();
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
