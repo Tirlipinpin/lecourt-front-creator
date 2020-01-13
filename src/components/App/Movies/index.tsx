@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import {Layout, PageHeader, List, Modal, Button, Tooltip} from 'antd';
 import { History } from 'history';
-
 import { IMovieDetails } from '../interfaces';
 import { SHOW_UPLOAD_MOVIE_MODAL, HIDE_UPLOAD_MOVIE_MODAL } from '../../../reducers/uploadMovie/constants';
 import './index.css';
@@ -14,10 +13,11 @@ export interface IMovies {
 
 export default (props: IMovies) => {
     const dispatch = useDispatch();
-    const { uploadedMovies, uploadModalVisible } = useSelector((state: any) => ({
-        uploadedMovies: state.uploadedMovies,
+    const { loading, uploadedMovies, uploadModalVisible } = useSelector((state: any) => ({
+        loading: state.uploadedMovies.loading,
+        uploadedMovies: state.uploadedMovies.movies,
         uploadModalVisible: state.uploadMovie.visible,
-    }));
+    }), shallowEqual);
 
     const showUploadModal = () => {
         dispatch({ type: SHOW_UPLOAD_MOVIE_MODAL });
@@ -51,7 +51,8 @@ export default (props: IMovies) => {
                 pagination={{
                     pageSize: 5,
                 }}
-                dataSource={uploadedMovies.movies}
+                dataSource={uploadedMovies}
+                loading={loading}
                 renderItem={(item: IMovieDetails) => (
                     <List.Item
                       onClick={() => goToMovieDetails(item.id)}
