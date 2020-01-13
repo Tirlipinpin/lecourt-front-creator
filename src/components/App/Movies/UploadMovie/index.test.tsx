@@ -7,8 +7,8 @@ import { Moment } from 'moment';
 import { UploadMovie } from '.';
 import {
     IActorForm,
-    IDirectorForm,
-    IGenreForm,
+    directorForm,
+    genreForm,
     IStaffForm,
 } from '../../interfaces';
 
@@ -115,9 +115,9 @@ describe('The UploadMovie component', () => {
 
     it('should update actors list state when changing actors', () => {
         const instance = wrapper.instance() as UploadMovie;
-        const actors = [
-            { actorId: 'poney', role: 'licorne' },
-            { actorId: 'magique', role: 'balais' }
+        const actors: IActorForm[] = [
+            { id: 'poney', role: 'licorne' },
+            { id: 'magique', role: 'balais' },
         ];
 
         instance.handleActor('poney', 'licorne');
@@ -128,9 +128,9 @@ describe('The UploadMovie component', () => {
 
     it('should update directors list state when changing directors', () => {
         const instance = wrapper.instance() as UploadMovie;
-        const directors = [
-            { personId: 'poney' },
-            { personId: 'magique' }
+        const directors: directorForm[] = [
+            'poney',
+            'magique',
         ];
 
         instance.handleDirectorSelect('poney');
@@ -142,8 +142,8 @@ describe('The UploadMovie component', () => {
     it('should update staff list state when changing staff', () => {
         const instance = wrapper.instance() as UploadMovie;
         const staff = [
-            { personId: 'poney', job: 'licorne' },
-            { personId: 'magique', job: 'balais' }
+            { id: 'poney', job: 'licorne' },
+            { id: 'magique', job: 'balais' }
         ];
 
         instance.handleStaff('poney', 'licorne');
@@ -159,10 +159,10 @@ describe('The UploadMovie component', () => {
             summary: 'poney magique',
             summarySmall: 'my little poney',
             releaseDate: '1998-09-20',
-            actors: [{ actorId: '1234', role: 'batman' }] as IActorForm[],
-            directors: [{ personId: '1234' }] as IDirectorForm[],
-            staff: [{ personId: '1234' }] as IStaffForm[],
-            genres: [{ genreId: '1234' }] as IGenreForm[],
+            actors: [{ id: '1234', role: 'batman' }] as IActorForm[],
+            directors: [ '1234' ] as directorForm[],
+            staff: [{ id: '1234' }] as IStaffForm[],
+            genres: [ '1234' ] as genreForm[],
             posterFile: { name: 'poster' } as UploadFile,
             movieFile: { name: 'video'} as UploadFile,
         };

@@ -14,7 +14,6 @@ import { UploadFile } from 'antd/lib/upload/interface';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import { Moment } from 'moment';
-
 import { uploadMovie } from './actions';
 import PersonsSelect from './components/PersonsSelect';
 import RoleSelect from './components/RoleSelect';
@@ -22,9 +21,9 @@ import { FETCH_MOVIE_CREATION_DATA } from '../../../../reducers/uploadMovie/cons
 import { IUploadMovieStore } from '../../../../reducers/uploadMovie';
 import {
     IActorForm,
-    IDirectorForm,
+    directorForm,
     IStaffForm,
-    IGenreForm,
+    genreForm,
     Genre,
 } from '../../interfaces';
 import './index.css';
@@ -40,9 +39,9 @@ export interface IUploadMovieState {
     summarySmall: string
     releaseDate: string
     actors: IActorForm[]
-    directors: IDirectorForm[]
+    directors: directorForm[]
     staff: IStaffForm[]
-    genres: IGenreForm[]
+    genres: genreForm[]
     posterFile: UploadFile | null
     movieFile: UploadFile | null
     modalVisible: boolean
@@ -72,12 +71,13 @@ export class UploadMovie extends Component<IUploadMovieProps, IUploadMovieState>
 
     componentDidMount(): void {
         const { dispatch } = this.props;
-
         dispatch({ type: FETCH_MOVIE_CREATION_DATA });
     }
 
     handleSubmit = (e: FormEvent) => {
         e.preventDefault();
+
+        console.log(this.state);
 
         const { title, summary, summarySmall, releaseDate, actors, directors, staff, genres, posterFile, movieFile } = this.state;
         if (!title || !summary || !summarySmall || !releaseDate || actors.length < 1 || directors.length < 1 || staff.length < 1 || genres.length < 1 || !posterFile || !movieFile) return;
@@ -119,10 +119,10 @@ export class UploadMovie extends Component<IUploadMovieProps, IUploadMovieState>
         this.setState({ releaseDate: dateString });
     };
 
-    handleActor = (actorId: string, role: string) => {
-        const actors = [ ...this.state.actors ];
+    handleActor = (id: string, role: string) => {
+        const actors: IActorForm[] = [ ...this.state.actors ];
 
-        actors.push({ actorId, role });
+        actors.push({ id, role });
         this.setState({ actors });
     };
 
@@ -133,7 +133,7 @@ export class UploadMovie extends Component<IUploadMovieProps, IUploadMovieState>
 
     handleActorDeselect = (e: string) => {
         const actors: IActorForm[] = [...this.state.actors];
-        const index = actors.findIndex((actor) => actor.actorId === e);
+        const index = actors.findIndex((actor) => actor.id === e);
 
         if (index !== -1) {
             actors.splice(index, 1);
@@ -141,16 +141,16 @@ export class UploadMovie extends Component<IUploadMovieProps, IUploadMovieState>
         }
     };
 
-    handleDirectorSelect = (personId: string) => {
-        const directors = [ ...this.state.directors ];
+    handleDirectorSelect = (id: string) => {
+        const directors: directorForm[] = [ ...this.state.directors ];
 
-        directors.push({ personId });
+        directors.push(id);
         this.setState({ directors });
     };
 
     handleDirectorDeselect = (e: string) => {
-        const directors: IDirectorForm[] = [...this.state.directors];
-        const index = directors.findIndex((director) => director.personId === e);
+        const directors: directorForm[] = [...this.state.directors];
+        const index = directors.findIndex((director) => director === e);
 
         if (index !== -1) {
             directors.splice(index, 1);
@@ -158,10 +158,10 @@ export class UploadMovie extends Component<IUploadMovieProps, IUploadMovieState>
         }
     };
 
-    handleStaff= (personId: string, job: string) => {
+    handleStaff= (id: string, job: string) => {
         const staff = [ ...this.state.staff ];
 
-        staff.push({ personId, job });
+        staff.push({ id, job });
         this.setState({ staff });
     };
 
@@ -172,7 +172,7 @@ export class UploadMovie extends Component<IUploadMovieProps, IUploadMovieState>
 
     handleStaffDeselect = (e: string) => {
         const staff: IStaffForm[] = [...this.state.staff];
-        const index = staff.findIndex((staff) => staff.personId === e);
+        const index = staff.findIndex((staff) => staff.id === e);
 
         if (index !== -1) {
             staff.splice(index, 1);
@@ -183,13 +183,13 @@ export class UploadMovie extends Component<IUploadMovieProps, IUploadMovieState>
     handleGenreSelect = (genreId: any) => {
         const genres = [ ...this.state.genres ];
 
-        genres.push({ genreId });
+        genres.push(genreId);
         this.setState({ genres });
     };
 
     handleGenreDeselect = (e: any) => {
-        const genres: IGenreForm[] = [...this.state.genres];
-        const index = genres.findIndex((genre) => genre.genreId === e);
+        const genres: genreForm[] = [...this.state.genres];
+        const index = genres.findIndex((genre) => genre === e);
 
         if (index !== -1) {
             genres.splice(index, 1);
@@ -275,7 +275,7 @@ export class UploadMovie extends Component<IUploadMovieProps, IUploadMovieState>
                             onChange={this.handleDescription}
                             placeholder="Ex: Un jeune homme cruel se lance dans une bataille contre les mouettes"
                             required
-                            autosize
+                            autoSize
                           />
                       </Form.Item>
                       <Form.Item
@@ -287,7 +287,7 @@ export class UploadMovie extends Component<IUploadMovieProps, IUploadMovieState>
                             onChange={this.handleShortDescription}
                             placeholder="Ex: Plein de mouettes !"
                             required
-                            autosize
+                            autoSize
                           />
                       </Form.Item>
                       <Form.Item

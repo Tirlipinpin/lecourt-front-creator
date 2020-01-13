@@ -6,22 +6,18 @@ export interface Person {
 }
 
 export interface IActorForm {
-    actorId: string
+    id: string
     role: string
 }
 
-export interface IDirectorForm {
-    personId: string
-}
+export type directorForm = string
 
 export interface IStaffForm {
-    personId: string
+    id: string
     job: string
 }
 
-export interface IGenreForm {
-    genreId: string
-}
+export type genreForm = string
 
 export interface Genre {
     id: string

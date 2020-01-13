@@ -1,7 +1,7 @@
 import {UploadFile} from "antd/es/upload/interface";
 
 import { UPLOAD_MOVIE } from '../../../../reducers/uploadMovie/constants';
-import {IActorForm, IDirectorForm, IGenreForm, IStaffForm} from '../../interfaces';
+import {IActorForm, directorForm, genreForm, IStaffForm} from '../../interfaces';
 
 export const uploadMovie = (
   title: string,
@@ -9,9 +9,9 @@ export const uploadMovie = (
   summarySmall: string,
   releaseDate: string,
   actors: IActorForm[],
-  directors: IDirectorForm[],
+  directors: directorForm[],
   staff: IStaffForm[],
-  genres: IGenreForm[],
+  genres: genreForm[],
   posterFile: UploadFile,
   movieFile: UploadFile,
 ) => ({

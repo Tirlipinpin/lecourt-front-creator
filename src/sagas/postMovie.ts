@@ -10,14 +10,33 @@ import {
     UPLOAD_MOVIE_FILE_SUCCEEDED,
 } from '../reducers/uploadMovie/constants';
 import { getUploadUrl } from '../services/requestUrl';
+import { IActorForm, directorForm, genreForm, IStaffForm } from 'components/App/interfaces';
 
-function* postMovie(action: AnyAction): IterableIterator<Object | void> {
+export interface IPostMovieAction {
+    type: string
+    payload: {
+        actors: IActorForm[]
+        directors: directorForm[]
+        genres: genreForm[]
+        releaseDate: string
+        staff: IStaffForm
+        summary: string
+        summarySmall: string
+        title: string
+    }
+}
+
+function* postMovie(action: IPostMovieAction): IterableIterator<Object | void> {
     try {
         const {
-            title,
+            actors,
+            directors,
+            genres,
+            releaseDate,
+            staff,
             summary,
             summarySmall,
-            releaseDate,
+            title,
             ...n
         } = action.payload;
 
@@ -26,11 +45,15 @@ function* postMovie(action: AnyAction): IterableIterator<Object | void> {
         });
 
         const res = yield axios.post(`movies`, {
-            title,
+            actors,
+            directors,
+            duration: 0,
+            genres,
+            releaseDate,
+            staff,
             summary,
             summarySmall,
-            releaseDate,
-            duration: 0,
+            title,
         });
 
         if (!res)
@@ -120,91 +143,10 @@ function* uploadMoviePosterFile(action: AnyAction): IterableIterator<Object | vo
     }
 }
 
-function* addMovieActors(action: AnyAction): IterableIterator<Object | void> {
-    try {
-        const {
-            id,
-            actors,
-        } = action.payload;
-
-        const res = yield axios.post(`movies/${id}/actors`, actors);
-
-        if (!res)
-            throw new Error('Unable to add actors');
-
-    } catch (e) {
-        yield notification['error']({
-            message: 'Unable to add actors in database',
-            description: e.message,
-        });
-    }
-}
-
-function* addMovieDirectors(action: AnyAction): IterableIterator<Object | void> {
-    try {
-        const {
-            id,
-            directors,
-        } = action.payload;
-
-        const res = yield axios.post(`movies/${id}/directors`, directors);
-        if (!res)
-            throw new Error('Unable to add directors');
-
-    } catch (e) {
-        yield notification['error']({
-            message: 'Unable to add directors in database',
-            description: e.message,
-        });
-    }
-}
-
-function* addMovieStaff(action: AnyAction): IterableIterator<Object | void> {
-    try {
-        const {
-            id,
-            staff,
-        } = action.payload;
-
-        const res = yield axios.post(`movies/${id}/staff`, staff);
-        if (!res)
-            throw new Error('Unable to add staff');
-
-    } catch (e) {
-        yield notification['error']({
-            message: 'Unable to add staff in database',
-            description: e.message,
-        });
-    }
-}
-
-function* addMovieGenres(action: AnyAction): IterableIterator<Object | void> {
-    try {
-        const {
-            id,
-            genres,
-        } = action.payload;
-
-        const res = yield axios.post(`movies/${id}/genres`, genres);
-        if (!res)
-            throw new Error('Unable to add genres');
-
-    } catch (e) {
-        yield notification['error']({
-            message: 'Unable to add genres in database',
-            description: e.message,
-        });
-    }
-}
-
 function* saga() {
     yield takeEvery(UPLOAD_MOVIE, postMovie);
     yield takeEvery(UPLOAD_MOVIE_SUCCEEDED, uploadMovieFile);
     yield takeEvery(UPLOAD_MOVIE_SUCCEEDED, uploadMoviePosterFile);
-    yield takeEvery(UPLOAD_MOVIE_SUCCEEDED, addMovieActors);
-    yield takeEvery(UPLOAD_MOVIE_SUCCEEDED, addMovieDirectors);
-    yield takeEvery(UPLOAD_MOVIE_SUCCEEDED, addMovieStaff);
-    yield takeEvery(UPLOAD_MOVIE_SUCCEEDED, addMovieGenres);
 }
 
 export default saga;
