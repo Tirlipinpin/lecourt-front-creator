@@ -1,8 +1,9 @@
 import { fork, all } from 'redux-saga/effects';
 
-import auth from './auth';
 import adminDashboard from './adminDashboard';
+import auth from './auth';
 import campaigns from './campaigns';
+import movieDetails from './movieDetails';
 import postMovie from './postMovie';
 import uploadedMovies from './uploadedMovies';
 import shared from './shared';
@@ -12,6 +13,7 @@ export default function* sagas() {
         fork(adminDashboard),
         fork(auth),
         fork(campaigns),
+        fork(movieDetails),
         fork(postMovie),
         fork(uploadedMovies),
         fork(shared),

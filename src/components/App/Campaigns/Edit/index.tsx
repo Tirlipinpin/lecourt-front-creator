@@ -32,7 +32,7 @@ export default (props: IProps) => {
             },
         });
         dispatch({ type: 'FETCH_UPLOADED_MOVIES' });
-    }, []);
+    }, [dispatch, props.match.params.id]);
 
 
     const form = {

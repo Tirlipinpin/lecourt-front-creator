@@ -1,7 +1,6 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, FunctionComponent } from 'react';
 import { Select } from 'antd';
-
-import { Person } from '../../../../interfaces';
+import { Person } from '../../../../../interfaces';
 
 export interface IPersonsSelectProps {
     persons: Person[]
@@ -10,7 +9,7 @@ export interface IPersonsSelectProps {
     onDeselect: (e: string | any) => any
 }
 
-export default ({ persons, filterOptions, onSelect, onDeselect }: IPersonsSelectProps) => (
+export const PersonsSelect: FunctionComponent<IPersonsSelectProps> = ({ persons, filterOptions, onSelect, onDeselect }) => (
     <Select
       mode="multiple"
       style={{ width: '100%' }}
@@ -28,3 +27,5 @@ export default ({ persons, filterOptions, onSelect, onDeselect }: IPersonsSelect
         ))}
     </Select>
 );
+
+export default PersonsSelect;

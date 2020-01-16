@@ -53,7 +53,7 @@ export interface ImageRelation {
     type: string
 }
 
-export interface GenreRelation {
+export interface IGenreRelation {
     node: Genre
 }
 
@@ -78,7 +78,7 @@ export interface IMovieDetails {
     directors: DirectorRelation[]
     staff: StaffRelation[]
     images: ImageRelation[]
-    genres: GenreRelation[]
+    genres: IGenreRelation[]
     file: FileRelation,
     result_quality: number
 }

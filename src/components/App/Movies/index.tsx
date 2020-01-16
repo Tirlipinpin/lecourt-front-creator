@@ -1,23 +1,27 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, FunctionComponent, useState } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
-import {Layout, PageHeader, List, Modal, Button, Tooltip} from 'antd';
+import {Layout, PageHeader, List, Button, Tooltip, Icon} from 'antd';
 import { History } from 'history';
 import { IMovieDetails } from '../interfaces';
 import { SHOW_UPLOAD_MOVIE_MODAL, HIDE_UPLOAD_MOVIE_MODAL } from '../../../reducers/uploadMovie/constants';
-import './index.css';
-import UploadMovie from "./UploadMovie";
+import UploadMovie from './containers/UploadMovie';
+import MovieUpdate from './containers/MovieUpdate';
+import styles from './index.module.scss';
 
 export interface IMovies {
     history: History
 }
 
-export default (props: IMovies) => {
+export const Movies: FunctionComponent<IMovies> = props => {
     const dispatch = useDispatch();
     const { loading, uploadedMovies, uploadModalVisible } = useSelector((state: any) => ({
         loading: state.uploadedMovies.loading,
         uploadedMovies: state.uploadedMovies.movies,
         uploadModalVisible: state.uploadMovie.visible,
     }), shallowEqual);
+
+    const [isUpdateMovieModalVisible, updateIsUpdateMovieModalVisible] = useState(false);
+    const [actualUpdatingMovie, updateActualUpdatingMovie] = useState('');
 
     const showUploadModal = () => {
         dispatch({ type: SHOW_UPLOAD_MOVIE_MODAL });
@@ -27,55 +31,51 @@ export default (props: IMovies) => {
         dispatch({ type: HIDE_UPLOAD_MOVIE_MODAL });
     };
 
+    const showUpdateMovieModal = (id: string) => {
+        updateIsUpdateMovieModalVisible(true);
+        updateActualUpdatingMovie(id);
+    }
+
+    const hideUpdateMovieModal = () => updateIsUpdateMovieModalVisible(false);
+
     useEffect(() => {
         dispatch({ type: 'FETCH_UPLOADED_MOVIES' });
-    }, []);
-
-    const goToMovieDetails = (id: string) => {
-        const { history } = props;
-
-        history.push(`/app/movies/${id}`);
-    };
+    }, [dispatch]);
 
     return (
-        <Layout className="movies-page-container">
+        <Layout className={styles.moviePageContainer}>
         <PageHeader
-          title="Films"
-          subTitle="Explorez vos courts métrages postés sur la platforme et définissez leurs paramètres"
-          className="movies-page-header"
+            title="Films"
+            subTitle="Explorez vos courts métrages postés sur la platforme et définissez leurs paramètres"
+            className={styles.moviePageHeader}
         />
             <List
-                className="movies-list"
+                className={styles.moviesList}
                 itemLayout="vertical"
                 size="large"
                 pagination={{
                     pageSize: 5,
+                    className: styles.pagination
                 }}
                 dataSource={uploadedMovies}
                 loading={loading}
                 renderItem={(item: IMovieDetails) => (
                     <List.Item
-                      onClick={() => goToMovieDetails(item.id)}
                       key={item.title}
                       extra={<img width={140} alt="logo" src={item.images[0] && item.images[0].node.id} />}
-                      className="movies-list-item"
+                      className={styles.moviesListItem}
                     >
-                     <List.Item.Meta
-                        title={item.title}
-                        description={item.genres.map(genre => genre.node.name).join(', ')}
-                    />
-                    {item.summary}
+                        <List.Item.Meta
+                            title={item.title}
+                            description={item.genres.map(genre => genre.node.name).join(', ')}
+                        />
+                        {item.summary}
+                        <Button onClick={() => showUpdateMovieModal(item.id)}><Icon type="edit" /></Button>
                     </List.Item>
                   )}
             />
-            <Modal
-              visible={uploadModalVisible}
-              onCancel={hideUploadModal}
-              title="Postez un court métrage !"
-              footer={null}
-            >
-                <UploadMovie />
-            </Modal>
+            <UploadMovie onCancel={hideUploadModal} visible={uploadModalVisible} />
+            <MovieUpdate id={actualUpdatingMovie} onCancel={hideUpdateMovieModal} visible={isUpdateMovieModalVisible} />
             <Tooltip
               placement="left"
               title="Postez un film"
@@ -92,3 +92,5 @@ export default (props: IMovies) => {
         </Layout>
     );
 };
+
+export default Movies;

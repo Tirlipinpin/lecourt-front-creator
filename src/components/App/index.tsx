@@ -14,7 +14,6 @@ import './index.scss';
 const Dashboard = lazy(() => import('./Dashboard'));
 const Profile = lazy(() => import('./Profile'));
 const Movies = lazy(() => import('./Movies'));
-const MovieDetails = lazy(() => import('./Movies/MovieDetails'));
 const Campaigns = lazy(() => import('./Campaigns'));
 const CampaignEdit = lazy(() => import('./Campaigns/Edit'));
 const AdminDashboard = lazy(() => import('./AdminDashboard'));
@@ -84,7 +83,6 @@ export class App extends Component<AppProps, {}> {
                                     <Route exact path={match.url} render={(props) => this.lazyRender(Dashboard, props)} />
                                     <Route path={`${match.path}/profile`} render={(props) => this.lazyRender(Profile, props)}/>
                                     <Route exact path={`${match.path}/movies`} render={(props) => this.lazyRender(Movies, props)}/>
-                                    <Route path={`${match.path}/movies/:id`} render={(props) => this.lazyRender(MovieDetails, props)}/>
                                     <Route exact path={`${match.path}/campaigns`} render={(props) => this.lazyRender(Campaigns, props)}/>
                                     <Route path={`${match.path}/campaigns/:id`} render={(props) => this.lazyRender(CampaignEdit, props)}/>
                                     <Route path={`${match.path}/adminDashboard`} render={(props) => this.lazyRender(AdminDashboard, props)}/>

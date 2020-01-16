@@ -1,35 +1,54 @@
-import {FETCH_MOVIE_DETAILS, FETCH_MOVIE_DETAILS_FAILED, FETCH_MOVIE_DETAILS_SUCCEEDED} from './constants';
+import {
+    FETCH_MOVIE_DETAILS,
+    FETCH_MOVIE_DETAILS_SUCCEEDED,
+    FETCH_MOVIE_DETAILS_FAILED,
+    UPDATE_MOVIE_DETAILS,
+    UPDATE_MOVIE_DETAILS_SUCCEEDED,
+    UPDATE_MOVIE_DETAILS_FAILED,
+} from './constants';
 import { IMovieDetails } from '../../components/App/interfaces';
 
 export interface IMovieDetailsStore {
-  movieDetails: IMovieDetails | []
+  movie?: IMovieDetails
   loading: boolean
+  updatingMovie: boolean
 }
 
 export const defaultState: IMovieDetailsStore = {
-  movieDetails: [],
-  loading: false,
+    loading: false,
+    updatingMovie: false,
 };
 
 export default (state = defaultState, action: any) => {
   switch(action.type) {
     case FETCH_MOVIE_DETAILS:
-      return {
-        ...state,
-        loading: true,
-      };
+        return {
+            ...defaultState,
+            loading: true,
+        };
     case FETCH_MOVIE_DETAILS_SUCCEEDED:
-      return {
-        ...state,
-        movieDetails: action.payload,
-        loading: false,
-      };
+        return {
+            ...state,
+            movie: action.payload,
+            loading: false,
+        };
     case FETCH_MOVIE_DETAILS_FAILED:
-      return {
-        ...state,
-        movieDetails: [],
-        loading: false,
-      };
+        return {
+            ...state,
+            movie: undefined,
+            loading: false,
+        };
+    case UPDATE_MOVIE_DETAILS:
+        return {
+            ...state,
+            updatingMovie: true,
+        };
+    case UPDATE_MOVIE_DETAILS_SUCCEEDED:
+    case UPDATE_MOVIE_DETAILS_FAILED:
+        return {
+            ...state,
+            updatingMovie: false,
+        };
     default:
       return state;
   }

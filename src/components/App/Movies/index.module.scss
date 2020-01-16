@@ -1,0 +1,33 @@
+@import 'styles/colors';
+
+.moviePageContainer {
+    margin: 32px 64px 0 64px;
+
+    .moviePageHeader {
+        background-color: white;
+        margin: auto auto 64px auto;
+        width: 100%;
+        box-shadow: 0 1px 5px 1px rgba(134, 134, 136, 0.35);
+    }
+
+    .moviesList {
+        margin-bottom: 64px;
+        background-color: white;
+        box-shadow: 0 1px 5px 1px rgba(134, 134, 136, 0.35);
+        padding-bottom: 16px;
+
+        .moviesListItem {
+            padding-left: 8px;
+            transition: box-shadow linear 150ms;
+            transition: background-color 250ms ease-in-out;
+
+            &:hover {
+                background-color: rgba($lc-light-blue, .1);
+            }
+        }
+
+        .pagination {
+            padding-right: 16px;
+        }
+    }    
+}

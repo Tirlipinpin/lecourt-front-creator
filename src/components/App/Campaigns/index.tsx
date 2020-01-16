@@ -51,7 +51,7 @@ export default (props: ICampaignsProps) => {
 
     useEffect(() => {
         dispatch({ type: FETCH_CAMPAIGNS });
-    }, []);
+    }, [dispatch]);
 
     const showDisplayCreationModal = () => {
         dispatch({ type: SHOW_CAMPAIGN_CREATION_MODAL });

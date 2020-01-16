@@ -4,7 +4,7 @@ import { History } from 'history';
 import { shallow, ShallowWrapper } from 'enzyme';
 import { Store } from 'redux';
 
-import MovieDetails from '.';
+import Movies from '.';
 
 describe('The Campaign component', () => {
     let wrapper: ShallowWrapper<any>;
@@ -20,7 +20,7 @@ describe('The Campaign component', () => {
 
         wrapper = shallow(
           <Provider store={store as Store}>
-            <MovieDetails history={history as History} />
+            <Movies history={history as History} />
           </Provider>
         );
     });

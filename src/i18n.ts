@@ -16,6 +16,7 @@ i18n
             LOGIN: 'Sign in',
             AUTH_NO_ACCOUNT: `Don't have an account yet?`,
             AUTH_REGISTER: `Register!`,
+            UPDATE_YOUR_SHORT: 'Upload your short information',
         }
       },
       fr: {
@@ -27,6 +28,7 @@ i18n
             LOGIN: 'Connexion',
             AUTH_NO_ACCOUNT: `Pas encore inscrit ?`,
             AUTH_REGISTER: `Inscrivez-vous !`,
+            UPDATE_YOUR_SHORT: 'Mettez à jour les informations de votre court',
         }
       }
     },

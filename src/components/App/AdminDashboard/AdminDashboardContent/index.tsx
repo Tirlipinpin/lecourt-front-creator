@@ -27,7 +27,7 @@ export const AdminDashboardContent = ({ entityType }: IAdminDashboardContentProp
             default:
                 return;
         }
-    }, [entityType]);
+    }, [dispatch, entityType]);
 
     const adminDashboard = useSelector((state: any) => state.adminDashboard );
     const { list, loading } = adminDashboard;

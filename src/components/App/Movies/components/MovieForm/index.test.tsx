@@ -3,25 +3,26 @@ import { shallow, ShallowWrapper } from 'enzyme';
 import { UploadChangeParam } from 'antd/lib/upload';
 import { UploadFile } from 'antd/es/upload/interface';
 import { Moment } from 'moment';
-
-import { UploadMovie } from '.';
+import { MovieForm } from '.';
 import {
     IActorForm,
     directorForm,
     genreForm,
     IStaffForm,
-} from '../../interfaces';
+} from 'components/App/interfaces';
 
 
-describe('The UploadMovie component', () => {
-    let wrapper: ShallowWrapper<UploadMovie>;
+describe('The MovieForm component', () => {
+    let wrapper: ShallowWrapper<MovieForm>;
     const dispatch = jest.fn();
+    const onSubmit = jest.fn();
 
     beforeEach(() => {
         wrapper = shallow(
-            <UploadMovie
-              dispatch={dispatch}
-              uploadMovie={{ persons: [], genres: [], visible: false }}
+            <MovieForm
+                genres={[]}
+                persons={[]}
+                onSubmit={onSubmit}
             />
         );
     });
@@ -37,7 +38,7 @@ describe('The UploadMovie component', () => {
     });
 
     it('should update movie state when uploading a movie', () => {
-        const instance = wrapper.instance() as UploadMovie;
+        const instance = wrapper.instance() as MovieForm;
         const info = {
             file: {
                 name: 'poney',
@@ -52,7 +53,7 @@ describe('The UploadMovie component', () => {
     });
 
     it('should update poster state when uploading a poster', () => {
-        const instance = wrapper.instance() as UploadMovie;
+        const instance = wrapper.instance() as MovieForm;
         const info = {
             file: {
                 name: 'poney',
@@ -67,7 +68,7 @@ describe('The UploadMovie component', () => {
     });
 
     it('should update title state when changing title', () => {
-        const instance = wrapper.instance() as UploadMovie;
+        const instance = wrapper.instance() as MovieForm;
         const event = {
             target: {
                 value: 'poney',
@@ -80,7 +81,7 @@ describe('The UploadMovie component', () => {
     });
 
     it('should update summary state when changing summary', () => {
-        const instance = wrapper.instance() as UploadMovie;
+        const instance = wrapper.instance() as MovieForm;
         const event = {
             target: {
                 value: 'poney',
@@ -93,7 +94,7 @@ describe('The UploadMovie component', () => {
     });
 
     it('should update summary small state when changing summary small', () => {
-        const instance = wrapper.instance() as UploadMovie;
+        const instance = wrapper.instance() as MovieForm;
         const event = {
             target: {
                 value: 'poney',
@@ -106,7 +107,7 @@ describe('The UploadMovie component', () => {
     });
 
     it('should update release date state when changing release date', () => {
-        const instance = wrapper.instance() as UploadMovie;
+        const instance = wrapper.instance() as MovieForm;
 
         instance.handleReleaseDate({} as Moment, '1998-09-20');
 
@@ -114,7 +115,7 @@ describe('The UploadMovie component', () => {
     });
 
     it('should update actors list state when changing actors', () => {
-        const instance = wrapper.instance() as UploadMovie;
+        const instance = wrapper.instance() as MovieForm;
         const actors: IActorForm[] = [
             { id: 'poney', role: 'licorne' },
             { id: 'magique', role: 'balais' },
@@ -127,7 +128,7 @@ describe('The UploadMovie component', () => {
     });
 
     it('should update directors list state when changing directors', () => {
-        const instance = wrapper.instance() as UploadMovie;
+        const instance = wrapper.instance() as MovieForm;
         const directors: directorForm[] = [
             'poney',
             'magique',
@@ -140,7 +141,7 @@ describe('The UploadMovie component', () => {
     });
 
     it('should update staff list state when changing staff', () => {
-        const instance = wrapper.instance() as UploadMovie;
+        const instance = wrapper.instance() as MovieForm;
         const staff = [
             { id: 'poney', job: 'licorne' },
             { id: 'magique', job: 'balais' }
@@ -153,7 +154,7 @@ describe('The UploadMovie component', () => {
     });
 
     it('should dispatch a uploadMovie action when submitting form', () => {
-        const instance = wrapper.instance() as UploadMovie;
+        const instance = wrapper.instance() as MovieForm;
         const state = {
             title: 'poney',
             summary: 'poney magique',

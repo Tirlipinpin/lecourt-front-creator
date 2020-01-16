@@ -15,3 +15,8 @@
     transition-timing-function: ease;
     transition-delay: 0s;
 }
+
+.ant-modal-body {
+    max-height: 80vh;
+    overflow: auto;
+}

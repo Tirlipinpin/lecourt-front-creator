@@ -1,5 +1,6 @@
 import React from 'react';
 import { Spin, Icon } from 'antd';
+import styles from './index.module.scss';
 
 export interface ILoaderProps {
   size?: number | string
@@ -7,7 +8,7 @@ export interface ILoaderProps {
 
 export const Loader = ({ size }: ILoaderProps): React.ReactElement => (
   <Spin
-    indicator={<Icon type="loading" style={{ fontSize: size, color: '#FF5242' }} />}
+    indicator={<Icon className={styles.loader} style={{ fontSize: size }} type="loading"  />}
   />
 );
 

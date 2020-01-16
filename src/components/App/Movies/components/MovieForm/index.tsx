@@ -1,4 +1,4 @@
-import React, {FormEvent, SyntheticEvent, Component, ReactElement} from 'react';
+import React, {FormEvent, SyntheticEvent, PureComponent, ReactElement} from 'react';
 import {
     Button,
     DatePicker,
@@ -9,50 +9,58 @@ import {
     Upload,
     Select,
 } from 'antd';
+import { Moment } from 'moment';
 import { UploadChangeParam } from 'antd/lib/upload';
 import { UploadFile } from 'antd/lib/upload/interface';
-import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
-import { Moment } from 'moment';
-import { uploadMovie } from './actions';
 import PersonsSelect from './components/PersonsSelect';
 import RoleSelect from './components/RoleSelect';
-import { FETCH_MOVIE_CREATION_DATA } from '../../../../reducers/uploadMovie/constants';
-import { IUploadMovieStore } from '../../../../reducers/uploadMovie';
 import {
     IActorForm,
     directorForm,
     IStaffForm,
     genreForm,
+    IMovieDetails,
+    Person,
     Genre,
-} from '../../interfaces';
+} from '../../../interfaces';
+import {
+    convertActors,
+    convertDirectors,
+    convertGenres,
+    convertStaffPersons,
+} from './services';
+import Loader from 'components/shared/Loader';
 import './index.css';
 
-export interface IUploadMovieProps {
-    dispatch: Dispatch
-    uploadMovie: IUploadMovieStore
-}
-
-export interface IUploadMovieState {
-    title: string
-    summary: string
-    summarySmall: string
-    releaseDate: string
+export interface IMovieFormState {
     actors: IActorForm[]
+    actualPerson: string
+    addPerson?: (id: string, role: string) => void
     directors: directorForm[]
-    staff: IStaffForm[]
     genres: genreForm[]
-    posterFile: UploadFile | null
     movieFile: UploadFile | null
     modalVisible: boolean
-    addPerson?: (id: string, role: string) => void
-    actualPerson: string
-    posterFileList: UploadFile[]
     movieFileList: UploadFile[]
+    posterFile: UploadFile | null
+    posterFileList: UploadFile[]
+    releaseDate: string
+    staff: IStaffForm[]
+    summary: string
+    summarySmall: string
+    title: string
 }
 
-export class UploadMovie extends Component<IUploadMovieProps, IUploadMovieState> {
-    state: Readonly<IUploadMovieState> = {
+export interface IMovieFormProps {
+    disabled?: boolean
+    genres: Genre[]
+    loading: boolean
+    movie?: IMovieDetails
+    onSubmit: (movie: IMovieFormState) => void
+    persons: Person[]
+}
+
+export class MovieForm extends PureComponent<IMovieFormProps, IMovieFormState> {
+    state: Readonly<IMovieFormState> = {
         title: '',
         summary: '',
         summarySmall: '',
@@ -69,32 +77,42 @@ export class UploadMovie extends Component<IUploadMovieProps, IUploadMovieState>
         movieFileList: [],
     };
 
-    componentDidMount(): void {
-        const { dispatch } = this.props;
-        dispatch({ type: FETCH_MOVIE_CREATION_DATA });
+    componentDidUpdate(prevProps: IMovieFormProps) {
+        const { movie } = this.props;
+        const { movie: prevMovie } = prevProps;
+
+        if (!movie || movie === prevMovie) return;
+
+        const {
+            title,
+            summary,
+            summarySmall,
+            actors,
+            directors,
+            genres,
+            staff,
+        } = movie;
+
+        this.setState({
+            title,
+            summary,
+            summarySmall,
+            actors: convertActors(actors),
+            directors: convertDirectors(directors),
+            staff: convertStaffPersons(staff),
+            genres: convertGenres(genres),
+        });
     }
 
     handleSubmit = (e: FormEvent) => {
         e.preventDefault();
 
-        console.log(this.state);
-
         const { title, summary, summarySmall, releaseDate, actors, directors, staff, genres, posterFile, movieFile } = this.state;
         if (!title || !summary || !summarySmall || !releaseDate || actors.length < 1 || directors.length < 1 || staff.length < 1 || genres.length < 1 || !posterFile || !movieFile) return;
 
-        const { dispatch } = this.props;
-        dispatch(uploadMovie(
-          title,
-          summary,
-          summarySmall,
-          releaseDate,
-          actors,
-          directors,
-          staff,
-          genres,
-          posterFile,
-          movieFile,
-        ));
+        const { onSubmit } = this.props;
+
+        onSubmit(this.state);
     };
 
     handleTitle = (e: SyntheticEvent) => {
@@ -249,7 +267,9 @@ export class UploadMovie extends Component<IUploadMovieProps, IUploadMovieState>
             actualPerson,
             movieFileList,
         } = this.state;
-        const { persons, genres } = this.props.uploadMovie;
+        const { genres, loading, persons } = this.props;
+
+        if (loading) return <Loader size='3vw' />;
 
         return (
           <div>
@@ -407,6 +427,4 @@ export class UploadMovie extends Component<IUploadMovieProps, IUploadMovieState>
     }
 }
 
-export default connect(({ uploadMovie }: any) => ({
-    uploadMovie,
-}))(UploadMovie);
+export default MovieForm;
