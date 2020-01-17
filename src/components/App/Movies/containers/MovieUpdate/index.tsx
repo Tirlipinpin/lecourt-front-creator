@@ -32,7 +32,7 @@ export const MovieUpdate: FunctionComponent<IMovieUpdateProps> = props => {
         persons,
         updatingMovie,
     } = useSelector((state: any) => ({
-        genres: state.uploadMovie.persons,
+        genres: state.uploadMovie.genres,
         loadingMovieCreationData: state.uploadMovie.loading,
         loadingMovieDetails: state.movieDetails.loading,
         movie: state.movieDetails.movie,
@@ -41,7 +41,7 @@ export const MovieUpdate: FunctionComponent<IMovieUpdateProps> = props => {
     }), shallowEqual);
 
     const submitMovieUpdate = (movie: IMovieFormState) => {
-        dispatch(updateMovieDetails(movie));
+        dispatch(updateMovieDetails(id, movie));
     };
 
     return (
@@ -52,7 +52,15 @@ export const MovieUpdate: FunctionComponent<IMovieUpdateProps> = props => {
             visible={visible}
             title={t('UPDATE_YOUR_SHORT')}
         >
-            <MovieForm disabled={updatingMovie} genres={genres} loading={loadingMovieDetails || loadingMovieCreationData} movie={movie} onSubmit={submitMovieUpdate} persons={persons} />
+            <MovieForm
+                disabled={updatingMovie}
+                genres={genres}
+                loading={loadingMovieDetails || loadingMovieCreationData}
+                movie={movie}
+                onSubmit={submitMovieUpdate}
+                persons={persons}
+                updateForm
+            />
         </Modal>
     );
 };

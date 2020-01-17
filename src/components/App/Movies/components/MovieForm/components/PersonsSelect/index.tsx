@@ -3,13 +3,14 @@ import { Select } from 'antd';
 import { Person } from '../../../../../interfaces';
 
 export interface IPersonsSelectProps {
-    persons: Person[]
+    defaultValue?: string[]
     filterOptions: (input: string, option: ReactElement) => boolean
-    onSelect: (e: string | any) => any
     onDeselect: (e: string | any) => any
+    onSelect: (e: string | any) => any
+    persons: Person[]
 }
 
-export const PersonsSelect: FunctionComponent<IPersonsSelectProps> = ({ persons, filterOptions, onSelect, onDeselect }) => (
+export const PersonsSelect: FunctionComponent<IPersonsSelectProps> = ({ defaultValue, filterOptions, onDeselect, onSelect, persons }) => (
     <Select
       mode="multiple"
       style={{ width: '100%' }}
@@ -19,6 +20,7 @@ export const PersonsSelect: FunctionComponent<IPersonsSelectProps> = ({ persons,
       filterOption={filterOptions}
       onSelect={onSelect}
       onDeselect={onDeselect}
+      defaultValue={defaultValue}
     >
         {persons.map((person: Person) => (
           <Select.Option key={person.id}>

@@ -18,7 +18,7 @@ import {
 
 function* fetchPersons(): IterableIterator<Object | void> {
     try {
-        const res = yield axios.get(`persons?limit=200`);
+        const res = yield axios.get(`persons?limit=2000`);
 
         if (!res)
             throw new Error('Unable to fetch persons to add to your short');
@@ -42,7 +42,7 @@ function* fetchPersons(): IterableIterator<Object | void> {
 
 function* fetchGenres(): IterableIterator<Object | void> {
     try {
-        const res = yield axios.get(`genres?limit=200`);
+        const res = yield axios.get(`genres?limit=2000`);
 
         if (!res)
             throw new Error('Unable to fetch genres');
@@ -66,7 +66,7 @@ function* fetchGenres(): IterableIterator<Object | void> {
 
 function* fetchCountries(): IterableIterator<Object | void> {
     try {
-        const res = yield axios.get(`countries?limit=200`);
+        const res = yield axios.get(`countries?limit=2000`);
 
         if (!res)
             throw new Error('Unable to fetch countries');

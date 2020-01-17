@@ -34,7 +34,7 @@ export const Movies: FunctionComponent<IMovies> = props => {
     const showUpdateMovieModal = (id: string) => {
         updateIsUpdateMovieModalVisible(true);
         updateActualUpdatingMovie(id);
-    }
+    };
 
     const hideUpdateMovieModal = () => updateIsUpdateMovieModalVisible(false);
 
@@ -68,9 +68,9 @@ export const Movies: FunctionComponent<IMovies> = props => {
                         <List.Item.Meta
                             title={item.title}
                             description={item.genres.map(genre => genre.node.name).join(', ')}
+                            avatar={<Button shape="circle" onClick={() => showUpdateMovieModal(item.id)}><Icon type="edit" /></Button>}
                         />
                         {item.summary}
-                        <Button onClick={() => showUpdateMovieModal(item.id)}><Icon type="edit" /></Button>
                     </List.Item>
                   )}
             />

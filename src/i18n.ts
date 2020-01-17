@@ -16,7 +16,7 @@ i18n
             LOGIN: 'Sign in',
             AUTH_NO_ACCOUNT: `Don't have an account yet?`,
             AUTH_REGISTER: `Register!`,
-            UPDATE_YOUR_SHORT: 'Upload your short information',
+            UPDATE_YOUR_SHORT: 'Update your short information',
         }
       },
       fr: {

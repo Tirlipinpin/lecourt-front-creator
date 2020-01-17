@@ -3,4 +3,4 @@ import { IMovieFormState } from '../../components/MovieForm';
 
 export const fetchMovieDetails = (id: string) => ({ type: FETCH_MOVIE_DETAILS, payload: { id } });
 
-export const updateMovieDetails = (payload: IMovieFormState) => ({ type: UPDATE_MOVIE_DETAILS, payload });
+export const updateMovieDetails = (id: string, movie: IMovieFormState) => ({ type: UPDATE_MOVIE_DETAILS, payload: { id, movie } });

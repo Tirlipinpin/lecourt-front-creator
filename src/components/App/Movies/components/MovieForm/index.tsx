@@ -9,7 +9,7 @@ import {
     Upload,
     Select,
 } from 'antd';
-import { Moment } from 'moment';
+import moment, { Moment } from 'moment';
 import { UploadChangeParam } from 'antd/lib/upload';
 import { UploadFile } from 'antd/lib/upload/interface';
 import PersonsSelect from './components/PersonsSelect';
@@ -57,6 +57,7 @@ export interface IMovieFormProps {
     movie?: IMovieDetails
     onSubmit: (movie: IMovieFormState) => void
     persons: Person[]
+    updateForm?: boolean
 }
 
 export class MovieForm extends PureComponent<IMovieFormProps, IMovieFormState> {
@@ -84,34 +85,32 @@ export class MovieForm extends PureComponent<IMovieFormProps, IMovieFormState> {
         if (!movie || movie === prevMovie) return;
 
         const {
-            title,
-            summary,
-            summarySmall,
             actors,
             directors,
             genres,
+            releaseDate,
             staff,
+            summarySmall,
+            summary,
+            title,
         } = movie;
 
         this.setState({
-            title,
-            summary,
-            summarySmall,
             actors: convertActors(actors),
             directors: convertDirectors(directors),
-            staff: convertStaffPersons(staff),
             genres: convertGenres(genres),
+            releaseDate: moment(releaseDate).format('YYYY-MM-DD'),
+            staff: convertStaffPersons(staff),
+            summarySmall,
+            summary,
+            title,
         });
     }
 
     handleSubmit = (e: FormEvent) => {
         e.preventDefault();
 
-        const { title, summary, summarySmall, releaseDate, actors, directors, staff, genres, posterFile, movieFile } = this.state;
-        if (!title || !summary || !summarySmall || !releaseDate || actors.length < 1 || directors.length < 1 || staff.length < 1 || genres.length < 1 || !posterFile || !movieFile) return;
-
         const { onSubmit } = this.props;
-
         onSubmit(this.state);
     };
 
@@ -267,7 +266,14 @@ export class MovieForm extends PureComponent<IMovieFormProps, IMovieFormState> {
             actualPerson,
             movieFileList,
         } = this.state;
-        const { genres, loading, persons } = this.props;
+        const {
+            disabled,
+            genres,
+            loading,
+            persons,
+            updateForm,
+            movie
+        } = this.props;
 
         if (loading) return <Loader size='3vw' />;
 
@@ -317,6 +323,7 @@ export class MovieForm extends PureComponent<IMovieFormProps, IMovieFormState> {
                           <DatePicker
                             format="YYYY-MM-DD"
                             onChange={this.handleReleaseDate}
+                            defaultValue={moment(movie?.releaseDate)}
                           />
                       </Form.Item>
                       <Form.Item
@@ -324,10 +331,11 @@ export class MovieForm extends PureComponent<IMovieFormProps, IMovieFormState> {
                         required
                       >
                           <PersonsSelect
-                            persons={persons}
+                            defaultValue={movie?.actors.map(actor => actor.node.id)}
                             filterOptions={this.filterOptions}
-                            onSelect={this.handleActorSelect}
                             onDeselect={this.handleActorDeselect}
+                            onSelect={this.handleActorSelect}
+                            persons={persons}
                           />
                       </Form.Item>
                       <Form.Item
@@ -335,10 +343,11 @@ export class MovieForm extends PureComponent<IMovieFormProps, IMovieFormState> {
                         required
                       >
                           <PersonsSelect
-                            persons={persons}
+                            defaultValue={movie?.directors.map(director => director.node.id)}
                             filterOptions={this.filterOptions}
-                            onSelect={this.handleDirectorSelect}
                             onDeselect={this.handleDirectorDeselect}
+                            onSelect={this.handleDirectorSelect}
+                            persons={persons}
                           />
                       </Form.Item>
                       <Form.Item
@@ -346,10 +355,11 @@ export class MovieForm extends PureComponent<IMovieFormProps, IMovieFormState> {
                         required
                       >
                           <PersonsSelect
-                            persons={persons}
+                            defaultValue={movie?.staff.map(person => person.node.id)}
                             filterOptions={this.filterOptions}
-                            onSelect={this.handleStaffSelect}
                             onDeselect={this.handleStaffDeselect}
+                            onSelect={this.handleStaffSelect}
+                            persons={persons}
                           />
                       </Form.Item>
                       <Form.Item
@@ -357,6 +367,7 @@ export class MovieForm extends PureComponent<IMovieFormProps, IMovieFormState> {
                         required
                       >
                           <Select
+                            defaultValue={movie?.genres.map(genre => genre.node.id)}
                             mode="multiple"
                             style={{ width: '100%' }}
                             allowClear
@@ -373,44 +384,49 @@ export class MovieForm extends PureComponent<IMovieFormProps, IMovieFormState> {
                               ))}
                           </Select>
                       </Form.Item>
-                      <Form.Item
-                        required
-                        label="Affiche du court métrage"
-                      >
-                          <Upload.Dragger
-                            name="file"
-                            onChange={this.onUploadPoster}
-                            beforeUpload={() => false}
-                            accept="image/*"
-                          >
-                              <p className="ant-upload-drag-icon">
-                                  <Icon type="inbox"/>
-                              </p>
-                              <p className="ant-upload-text">Ajoutez l'affiche du court métrage</p>
-                              <p className="ant-upload-hint">Celle-ci sera utilisée comme vignette représentative de votre film</p>
-                          </Upload.Dragger>
-                      </Form.Item>
-                      <Form.Item
-                        required
-                        label="Court métrage"
-                      >
-                          <Upload.Dragger
-                            name="file"
-                            onChange={this.onUploadMovie}
-                            beforeUpload={() => false}
-                            accept="video/*"
-                            fileList={movieFileList}
-                          >
-                              <p className="ant-upload-drag-icon">
-                                  <Icon type="inbox"/>
-                              </p>
-                              <p className="ant-upload-text">Ajoutez votre court métrage</p>
-                          </Upload.Dragger>
-                      </Form.Item>
+                      {!updateForm && [
+                        <Form.Item
+                            key="poster"
+                            required
+                            label="Affiche du court métrage"
+                        >
+                            <Upload.Dragger
+                                name="file"
+                                onChange={this.onUploadPoster}
+                                beforeUpload={() => false}
+                                accept="image/*"
+                            >
+                                <p className="ant-upload-drag-icon">
+                                    <Icon type="inbox"/>
+                                </p>
+                                <p className="ant-upload-text">Ajoutez l'affiche du court métrage</p>
+                                <p className="ant-upload-hint">Celle-ci sera utilisée comme vignette représentative de votre film</p>
+                            </Upload.Dragger>
+                        </Form.Item>,
+                        <Form.Item
+                            key="movie"
+                            required
+                            label="Court métrage"
+                        >
+                            <Upload.Dragger
+                                name="file"
+                                onChange={this.onUploadMovie}
+                                beforeUpload={() => false}
+                                accept="video/*"
+                                fileList={movieFileList}
+                            >
+                                <p className="ant-upload-drag-icon">
+                                    <Icon type="inbox"/>
+                                </p>
+                                <p className="ant-upload-text">Ajoutez votre court métrage</p>
+                            </Upload.Dragger>
+                        </Form.Item>
+                      ]}
                       <Button
                         icon="upload"
                         htmlType="submit"
                         className="upload-movie-button"
+                        disabled={disabled}
                       >
                           Envoyer
                       </Button>
