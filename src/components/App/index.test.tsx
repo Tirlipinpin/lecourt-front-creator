@@ -26,11 +26,11 @@ describe('The App component', () => {
         );
     });
 
-    it('should render correctly', () => {
+    test('should render correctly', () => {
         expect(wrapper).toHaveLength(1);
     });
 
-    it('should redirect when user is not logged', () => {
+    test('should redirect when user is not logged', () => {
         wrapper.setProps({
             login: {
                 token: false,
@@ -40,11 +40,11 @@ describe('The App component', () => {
         expect(wrapper.find('Redirect')).toHaveLength(1);
     });
 
-    it('should display app when user is logged', () => {
+    test('should display app when user is logged', () => {
         expect(wrapper.find(`.${styles.appContainer}`)).toHaveLength(1);
     });
 
-    it('should collape navbar when collapsed is true', () => {
+    test('should collape navbar when collapsed is true', () => {
         wrapper.setProps({
             collapsed: true,
         });

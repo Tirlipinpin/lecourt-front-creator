@@ -22,7 +22,7 @@ describe('The Profile component', () => {
         );
     });
 
-    it('should render correctly', () => {
+    test('should render correctly', () => {
         expect(wrapper.length).toBe(1);
     });
 });

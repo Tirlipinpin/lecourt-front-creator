@@ -14,7 +14,6 @@ import {
 
 describe('The MovieForm component', () => {
     let wrapper: ShallowWrapper<MovieForm>;
-    const dispatch = jest.fn();
     const onSubmit = jest.fn();
 
     beforeEach(() => {
@@ -23,21 +22,16 @@ describe('The MovieForm component', () => {
                 genres={[]}
                 persons={[]}
                 onSubmit={onSubmit}
+                loading={false}
             />
         );
     });
 
-    it('should render correctly', () => {
+    test('should render correctly', () => {
         expect(wrapper).toHaveLength(1);
     });
 
-    it('should dispatch a FETCH_MOVIE_CREATION_DATA action on mount', () => {
-        expect(dispatch).toHaveBeenCalledWith({
-            type: 'FETCH_MOVIE_CREATION_DATA',
-        })
-    });
-
-    it('should update movie state when uploading a movie', () => {
+    test('should update movie state when uploading a movie', () => {
         const instance = wrapper.instance() as MovieForm;
         const info = {
             file: {
@@ -52,7 +46,7 @@ describe('The MovieForm component', () => {
         expect(wrapper.state('movieFile')).toEqual(info.file);
     });
 
-    it('should update poster state when uploading a poster', () => {
+    test('should update poster state when uploading a poster', () => {
         const instance = wrapper.instance() as MovieForm;
         const info = {
             file: {
@@ -67,7 +61,7 @@ describe('The MovieForm component', () => {
         expect(wrapper.state('posterFile')).toEqual(info.file);
     });
 
-    it('should update title state when changing title', () => {
+    test('should update title state when changing title', () => {
         const instance = wrapper.instance() as MovieForm;
         const event = {
             target: {
@@ -80,7 +74,7 @@ describe('The MovieForm component', () => {
         expect(wrapper.state('title')).toEqual('poney');
     });
 
-    it('should update summary state when changing summary', () => {
+    test('should update summary state when changing summary', () => {
         const instance = wrapper.instance() as MovieForm;
         const event = {
             target: {
@@ -93,7 +87,7 @@ describe('The MovieForm component', () => {
         expect(wrapper.state('summary')).toEqual('poney');
     });
 
-    it('should update summary small state when changing summary small', () => {
+    test('should update summary small state when changing summary small', () => {
         const instance = wrapper.instance() as MovieForm;
         const event = {
             target: {
@@ -106,7 +100,7 @@ describe('The MovieForm component', () => {
         expect(wrapper.state('summarySmall')).toEqual('poney');
     });
 
-    it('should update release date state when changing release date', () => {
+    test('should update release date state when changing release date', () => {
         const instance = wrapper.instance() as MovieForm;
 
         instance.handleReleaseDate({} as Moment, '1998-09-20');
@@ -114,7 +108,7 @@ describe('The MovieForm component', () => {
         expect(wrapper.state('releaseDate')).toEqual('1998-09-20');
     });
 
-    it('should update actors list state when changing actors', () => {
+    test('should update actors list state when changing actors', () => {
         const instance = wrapper.instance() as MovieForm;
         const actors: IActorForm[] = [
             { id: 'poney', role: 'licorne' },
@@ -127,7 +121,7 @@ describe('The MovieForm component', () => {
         expect(wrapper.state('actors')).toEqual(actors);
     });
 
-    it('should update directors list state when changing directors', () => {
+    test('should update directors list state when changing directors', () => {
         const instance = wrapper.instance() as MovieForm;
         const directors: directorForm[] = [
             'poney',
@@ -140,7 +134,7 @@ describe('The MovieForm component', () => {
         expect(wrapper.state('directors')).toEqual(directors);
     });
 
-    it('should update staff list state when changing staff', () => {
+    test('should update staff list state when changing staff', () => {
         const instance = wrapper.instance() as MovieForm;
         const staff = [
             { id: 'poney', job: 'licorne' },
@@ -153,7 +147,7 @@ describe('The MovieForm component', () => {
         expect(wrapper.state('staff')).toEqual(staff);
     });
 
-    it('should dispatch a uploadMovie action when submitting form', () => {
+    test('should call onSubmit method from props when submitting the form', () => {
         const instance = wrapper.instance() as MovieForm;
         const state = {
             title: 'poney',
@@ -167,14 +161,10 @@ describe('The MovieForm component', () => {
             posterFile: { name: 'poster' } as UploadFile,
             movieFile: { name: 'video'} as UploadFile,
         };
-
         instance.setState(state);
 
         instance.handleSubmit({ preventDefault(): void {} } as FormEvent);
 
-        expect(dispatch).toHaveBeenCalledWith({
-            type: 'UPLOAD_MOVIE',
-            payload: { ...state },
-        });
-    })
+        expect(onSubmit).toHaveBeenCalledWith(state);
+    });
 });

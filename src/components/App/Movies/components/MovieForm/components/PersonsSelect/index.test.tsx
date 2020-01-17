@@ -17,7 +17,7 @@ describe('The PersonsSelect component', () => {
         );
     });
 
-    it('should render correctly', () => {
+    test('should render correctly', () => {
         expect(wrapper).toHaveLength(1);
     });
 });

@@ -10,7 +10,7 @@ describe('The Profile component', () => {
         wrapper = shallow(<Profile />);
     });
 
-    it('should render correctly', () => {
+    test('should render correctly', () => {
         expect(wrapper.length).toBe(1);
     });
 });

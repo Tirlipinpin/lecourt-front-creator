@@ -13,7 +13,7 @@ describe('the Homepage component', () => {
         wrapper = shallow(<Dashboard />);
     });
 
-    it('should render correctly', () => {
+    test('should render correctly', () => {
         expect(wrapper.length).toEqual(1);
     });
 });
