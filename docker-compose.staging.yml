@@ -3,7 +3,6 @@ version: '3.7'
 services:
   front:
     image: $CONTAINER_STAGING_IMAGE
-    entrypoint: npm run start:staging
     restart: always
 
 networks:
