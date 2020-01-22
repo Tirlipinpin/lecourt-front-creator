@@ -8,6 +8,7 @@ variables:
   DOCKER_DRIVER: overlay2
   DOCKER_TLS_CERTDIR: ''
   CONTAINER_STAGING_IMAGE: $CI_REGISTRY_IMAGE/staging:$CI_COMMIT_REF_SLUG
+  CONTAINER_STAGING_CI_IMAGE: $CI_REGISTRY_IMAGE/staging-ci:$CI_COMMIT_REF_SLUG
 
 before_script:
   - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
@@ -71,7 +72,9 @@ build_staging:
   services:
     - docker:dind
   script:
-    - docker build --pull -t $CONTAINER_STAGING_IMAGE -f development.Dockerfile .
+    - docker build --pull -t $CONTAINER_STAGING_CI_IMAGE --target base .
+    - docker build --pull -t $CONTAINER_STAGING_IMAGE --target runtime .
+    - docker push $CONTAINER_STAGING_CI_IMAGE
     - docker push $CONTAINER_STAGING_IMAGE
 
 deploy_staging:
@@ -92,11 +95,11 @@ deploy_staging:
 
 test_unit:
   image:
-    name: $CONTAINER_STAGING_IMAGE
+    name: $CONTAINER_STAGING_CI_IMAGE
     entrypoint: [""]
   stage: test
   <<: [ *branch-test, *runner-docker ]
   before_script:
-    - npm i
+    - cd /app
   script:
     - npm run testci
