@@ -1,13 +1,13 @@
-import React, { Component, Dispatch, Suspense, lazy } from 'react';
-import { connect } from 'react-redux';
+import React, { FunctionComponent, lazy, Suspense, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Switch, Route, Redirect, Router, RouteComponentProps } from 'react-router';
-import { Icon, Layout } from 'antd';
+import { Icon } from 'antd';
 import axios from 'axios';
+import { logout } from '../../actions';
 import { getManagementUrl } from '../../services/requestUrl';
-import { collapseNavbar } from './Navbar/actions';
 import axiosInterceptor from '../../services/axiosInterceptor';
 import { ILoginStore } from '../../reducers/login';
-import Navbar from './Navbar';
+import { Sidebar } from './Sidebar';
 import styles from './index.module.scss';
 import './index.scss';
 
@@ -18,91 +18,66 @@ const Campaigns = lazy(() => import('./Campaigns'));
 const CampaignEdit = lazy(() => import('./Campaigns/Edit'));
 const AdminDashboard = lazy(() => import('./AdminDashboard'));
 
-interface AppProps extends RouteComponentProps {
+interface IAppProps extends RouteComponentProps {
     login: ILoginStore
-    dispatch: Dispatch<any>
-    collapsed: boolean
 }
 
-export class App extends Component<AppProps, {}> {
-    componentDidMount() {
-        const { history, dispatch, login } = this.props;
+const lazyRender = (Child: React.LazyExoticComponent<any>, props: RouteComponentProps) => (
+    <Suspense
+        fallback={(
+            <Icon type="loading" />
+        )}
+    >
+        <Child { ...props } />
+    </Suspense>
+);
+
+export const App: FunctionComponent<IAppProps> = (props) => {
+    const dispatch = useDispatch();
+    const { history, match } = props;
+    const login: ILoginStore = useSelector((state: any) => state.login);
+
+    useEffect(() => {
         const { token } = login;
 
         axiosInterceptor(() => {
-            dispatch({ type: 'LOGOUT' });
+            dispatch(logout());
             history.push('/');
         });
-        
+
         if (!token) return;
 
         axios.defaults.baseURL = getManagementUrl();
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-    }
 
-    onCollapse = (collapsed: boolean) => {
-        const { dispatch } = this.props;
+    }, [dispatch, history, login]);
 
-        dispatch(collapseNavbar(collapsed));
-    };
+    if (!login.token) return <Redirect to="/authentication/login" />;
 
-    lazyRender = (Child: React.LazyExoticComponent<any>, props: RouteComponentProps) => (
-        <Suspense
-            fallback={(
-                <Icon type="loading" />
-            )}
-        >
-            <Child { ...props } />
-        </Suspense>
-    );
+    return (
+      <div className={styles.appWrapper}>
+          <div className={styles.layout}>
+              <Sidebar {...props} />
+              <div className={styles.appContainer}>
+                  <div className={styles.contentContainer}>
+                      <Router history={props.history}>
+                          <Switch>
+                              <Route exact path={match.url} render={(props) => lazyRender(Dashboard, props)} />
+                              <Route path={`${match.path}/profile`} render={(props) => lazyRender(Profile, props)}/>
+                              <Route exact path={`${match.path}/movies`} render={(props) => lazyRender(Movies, props)}/>
+                              <Route exact path={`${match.path}/campaigns`} render={(props) => lazyRender(Campaigns, props)}/>
+                              <Route path={`${match.path}/campaigns/:id`} render={(props) => lazyRender(CampaignEdit, props)}/>
+                              <Route path={`${match.path}/adminDashboard`} render={(props) => lazyRender(AdminDashboard, props)}/>
+                          </Switch>
+                      </Router>
+                  </div>
+                  <div className={styles.footer}>
+                      Lecourt ©2019 Created with <Icon type="heart" /> by the best developers ever
+                  </div>
+              </div>
+          </div>
+      </div>
+  );
+};
 
-    render() {
-        const { match, login, collapsed } = this.props;
-
-        if (!login.token)
-            return (
-                <Redirect to="/authentication/login" />
-            );
-
-        return (
-            <div className={styles.appWrapper}>
-                <Layout>
-                    <Layout.Sider
-                        collapsible
-                        collapsed={collapsed}
-                        onCollapse={this.onCollapse}
-                        theme="light"
-                        className={styles.navbarContainer}
-                    >
-                        <Navbar { ...this.props } collapsed={collapsed} />
-                    </Layout.Sider>
-                    <Layout className={styles.appContainer}>
-                        <Layout.Content className={`${styles.contentContainer} ${collapsed && styles.contentContainerExtended}`}>
-                            <Router history={this.props.history}>
-                                <Switch>
-                                    <Route exact path={match.url} render={(props) => this.lazyRender(Dashboard, props)} />
-                                    <Route path={`${match.path}/profile`} render={(props) => this.lazyRender(Profile, props)}/>
-                                    <Route exact path={`${match.path}/movies`} render={(props) => this.lazyRender(Movies, props)}/>
-                                    <Route exact path={`${match.path}/campaigns`} render={(props) => this.lazyRender(Campaigns, props)}/>
-                                    <Route path={`${match.path}/campaigns/:id`} render={(props) => this.lazyRender(CampaignEdit, props)}/>
-                                    <Route path={`${match.path}/adminDashboard`} render={(props) => this.lazyRender(AdminDashboard, props)}/>
-                                </Switch>
-                            </Router>
-                        </Layout.Content>
-                        <Layout.Footer style={{
-                            textAlign: 'center',
-                            background: 'white',
-                        }}>
-                            Lecourt ©2019 Created with <Icon type="heart" /> by the best developers ever
-                        </Layout.Footer>
-                    </Layout>
-                </Layout>
-            </div>
-        );
-    }
-}
-
-export default connect(({ login, navbar }: any) => ({
-    login,
-    collapsed: navbar.collapsed,
-}))(App);
+export default App;

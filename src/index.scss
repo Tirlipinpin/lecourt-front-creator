@@ -1,4 +1,5 @@
 @import '~antd/dist/antd.css';
+@import 'styles/colors';
 
 body {
   height: 100vh;
@@ -9,6 +10,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: $lc-black;
 }
 
 #root {

@@ -8,8 +8,9 @@ import { restoreToken } from 'actions';
 import { lazyRenderer } from 'services/renderer/lazyRenderer';
 import * as serviceWorker from './serviceWorker';
 import configureStore, { history } from './store';
+import './index.scss';
+import './Antd.replace.scss';
 import './i18n';
-import './index.css';
 
 const App = lazy(() => import('./components/App'));
 const Authentication = lazy(() => import('./components/Authentication'));

@@ -113,7 +113,7 @@ export class Dashboard extends Component<{}, {}> {
                     subTitle="Voyez toutes vos statistiques du premier coup d'œil"
                     className="dashboard-header"
                 />
-                <Row gutter={32}>
+                <Row type="flex" gutter={32}>
                     <Col span={8}>
                         <ResponsiveContainer
                             height={350}

@@ -1,28 +1,51 @@
 import React from 'react';
-import { shallow, ShallowWrapper } from 'enzyme';
-
+import {mount, ReactWrapper} from 'enzyme';
+import { Router } from 'react-router';
+import * as reactRedux from 'react-redux';
+import { Store } from 'redux';
 import { App } from '.';
+import { createMemoryHistory, createLocation } from 'history';
+import { match } from 'react-router';
 import { ILoginStore } from '../../reducers/login';
 import styles from './index.module.scss';
 
-describe('The App component', () => {
-    let wrapper: ShallowWrapper;
+const { Provider } = reactRedux;
+
+describe.skip('The App component', () => {
+    let wrapper: ReactWrapper;
+    let dispatch;
 
     beforeEach(() => {
+        dispatch = jest.fn();
         const loginStore: ILoginStore = {
             token: 'something',
             loading: false,
         };
+        const path = `/route/:id`;
+        const match: match<{ id: string }> = {
+            isExact: false,
+            path,
+            url: path.replace(':id', '1'),
+            params: { id: "1" }
+        };
+        const store = {
+            subscribe: jest.fn(),
+            dispatch,
+            getState: jest.fn(),
+            replaceReducer: jest.fn(),
+        } as unknown;
 
-        wrapper = shallow(
-            <App
-                match={{}}
-                history={{}}
-                login={loginStore}
-                dispatch={() => {}}
-                location={{}}
-                collapsed={false}
-            />
+        wrapper = mount(
+            <Provider store={store as Store}>
+                <Router history={createMemoryHistory()}>
+                    <App
+                        match={match}
+                        history={createMemoryHistory()}
+                        login={loginStore}
+                        location={createLocation(match.url)}
+                    />
+                </Router>
+            </Provider>
         );
     });
 
@@ -31,27 +54,20 @@ describe('The App component', () => {
     });
 
     test('should redirect when user is not logged', () => {
-        wrapper.setProps({
-            login: {
-                token: false,
-            },
-        });
+        jest.spyOn(reactRedux, 'useSelector').mockReturnValue({ token: null });
 
-        expect(wrapper.find('Redirect')).toHaveLength(1);
+        wrapper.render();
+        console.log(wrapper.html());
+
+        expect(wrapper.find('Redirect').exists()).toBe(true);
     });
 
     test('should display app when user is logged', () => {
-        expect(wrapper.find(`.${styles.appContainer}`)).toHaveLength(1);
-    });
+        jest.spyOn(reactRedux, 'useSelector').mockReturnValue({ token: 'some-token' });
 
-    test('should collape navbar when collapsed is true', () => {
-        wrapper.setProps({
-            collapsed: true,
-        });
-        const Navbar = wrapper.find('Sider');
+        wrapper.render();
+        console.log(JSON.stringify(wrapper));
 
-        expect(Navbar.props()).toMatchObject({
-            collapsed: true,
-        });
+        expect(wrapper.find(`.${styles.appWrapper}`).exists()).toBe(true);
     });
 });

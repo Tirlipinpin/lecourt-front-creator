@@ -1,0 +1,70 @@
+@import 'styles/colors';
+
+%item {
+  margin-top: 24px;
+  font-size: 1.5em;
+  color: white;
+
+  &.multiItems {
+    cursor: auto;
+  }
+
+  &:hover {
+    color: $lc-blue;
+  }
+
+  &.logout {
+    margin-top: auto;
+    margin-bottom: 16px;
+  }
+}
+
+%activeItem {
+  color: $lc-light-blue;
+}
+
+.sidebar {
+  width: 64px;
+  background-color: $lc-black;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+
+  .item {
+    @extend %item;
+  }
+
+  .logo {
+    width: 80%;
+    margin-top: 16px;
+  }
+
+  .activeItem {
+    @extend %activeItem;
+  }
+
+  .logout {
+    cursor: pointer;
+    transition: color 150ms ease-in-out;
+  }
+}
+
+.dashboardSubItemsPopover {
+  .dashboardSubItems {
+    display: flex;
+    flex-flow: column nowrap;
+    background: $lc-black;
+
+    .item {
+      @extend %item;
+
+      &:first-child {
+        margin: 0;
+      }
+    }
+
+    .activeItem {
+      @extend %activeItem;
+    }
+  }
+}

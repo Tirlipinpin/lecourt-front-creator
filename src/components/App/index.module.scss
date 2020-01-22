@@ -1,25 +1,28 @@
+@import 'styles/colors';
+
 .appWrapper {
-    .appContainer {
-        min-height: 100vh;
+    .layout {
         display: flex;
-        flex-direction: column;
-
-        .contentContainer {
-            background-color: #f0f2f5;
-            margin-left: 200px;
-            max-width: 100%;
-        }
-
-        .contentContainerExtended {
-            margin-left: 80px;
-        }
-    }
-
-    .navbarContainer {
-        border-right: 1px solid #e8e8e8;
+        flex-flow: row nowrap;
         height: 100vh;
-        position: fixed;
-        background-color: #292929;
-        color: white;
+
+        .appContainer {
+            display: flex;
+            flex-direction: column;
+            overflow: auto;
+            width: 100%;
+
+            .contentContainer {
+                background-color: #f0f2f5;
+                flex: 1;
+                align-self: stretch;
+            }
+
+            .footer {
+                background: white;
+                text-align: center;
+                padding: 24px;
+            }
+        }
     }
 }
