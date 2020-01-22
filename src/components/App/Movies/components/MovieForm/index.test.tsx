@@ -150,16 +150,20 @@ describe('The MovieForm component', () => {
     test('should call onSubmit method from props when submitting the form', () => {
         const instance = wrapper.instance() as MovieForm;
         const state = {
-            title: 'poney',
+            actors: [{ id: '1234', role: 'batman' }] as IActorForm[],
+            actualPerson: '',
+            directors: [ '1234' ] as directorForm[],
+            genres: [ '1234' ] as genreForm[],
+            modalVisible: false,
+            movieFile: { name: 'video'} as UploadFile,
+            movieFileList: [],
+            posterFile: { name: 'poster' } as UploadFile,
+            posterFileList: [],
+            releaseDate: '1998-09-20',
+            staff: [{ id: '1234' }] as IStaffForm[],
             summary: 'poney magique',
             summarySmall: 'my little poney',
-            releaseDate: '1998-09-20',
-            actors: [{ id: '1234', role: 'batman' }] as IActorForm[],
-            directors: [ '1234' ] as directorForm[],
-            staff: [{ id: '1234' }] as IStaffForm[],
-            genres: [ '1234' ] as genreForm[],
-            posterFile: { name: 'poster' } as UploadFile,
-            movieFile: { name: 'video'} as UploadFile,
+            title: 'poney',
         };
         instance.setState(state);
 
