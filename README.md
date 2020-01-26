@@ -12,7 +12,7 @@ $ yarn
 $ yarn start
 ```
 
-There you go!
+There you go.
 
 When you want to push some code, don't forget to check your CI tests. You can launch the process with
 ```bash
