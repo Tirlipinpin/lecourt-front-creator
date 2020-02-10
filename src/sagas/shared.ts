@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { put, takeEvery } from 'redux-saga/effects';
+import { put, takeLatest } from 'redux-saga/effects';
 import { notification } from 'antd';
 import {
     FETCH_GENRES,
@@ -89,11 +89,11 @@ function* fetchCountries(): IterableIterator<Object | void> {
 }
 
 function* saga() {
-    yield takeEvery(FETCH_MOVIE_CREATION_DATA, fetchPersons);
-    yield takeEvery(FETCH_MOVIE_CREATION_DATA, fetchGenres);
-    yield takeEvery(FETCH_PERSONS, fetchPersons);
-    yield takeEvery(FETCH_GENRES, fetchGenres);
-    yield takeEvery(FETCH_COUNTRIES, fetchCountries);
+    yield takeLatest(FETCH_MOVIE_CREATION_DATA, fetchPersons);
+    yield takeLatest(FETCH_MOVIE_CREATION_DATA, fetchGenres);
+    yield takeLatest(FETCH_PERSONS, fetchPersons);
+    yield takeLatest(FETCH_GENRES, fetchGenres);
+    yield takeLatest(FETCH_COUNTRIES, fetchCountries);
 }
 
 export default saga;
