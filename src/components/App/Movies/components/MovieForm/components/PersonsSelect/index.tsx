@@ -24,7 +24,7 @@ export const PersonsSelect: FunctionComponent<IPersonsSelectProps> = ({ defaultV
     >
         {persons.map((person: Person) => (
           <Select.Option key={person.id}>
-              {person.firstName} {person.lastName}
+              {person.first_name} {person.last_name}
           </Select.Option>
         ))}
     </Select>

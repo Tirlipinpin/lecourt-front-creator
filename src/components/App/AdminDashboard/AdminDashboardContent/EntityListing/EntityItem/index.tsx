@@ -17,9 +17,9 @@ export interface IEntityItemProps {
 };
 
 const getEntityName = (entity: Person | Genre | Country): string => {
-    if ('firstName' in entity) return `${entity.firstName} ${entity.lastName}`;
+    if ('first_name' in entity) return `${entity.first_name} ${entity.last_name}`;
 
-    return entity.name;
+    return entity.code;
 };
 
 export const EntityItem: FunctionComponent<IEntityItemProps> = ({ entity, entityName }) => {

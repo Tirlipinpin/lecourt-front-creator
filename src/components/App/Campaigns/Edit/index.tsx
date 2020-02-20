@@ -34,15 +34,13 @@ export default (props: IProps) => {
         dispatch({ type: 'FETCH_UPLOADED_MOVIES' });
     }, [dispatch, props.match.params.id]);
 
-
     const form = {
         enabled: editingCampaign ? editingCampaign.enabled : false,
         id: editingCampaign ? editingCampaign.id : '',
         name: editingCampaign ? editingCampaign.name : '',
-        startTime: editingCampaign ? editingCampaign.startTime : 0,
-        endTime: editingCampaign ? editingCampaign.endTime : 0,
+        startDate: editingCampaign ? editingCampaign.start_date : moment(),
+        endDate: editingCampaign ? editingCampaign.end_date : moment(),
         movies: editingCampaign ? editingCampaign.movies : [],
-        note: '-',
     };
 
     const filterOptions = (input: string, option: ReactElement): boolean => {
@@ -52,8 +50,8 @@ export default (props: IProps) => {
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
 
-        const { name, startTime, endTime, note, movies} = form;
-        if (!name || !startTime || !endTime || !note || !movies)
+        const { name, startDate, endDate, movies} = form;
+        if (!name || !startDate || !endDate || !movies)
              return;
 
         dispatch({
@@ -77,8 +75,8 @@ export default (props: IProps) => {
         });
     };
 
-    const updateFormDates = (_: RangePickerValue, dates: [string, string]) => {
-        if (!editingCampaign) {
+    const updateFormDates = (dates: RangePickerValue) => {
+        if (!Array.isArray(dates) || dates.length !== 2 || !dates[0] || !dates[1]) {
             return;
         }
 
@@ -86,8 +84,8 @@ export default (props: IProps) => {
             type: UPDATE_EDITING_CAMPAIGN,
             payload: {
                 ...editingCampaign,
-                startTime: moment(dates[0]).valueOf(),
-                endTime: moment(dates[1]).valueOf(),
+                startDate: dates[0].format(),
+                endDate: dates[1].format(),
             },
         });
     };
@@ -135,16 +133,6 @@ export default (props: IProps) => {
                 />
                 </Form.Item>
                 <Form.Item
-                    label="Note de la campagne"
-                    required
-                >
-                <Input.TextArea
-                    value={form.note}
-                    onChange={updateFormStrings}
-                    name="note"
-                />
-                </Form.Item>
-                <Form.Item
                     label="Dates de diffusion de la campagne"
                     required
                 >
@@ -152,7 +140,7 @@ export default (props: IProps) => {
                         showTime
                         format="YYYY-MM-DD"
                         onChange={updateFormDates}
-                        value={[moment(form.startTime), moment(form.endTime)]}
+                        value={[form.startDate, form.endDate]}
                     />
                 </Form.Item>
                 <Form.Item
@@ -165,7 +153,7 @@ export default (props: IProps) => {
                         allowClear
                         mode="multiple"
                         onChange={updateFormMovies}
-                        value={form.movies.map((m: MovieRelation) => m.node.id)}
+                        value={form.movies.map((m: MovieRelation) => m.movie.id)}
                     >
                         {uploadedMovies.movies.map((movie: IMovieDetails) => <Select.Option key={movie.id}>{movie.title}</Select.Option>)}
                     </Select>

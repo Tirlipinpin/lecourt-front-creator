@@ -62,12 +62,12 @@ export const Movies: FunctionComponent<IMovies> = props => {
                 renderItem={(item: IMovieDetails) => (
                     <List.Item
                       key={item.title}
-                      extra={<img width={140} alt="logo" src={item.images[0] && item.images[0].node.id} />}
+                      extra={<img width={140} alt="logo" src={item.posters[0] && item.posters[0].file.id} />}
                       className={styles.moviesListItem}
                     >
                         <List.Item.Meta
                             title={item.title}
-                            description={item.genres.map(genre => genre.node.name).join(', ')}
+                            description={item.genres.map(genre => genre.genre.code).join(', ')}
                             avatar={<Button shape="circle" onClick={() => showUpdateMovieModal(item.id)}><Icon type="edit" /></Button>}
                         />
                         {item.summary}
