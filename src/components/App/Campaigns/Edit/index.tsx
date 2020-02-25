@@ -38,8 +38,8 @@ export default (props: IProps) => {
         enabled: editingCampaign ? editingCampaign.enabled : false,
         id: editingCampaign ? editingCampaign.id : '',
         name: editingCampaign ? editingCampaign.name : '',
-        startDate: editingCampaign ? editingCampaign.start_date : moment(),
-        endDate: editingCampaign ? editingCampaign.end_date : moment(),
+        startDate: editingCampaign ? moment(editingCampaign.start_date) : moment(),
+        endDate: editingCampaign ? moment(editingCampaign.end_date) : moment(),
         movies: editingCampaign ? editingCampaign.movies : [],
     };
 
@@ -99,7 +99,7 @@ export default (props: IProps) => {
             type: UPDATE_EDITING_CAMPAIGN,
             payload: {
                 ...editingCampaign,
-                movies: movies.map((id) => ({ node: { id } })),
+                movies: movies.map((id) => ({ movie: { id } })),
             },
         });
     };
