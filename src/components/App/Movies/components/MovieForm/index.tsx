@@ -46,7 +46,6 @@ export interface IMovieFormState {
     releaseDate: string
     staff: IStaffForm[]
     summary: string
-    summarySmall: string
     title: string
 }
 
@@ -64,7 +63,6 @@ export class MovieForm extends PureComponent<IMovieFormProps, IMovieFormState> {
     state: Readonly<IMovieFormState> = {
         title: '',
         summary: '',
-        summarySmall: '',
         releaseDate: '',
         actors: [],
         directors: [],
@@ -90,7 +88,6 @@ export class MovieForm extends PureComponent<IMovieFormProps, IMovieFormState> {
             genres,
             releaseDate,
             staff,
-            summarySmall,
             summary,
             title,
         } = movie;
@@ -101,7 +98,6 @@ export class MovieForm extends PureComponent<IMovieFormProps, IMovieFormState> {
             genres: convertGenres(genres),
             releaseDate: moment(releaseDate).format('YYYY-MM-DD'),
             staff: convertStaffPersons(staff),
-            summarySmall,
             summary,
             title,
         });
@@ -124,12 +120,6 @@ export class MovieForm extends PureComponent<IMovieFormProps, IMovieFormState> {
         const target = e.target as HTMLInputElement;
 
         this.setState({ summary: target.value });
-    };
-
-    handleShortDescription = (e: SyntheticEvent) => {
-        const target = e.target as HTMLInputElement;
-
-        this.setState({ summarySmall: target.value });
     };
 
     handleReleaseDate = (date: Moment | null, dateString: string) => {
@@ -260,7 +250,6 @@ export class MovieForm extends PureComponent<IMovieFormProps, IMovieFormState> {
         const {
             title,
             summary,
-            summarySmall,
             modalVisible,
             addPerson,
             actualPerson,
@@ -305,18 +294,6 @@ export class MovieForm extends PureComponent<IMovieFormProps, IMovieFormState> {
                           />
                       </Form.Item>
                       <Form.Item
-                        label="Description rapide du court métrage"
-                        required
-                      >
-                          <Input.TextArea
-                            value={summarySmall}
-                            onChange={this.handleShortDescription}
-                            placeholder="Ex: Plein de mouettes !"
-                            required
-                            autoSize
-                          />
-                      </Form.Item>
-                      <Form.Item
                         label="Date de sortie du court métrage"
                         required
                       >
@@ -331,7 +308,7 @@ export class MovieForm extends PureComponent<IMovieFormProps, IMovieFormState> {
                         required
                       >
                           <PersonsSelect
-                            defaultValue={movie?.actors.map(actor => actor.node.id)}
+                            defaultValue={movie?.actors.map(actor => actor.person.id)}
                             filterOptions={this.filterOptions}
                             onDeselect={this.handleActorDeselect}
                             onSelect={this.handleActorSelect}
@@ -343,7 +320,7 @@ export class MovieForm extends PureComponent<IMovieFormProps, IMovieFormState> {
                         required
                       >
                           <PersonsSelect
-                            defaultValue={movie?.directors.map(director => director.node.id)}
+                            defaultValue={movie?.directors.map(director => director.person.id)}
                             filterOptions={this.filterOptions}
                             onDeselect={this.handleDirectorDeselect}
                             onSelect={this.handleDirectorSelect}
@@ -355,7 +332,7 @@ export class MovieForm extends PureComponent<IMovieFormProps, IMovieFormState> {
                         required
                       >
                           <PersonsSelect
-                            defaultValue={movie?.staff.map(person => person.node.id)}
+                            defaultValue={movie?.staff.map(person => person.person.id)}
                             filterOptions={this.filterOptions}
                             onDeselect={this.handleStaffDeselect}
                             onSelect={this.handleStaffSelect}
@@ -367,7 +344,7 @@ export class MovieForm extends PureComponent<IMovieFormProps, IMovieFormState> {
                         required
                       >
                           <Select
-                            defaultValue={movie?.genres.map(genre => genre.node.id)}
+                            defaultValue={movie?.genres.map(genre => genre.genre.id)}
                             mode="multiple"
                             style={{ width: '100%' }}
                             allowClear
@@ -379,7 +356,7 @@ export class MovieForm extends PureComponent<IMovieFormProps, IMovieFormState> {
                           >
                               {genres.map((genre: Genre) => (
                                 <Select.Option key={genre.id}>
-                                    {genre.name}
+                                    {genre.code}
                                 </Select.Option>
                               ))}
                           </Select>

@@ -87,19 +87,6 @@ describe('The MovieForm component', () => {
         expect(wrapper.state('summary')).toEqual('poney');
     });
 
-    test('should update summary small state when changing summary small', () => {
-        const instance = wrapper.instance() as MovieForm;
-        const event = {
-            target: {
-                value: 'poney',
-            },
-        } as unknown;
-
-        instance.handleShortDescription(event as SyntheticEvent);
-
-        expect(wrapper.state('summarySmall')).toEqual('poney');
-    });
-
     test('should update release date state when changing release date', () => {
         const instance = wrapper.instance() as MovieForm;
 

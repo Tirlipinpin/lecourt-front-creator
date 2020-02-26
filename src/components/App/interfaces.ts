@@ -1,8 +1,8 @@
 export interface Person {
     id: string
-    firstName: string
-    lastName: string
-    birthDate: string
+    first_name: string
+    last_name: string
+    birth_date: string
 }
 
 export interface IActorForm {
@@ -21,48 +21,48 @@ export type genreForm = string
 
 export interface Genre {
     id: string
-    name: string
+    code: string
 }
 
 export interface Country {
     id: string
-    name: string
+    code: string
 }
 
 export interface Image {
     id: string
     type: string
+    path: string
 }
 
 export interface ActorRelation {
-    node: Person
+    person: Person
     role: string
 }
 
 export interface StaffRelation {
-    node: Person
+    person: Person
     job: string
 }
 
 export interface DirectorRelation {
-    node: Person
+    person: Person
 }
 
 export interface ImageRelation {
-    node: Image
-    type: string
+    file: Image
 }
 
 export interface IGenreRelation {
-    node: Genre
+    genre: Genre
 }
 
 export interface FileRelation {
-    node: File
+    file: File
 }
 
 export interface MovieRelation {
-    node: IMovieDetails
+    movie: IMovieDetails
 }
 
 export interface IMovieDetails {
@@ -77,9 +77,9 @@ export interface IMovieDetails {
     actors: ActorRelation[]
     directors: DirectorRelation[]
     staff: StaffRelation[]
-    images: ImageRelation[]
+    posters: ImageRelation[]
     genres: IGenreRelation[]
-    file: FileRelation,
+    files: FileRelation[],
     result_quality: number
 }
 
@@ -87,17 +87,21 @@ export interface ICampaign {
     id: string
     name: string
     note: string
-    startTime: number
-    endTime: number
+    start_date: number
+    end_date: number
     enabled: boolean
     movies: MovieRelation[]
 }
 
+export interface ICampaignMutation extends ICampaign {
+    movies_id: string[]
+}
+
 /* Entity creation data models */
 export interface IPersonCreationModel {
-    firstName: string
-    lastName: string
-    birthDate: string
+    first_name: string
+    last_name: string
+    birth_date: string
 }
 
 export interface IGenreCreationModel {

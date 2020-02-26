@@ -50,11 +50,15 @@ export interface IUpdateMovieDetailsAction {
 function* updateMovieDetails(action: IUpdateMovieDetailsAction): IterableIterator<Object | void> {
   try {
     const { id, movie } = action.payload;
-    const { posterFile, posterFileList, movieFile, movieFileList, modalVisible, ...n } = movie;
+    const { posterFile, posterFileList, movieFile, movieFileList, modalVisible, actors, genres, staff, directors, ...n } = movie;
 
     const res = yield axios.put(`movies/${id}`, {
       ...n,
       duration: 30,
+      actors_id: actors,
+      staffs_id: staff,
+      directors_id: directors,
+      genres_id: genres,
     });
 
     if (!res)

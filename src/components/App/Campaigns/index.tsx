@@ -1,5 +1,5 @@
 import React, { useEffect, Fragment } from 'react';
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from 'react-redux';
 import { RouterProps } from "react-router";
 import { Layout, PageHeader, Button, Tooltip, Switch, Table, Divider, Tag, Popover, Steps } from 'antd';
 import moment from 'moment';
@@ -31,9 +31,9 @@ function getTimelineCurrentState(campaign: ICampaign): number {
   const now = moment().unix();
   let current = 2;
 
-  if (campaign.startTime / 1000 > now) {
+  if (campaign.start_date / 1000 > now) {
     current = 1;
-  } else if (campaign.endTime / 1000 < now) {
+  } else if (campaign.end_date / 1000 < now) {
     current = 3;
   }
   if (!campaign.enabled) {
@@ -110,7 +110,7 @@ export default (props: ICampaignsProps) => {
                       <Paragraph strong>{campaign.id}</Paragraph>
                       <Divider type="horizontal" />
                       <Title level={4}>Movies</Title>
-                      {campaign.movies.map((m: MovieRelation) => <Tag color="blue">{m.node.title}</Tag>)}
+                      {campaign.movies.map((m: MovieRelation) => <Tag color="blue">{m.movie.title}</Tag>)}
                     </div>} title="Additional informations">
                       <Button
                         type="default"
@@ -128,9 +128,9 @@ export default (props: ICampaignsProps) => {
               render={(_: any, campaign: any) => (
                   <Steps current={getTimelineCurrentState(campaign)}>
                     <Step title="Disabled" description="Your campaign is currently disabled" />
-                    <Step title="Being started" description={moment(campaign.startTime).format("MMM Do YYYY")} />
+                    <Step title="Being started" description={moment(campaign.start_date).format("MMM Do YYYY")} />
                     <Step title="In Progress" description="Your campaign is currently beign broadcast" />
-                    <Step title="Terminated" description={moment(campaign.endTime).format("MMM Do YYYY")} />
+                    <Step title="Terminated" description={moment(campaign.end_date).format("MMM Do YYYY")} />
                   </Steps>
               )}
             />

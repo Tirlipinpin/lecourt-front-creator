@@ -21,7 +21,6 @@ export interface IPostMovieAction {
         releaseDate: string
         staff: IStaffForm
         summary: string
-        summarySmall: string
         title: string
     }
 }
@@ -35,7 +34,6 @@ function* postMovie(action: IPostMovieAction): IterableIterator<Object | void> {
             releaseDate,
             staff,
             summary,
-            summarySmall,
             title,
             ...n
         } = action.payload;
@@ -45,14 +43,13 @@ function* postMovie(action: IPostMovieAction): IterableIterator<Object | void> {
         });
 
         const res = yield axios.post(`movies`, {
-            actors,
-            directors,
+            actors_id: actors,
+            directors_id: directors,
             duration: 0,
-            genres,
-            releaseDate,
-            staff,
+            genres_id: genres,
+            release_date: releaseDate,
+            staff_id: staff,
             summary,
-            summarySmall,
             title,
         });
 

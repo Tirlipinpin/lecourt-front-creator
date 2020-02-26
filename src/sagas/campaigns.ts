@@ -74,7 +74,11 @@ function* createCampaign(action: AnyAction): IterableIterator<Object | void> {
     try {
         const { payload } = action;
         const res = yield axios.post(`campaigns`, {
-            ...payload,
+            enabled: payload.enabled,
+            start_date: payload.startDate.format(),
+            end_date: payload.endDate.format(),
+            movies_id: payload.moviesId,
+            name: payload.name,
         });
 
         if (!res)
@@ -106,8 +110,11 @@ function* updateCampaign(action: AnyAction): IterableIterator<Object | void> {
         const { id } = payload;
 
         const res = yield axios.put(`campaigns/${id}`, {
-            ...payload,
-            movies: payload.movies.map((movie: MovieRelation) => movie.node.id),
+            enabled: payload.enabled,
+            start_date: payload.startDate.format(),
+            end_date: payload.endDate.format(),
+            movies_id: payload.movies.map((movie: MovieRelation) => movie.movie.id),
+            name: payload.name,
         });
 
         if (!res)

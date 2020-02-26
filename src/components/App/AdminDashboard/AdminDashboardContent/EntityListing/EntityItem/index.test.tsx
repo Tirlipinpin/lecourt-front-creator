@@ -9,7 +9,7 @@ import styles from './index.module.scss';
 
 describe('EntityItem', () => {
     let wrapper: ShallowWrapper<any>;
-    const entity: Genre = { id: 'poney', name: 'magique' };
+    const entity: Genre = { id: 'poney', code: 'magique' };
     const dispatch = jest.fn();
 
     beforeEach(() => {
