@@ -1,4 +1,4 @@
-import login, { defaultState } from '.';
+import login, { defaultState } from './index';
 import { FETCH_TOKEN, FETCH_TOKEN_SUCCEEDED, FETCH_TOKEN_FAILED, LOGOUT } from './constants';
 
 describe('login reducer', () => {

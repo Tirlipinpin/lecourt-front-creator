@@ -1,7 +1,7 @@
 import { History } from 'history';
 import { AnyAction } from 'redux';
 
-import rootReducer from './rootReducer';
+import rootReducer, { IUserStore } from './rootReducer';
 import { IAdminDashboardStore } from './adminDashboard';
 import { ICampaignsStore } from './campaigns';
 import { IMovieDetailsStore } from './movieDetails';
@@ -10,7 +10,7 @@ import { IUploadMovieStore } from './uploadMovie';
 import { RouterState } from 'connected-react-router';
 import { NavbarStore } from './navbar';
 import { IHomepageStore } from './homepage';
-import { LoginStore } from './login';
+import { ILoginStore } from './login';
 import { RegisterStore } from './register';
 
 describe('rootReducer', () => {
@@ -22,12 +22,13 @@ describe('rootReducer', () => {
             adminDashboard: {} as IAdminDashboardStore,
             campaigns: {} as ICampaignsStore,
             homepage: {} as IHomepageStore,
-            login: {} as LoginStore,
+            login: {} as ILoginStore,
             register: {} as RegisterStore,
             movieDetails: {} as IMovieDetailsStore,
             navbar: {} as NavbarStore,
             uploadedMovies: {} as IMoviesStore,
             uploadMovie: {} as IUploadMovieStore,
+            user: {} as IUserStore,
         }, {} as AnyAction);
 
         expect(reducers).toEqual({
@@ -41,6 +42,7 @@ describe('rootReducer', () => {
             navbar: {},
             uploadedMovies: {},
             uploadMovie: {},
+            user: {},
         });
     })
 });

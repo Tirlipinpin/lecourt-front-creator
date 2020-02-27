@@ -2,17 +2,18 @@ import { put, takeLatest } from 'redux-saga/effects';
 import axios, { AxiosResponse } from 'axios';
 import { notification } from 'antd';
 import Cookies from 'js-cookie';
-import { getLoginUrl, getRegisterUrl } from '../services/requestUrl';
+import { getLoginUrl, getRegisterUrl, getUserUrl } from 'services/requestUrl';
+import { FETCH_USER_INIT_APP, FETCH_USER_INIT_APP_FAILED, FETCH_USER_INIT_APP_SUCCEEDED } from 'reducers/constants';
 import {
     FETCH_TOKEN,
     FETCH_TOKEN_FAILED,
     FETCH_TOKEN_SUCCEEDED,
-} from '../reducers/login/constants';
+} from 'reducers/login/constants';
 import {
     REGISTER_USER,
     REGISTER_USER_SUCCEEDED,
     REGISTER_USER_FAILED,
-} from '../reducers/register/constants';
+} from 'reducers/register/constants';
 
 export interface IFetchTokenAction {
     type: string
@@ -61,7 +62,7 @@ function* fetchToken(action: IFetchTokenAction): IterableIterator<Object | void>
             type: FETCH_TOKEN_FAILED,
         });
         yield notification['error']({
-            message: 'An error occured',
+            message: 'An error occurred',
             description: e.message,
         });
     }
@@ -106,7 +107,35 @@ function* registerUser(action: IRegisterUserAction): IterableIterator<Object | v
             type: REGISTER_USER_FAILED,
         });
         yield notification['error']({
-            message: 'An error occured',
+            message: 'An error occurred',
+            description: e.message,
+        });
+    }
+}
+
+export interface IFetchUserProfileAction {
+    type: string
+}
+
+function* fetchUserInitApp(action: IFetchUserProfileAction): IterableIterator<Object | void> {
+    try {
+        const res: unknown = yield axios.get(getUserUrl());
+
+        if (!res)
+            throw new Error('Unable to fetch your profile information');
+
+        const { data } = res as AxiosResponse;
+
+        yield put({
+            type: FETCH_USER_INIT_APP_SUCCEEDED,
+            payload: data,
+        });
+    } catch (e) {
+        yield put({
+            type: FETCH_USER_INIT_APP_FAILED,
+        });
+        yield notification['error']({
+            message: 'An error occurred',
             description: e.message,
         });
     }
@@ -115,6 +144,7 @@ function* registerUser(action: IRegisterUserAction): IterableIterator<Object | v
 function* saga() {
     yield takeLatest(FETCH_TOKEN, fetchToken);
     yield takeLatest(REGISTER_USER, registerUser);
+    yield takeLatest(FETCH_USER_INIT_APP, fetchUserInitApp);
 }
 
 export default saga;

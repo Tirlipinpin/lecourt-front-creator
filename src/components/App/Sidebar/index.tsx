@@ -1,8 +1,10 @@
 import React, { FunctionComponent } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector, shallowEqual } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { Icon, Popover } from 'antd';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import Cookies from 'js-cookie';
+import { IUserStore } from 'reducers/rootReducer';
 import logo from 'assets/Logo.png';
 import { logout } from 'actions';
 import styles from './index.module.scss';
@@ -25,6 +27,8 @@ const AdminDashboardSubItems = (activeItem: string) => (
 
 export const Sidebar: FunctionComponent<ISidebarProps> = (props) => {
     const dispatch = useDispatch();
+    const { t } = useTranslation();
+    const { avatarUrl, role }: IUserStore = useSelector((state: any) => state.user, shallowEqual);
 
     const onLogout = () => {
         dispatch(logout());
@@ -56,13 +60,25 @@ export const Sidebar: FunctionComponent<ISidebarProps> = (props) => {
             <Link to="/app/campaigns" className={`${styles.item} ${getActiveKey() === 'campaigns' ? styles.activeItem : ''}`}>
                 <Icon type="flag" theme="filled" />
             </Link>
-            <Popover content={AdminDashboardSubItems(getActiveKey())} overlayClassName={styles.dashboardSubItemsPopover} arrowPointAtCenter placement="bottom">
-                <div className={`${styles.item} ${styles.multiItems} ${getActiveKey().includes('adminDashboard') ? styles.activeItem : ''}`}>
-                    <Icon type="appstore" theme="filled" />
-                </div>
-            </Popover>
-            <div className={`${styles.item} ${styles.logout}`} onClick={onLogout}>
-                <Icon type="logout" />
+            {['CONTENT_ADMIN', 'SUPERADMIN'].includes(role) && (
+                <Popover content={AdminDashboardSubItems(getActiveKey())}
+                         overlayClassName={styles.dashboardSubItemsPopover} arrowPointAtCenter placement="bottom">
+                    <div
+                        className={`${styles.item} ${styles.multiItems} ${getActiveKey().includes('adminDashboard') ? styles.activeItem : ''}`}>
+                        <Icon type="appstore" theme="filled"/>
+                    </div>
+                </Popover>
+                )
+            }
+            <div className={`${styles.item} ${styles.logout}`}>
+                <Popover
+                    overlayClassName={styles.logoutPopover}
+                    content={<span onClick={onLogout}>{t('LOGOUT')}</span>}
+                    placement="right"
+                    trigger="hover"
+                >
+                    <img alt="" className={styles.avatar} src={avatarUrl} />
+                </Popover>
             </div>
         </nav>
     );

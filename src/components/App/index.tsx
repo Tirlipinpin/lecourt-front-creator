@@ -3,11 +3,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Switch, Route, Redirect, Router, RouteComponentProps } from 'react-router';
 import { Icon } from 'antd';
 import axios from 'axios';
+import Loader from 'components/shared/Loader';
 import { logout } from '../../actions';
 import { getManagementUrl } from '../../services/requestUrl';
 import axiosInterceptor from '../../services/axiosInterceptor';
 import { ILoginStore } from '../../reducers/login';
 import { Sidebar } from './Sidebar';
+import { fetchUserInitApp } from './actions';
 import styles from './index.module.scss';
 import './index.scss';
 
@@ -36,6 +38,7 @@ export const App: FunctionComponent<IAppProps> = (props) => {
     const dispatch = useDispatch();
     const { history, match } = props;
     const login: ILoginStore = useSelector((state: any) => state.login);
+    const isReady: boolean = useSelector((state: any) => state.user.isReady);
 
     useEffect(() => {
         const { token } = login;
@@ -50,9 +53,18 @@ export const App: FunctionComponent<IAppProps> = (props) => {
         axios.defaults.baseURL = getManagementUrl();
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
+        dispatch(fetchUserInitApp());
     }, [dispatch, history, login]);
 
     if (!login.token) return <Redirect to="/authentication/login" />;
+
+    if (!isReady) {
+        return(
+            <div className={styles.appLoading}>
+                <Loader className={styles.loader} size="3vw" />
+            </div>
+        );
+    }
 
     return (
       <div className={styles.appWrapper}>

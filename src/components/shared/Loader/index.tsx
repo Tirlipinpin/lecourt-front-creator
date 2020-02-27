@@ -4,11 +4,19 @@ import styles from './index.module.scss';
 
 export interface ILoaderProps {
   size?: number | string
+  className?: string
 }
 
-export const Loader = ({ size }: ILoaderProps): React.ReactElement => (
+export const Loader = ({ size, className }: ILoaderProps): React.ReactElement => (
   <Spin
-    indicator={<Icon className={styles.loader} style={{ fontSize: size }} type="loading"  />}
+      className={className}
+      indicator={
+        <Icon
+            className={styles.loader}
+            style={{ fontSize: size }}
+            type="loading"
+        />
+      }
   />
 );
 

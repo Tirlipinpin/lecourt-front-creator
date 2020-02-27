@@ -1,4 +1,4 @@
-import register, { defaultState } from '.';
+import register, { defaultState } from './index';
 import { REGISTER_USER, REGISTER_USER_SUCCEEDED, REGISTER_USER_FAILED } from './constants';
 
 describe('register reducer', () => {
