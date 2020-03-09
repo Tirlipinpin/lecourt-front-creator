@@ -17,10 +17,6 @@ export interface IEntityListingProps {
 
 export const EntityListing: FunctionComponent<IEntityListingProps> = ({ entityList, entityName }) => {
     const dispatch = useDispatch();
-    const { entityFormEditing, entityFormVisible } = useSelector((state: any) => ({
-        entityFormVisible: state.adminDashboard.entityFormVisible,
-        entityFormEditing: state.adminDashboard.entityFormEditing,
-    }), shallowEqual);
 
     const showEntityForm = (item: any = null) => dispatch({
         type: SET_EDIT_ENTITY,
@@ -32,32 +28,34 @@ export const EntityListing: FunctionComponent<IEntityListingProps> = ({ entityLi
         payload: null,
     });
 
-    return <Fragment>
-        <List
-            header={<h1>{entityName}</h1>}
-            pagination={{
-                pageSize: 10,
-            }}
-            dataSource={entityList}
-            renderItem={(entity: Person | Genre | Country) => (
-                <EntityItem key={entity.id} entity={entity} entityName={entityName} onEdit={showEntityForm} />
-            )}
-        />
-        <EntityForm entityItem={entityFormEditing} entityName={entityName} onCancel={hideEntityForm} visible={entityFormVisible} />
-        <Tooltip
-            placement="left"
-            title="Créer"
-        >
-            <Button
-                type="primary"
-                shape="circle"
-                icon="plus"
-                className="add-movie-button floating-button"
-                size="large"
-                onClick={showEntityForm}
+    return (
+        <Fragment>
+            <List
+                header={<h1>{entityName}</h1>}
+                pagination={{
+                    pageSize: 10,
+                }}
+                dataSource={entityList}
+                renderItem={(entity: Person | Genre | Country) => (
+                    <EntityItem key={entity.id} entity={entity} entityName={entityName} onEdit={showEntityForm} />
+                )}
             />
-        </Tooltip>
-    </Fragment>;
+            <EntityForm entityName={entityName} onCancel={hideEntityForm} />
+            <Tooltip
+                placement="left"
+                title="Créer"
+            >
+                <Button
+                    type="primary"
+                    shape="circle"
+                    icon="plus"
+                    className="add-movie-button floating-button"
+                    size="large"
+                    onClick={showEntityForm}
+                />
+            </Tooltip>
+        </Fragment>
+    );
 };
 
 export default EntityListing;
