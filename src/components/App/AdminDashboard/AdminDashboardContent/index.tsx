@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, Fragment } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Icon, Spin } from 'antd';
 import {
@@ -34,7 +34,9 @@ export const AdminDashboardContent = ({ entityType }: IAdminDashboardContentProp
 
     if (loading) return <Spin indicator={<Icon type="loading" />} />;
     return (
-        <EntityListing entityList={list} entityName={entityType} />
+        <Fragment>
+            <EntityListing entityList={list} entityName={entityType} />
+        </Fragment>
     );
 };
 
