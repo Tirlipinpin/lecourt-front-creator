@@ -1,7 +1,7 @@
 import React from 'react';
 import * as ReactRedux from 'react-redux';
 import { mount, ReactWrapper } from 'enzyme';
-import BaseForm from '.';
+import PersonForm from '.';
 
 describe('The EntityForm Base component', () => {
     let wrapper: ReactWrapper<any>;
@@ -10,7 +10,7 @@ describe('The EntityForm Base component', () => {
     beforeEach(() => {
         dispatch = jest.fn();
         jest.spyOn(ReactRedux, 'useDispatch').mockReturnValue(dispatch);
-        wrapper = mount(<BaseForm entityName="genres" entityItem={null} />);
+        wrapper = mount(<PersonForm entityName="persons" entityItem={null} />);
     });
 
     test('should render correctly with a Form', () => {
@@ -19,11 +19,17 @@ describe('The EntityForm Base component', () => {
 
     test('should dispatch a create action on submit', () => {
         const form = wrapper.find('Form');
-        const codeInput = wrapper.find('Input');
+        const firstNameInput = wrapper.find('Input').at(0);
+        const lastNameInput = wrapper.find('Input').at(1);
 
-        codeInput.simulate('change', {
+        firstNameInput.simulate('change', {
             target: {
-                value: 'FRA',
+                value: 'First',
+            },
+        });
+        lastNameInput.simulate('change', {
+            target: {
+                value: 'Last',
             },
         });
         form.simulate('submit', { preventDefault: jest.fn() });
@@ -31,9 +37,11 @@ describe('The EntityForm Base component', () => {
         expect(dispatch).toHaveBeenCalledWith({
             type: 'CREATE_ENTITY',
             payload: {
-                entityName: 'genres',
+                entityName: 'persons',
                 body: {
-                    code: 'FRA',
+                    first_name: 'First',
+                    last_name: 'Last',
+                    birth_date: '1970-01-01',
                 },
             },
         });
