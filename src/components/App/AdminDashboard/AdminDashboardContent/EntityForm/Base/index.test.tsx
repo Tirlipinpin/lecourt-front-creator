@@ -20,12 +20,12 @@ describe('The EntityForm Base component', () => {
     test('should dispatch a create action on submit', () => {
         const form = wrapper.find('Form');
         const codeInput = wrapper.find('Input');
-
         codeInput.simulate('change', {
             target: {
                 value: 'FRA',
             },
         });
+
         form.simulate('submit', { preventDefault: jest.fn() });
 
         expect(dispatch).toHaveBeenCalledWith({

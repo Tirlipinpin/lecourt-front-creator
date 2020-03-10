@@ -21,7 +21,6 @@ describe('The EntityForm Base component', () => {
         const form = wrapper.find('Form');
         const firstNameInput = wrapper.find('Input').at(0);
         const lastNameInput = wrapper.find('Input').at(1);
-
         firstNameInput.simulate('change', {
             target: {
                 value: 'First',
@@ -32,6 +31,7 @@ describe('The EntityForm Base component', () => {
                 value: 'Last',
             },
         });
+
         form.simulate('submit', { preventDefault: jest.fn() });
 
         expect(dispatch).toHaveBeenCalledWith({
